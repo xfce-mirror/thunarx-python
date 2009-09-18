@@ -9,8 +9,7 @@ libthunarx_python_la_SOURCES = \
     thunarx_python.h
 
 libthunarx_python_la_LIBADD = \
-    $(PACKAGE_LIBS)         \
-    $(PYTHON_LIBS)
+    $(PACKAGE_LIBS)
  
 libthunarx_python_la_LDFLAGS = \
 	-avoid-version							\
@@ -22,8 +21,7 @@ libthunarx_python_la_CPPFLAGS = \
     $(PACKAGE_CPPFLAGS)
  
 libthunarx_python_la_CFLAGS = \
-    $(PACKAGE_CFLAGS)           \
-    $(PYTHON_CFLAGS)
+    $(PACKAGE_CFLAGS)
  
 pyexec_LTLIBRARIES = libthunarx.la
 pyexecdir = $(libdir)/thunarx-1/thunarx-python
@@ -37,8 +35,7 @@ libthunarx_la_LDFLAGS = \
     -module -avoid-version -export-symbols-regex initthunarx
 
 libthunarx_la_LIBADD = \
-    $(PACKAGE_LIBS) \
-    $(PYTHON_LIBS)
+    $(PACKAGE_LIBS)
     
 libthunarx_la_SOURCES = \
     thunarxmodule.c
