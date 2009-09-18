@@ -25,12 +25,7 @@ headers
 
 #include "pygnomevfs.h"
 
-#include <thunarx/thunarx-file-info.h>
-#include <thunarx/thunarx-info-provider.h>
-#include <thunarx/thunarx-column-provider.h>
-#include <thunarx/thunarx-location-widget-provider.h>
-#include <thunarx/thunarx-menu-provider.h>
-#include <thunarx/thunarx-property-page-provider.h>
+#include <thunarx/thunarx.h>
 
 %%
 modulename thunarx
@@ -48,7 +43,7 @@ _wrap_thunarx_file_info_get_vfs_file_info(PyGObject *self)
 {
     GnomeVFSFileInfo *ret;
     
-    ret = thunarx_file_info_get_vfs_file_info(NAUTILUS_FILE_INFO(self->obj));
+    ret = thunarx_file_info_get_vfs_file_info(THUNARX_FILE_INFO(self->obj));
     if (ret) {
         return pygnome_vfs_file_info_new(ret);
     }

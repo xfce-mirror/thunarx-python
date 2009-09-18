@@ -4,64 +4,64 @@
   (in-module "Thunarx")
   (parent "GObject")
   (c-name "ThunarxColumn")
-  (gtype-id "NAUTILUS_TYPE_COLUMN")
+  (gtype-id "THUNARX_TYPE_COLUMN")
 )
 
 (define-interface ColumnProvider
   (in-module "Thunarx")
   (c-name "ThunarxColumnProvider")
-  (gtype-id "NAUTILUS_TYPE_COLUMN_PROVIDER")
+  (gtype-id "THUNARX_TYPE_COLUMN_PROVIDER")
 )
 
 (define-interface FileInfo
   (in-module "Thunarx")
   (c-name "ThunarxFileInfo")
-  (gtype-id "NAUTILUS_TYPE_FILE_INFO")
+  (gtype-id "THUNARX_TYPE_FILE_INFO")
 )
 
 (define-interface InfoProvider
   (in-module "Thunarx")
   (c-name "ThunarxInfoProvider")
-  (gtype-id "NAUTILUS_TYPE_INFO_PROVIDER")
+  (gtype-id "THUNARX_TYPE_INFO_PROVIDER")
 )
 
 (define-interface LocationWidgetProvider
   (in-module "Thunarx")
   (c-name "ThunarxLocationWidgetProvider")
-  (gtype-id "NAUTILUS_TYPE_LOCATION_WIDGET_PROVIDER")
+  (gtype-id "THUNARX_TYPE_LOCATION_WIDGET_PROVIDER")
 )
 
 (define-object Menu
   (in-module "Thunarx")
   (parent "GObject")
   (c-name "ThunarxMenu")
-  (gtype-id "NAUTILUS_TYPE_MENU")
+  (gtype-id "THUNARX_TYPE_MENU")
 )
 
 (define-object MenuItem
   (in-module "Thunarx")
   (parent "GObject")
   (c-name "ThunarxMenuItem")
-  (gtype-id "NAUTILUS_TYPE_MENU_ITEM")
+  (gtype-id "THUNARX_TYPE_MENU_ITEM")
 )
 
 (define-interface MenuProvider
   (in-module "Thunarx")
   (c-name "ThunarxMenuProvider")
-  (gtype-id "NAUTILUS_TYPE_MENU_PROVIDER")
+  (gtype-id "THUNARX_TYPE_MENU_PROVIDER")
 )
 
 (define-object PropertyPage
   (in-module "Thunarx")
   (parent "GObject")
   (c-name "ThunarxPropertyPage")
-  (gtype-id "NAUTILUS_TYPE_PROPERTY_PAGE")
+  (gtype-id "THUNARX_TYPE_PROPERTY_PAGE")
 )
 
 (define-interface PropertyPageProvider
   (in-module "Thunarx")
   (c-name "ThunarxPropertyPageProvider")
-  (gtype-id "NAUTILUS_TYPE_PROPERTY_PAGE_PROVIDER")
+  (gtype-id "THUNARX_TYPE_PROPERTY_PAGE_PROVIDER")
 )
 
 ;; Enumerations and flags ...
@@ -69,11 +69,11 @@
 (define-enum OperationResult
   (in-module "Thunarx")
   (c-name "ThunarxOperationResult")
-  (gtype-id "NAUTILUS_TYPE_OPERATION_RESULT")
+  (gtype-id "THUNARX_TYPE_OPERATION_RESULT")
   (values
-    '("complete" "NAUTILUS_OPERATION_COMPLETE")
-    '("failed" "NAUTILUS_OPERATION_FAILED")
-    '("in-progress" "NAUTILUS_OPERATION_IN_PROGRESS")
+    '("complete" "THUNARX_OPERATION_COMPLETE")
+    '("failed" "THUNARX_OPERATION_FAILED")
+    '("in-progress" "THUNARX_OPERATION_IN_PROGRESS")
   )
 )
 

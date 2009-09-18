@@ -32,7 +32,7 @@
 #include <thunarx/thunarx-extension-types.h>
 
 static const GDebugKey thunarx_python_debug_keys[] = {
-  {"misc", NAUTILUS_PYTHON_DEBUG_MISC},
+  {"misc", THUNARX_PYTHON_DEBUG_MISC},
 };
 static const guint thunarx_python_ndebug_keys = sizeof (thunarx_python_debug_keys) / sizeof (GDebugKey);
 ThunarxPythonDebug thunarx_python_debug;
@@ -279,11 +279,11 @@ thunarx_python_init_python (void)
 	debug("sys.path.insert(0, ...)");
 	sys_path = PySys_GetObject("path");
 	PyList_Insert(sys_path, 0,
-				  (tmp = PyString_FromString(NAUTILUS_LIBDIR "/thunarx-python")));
+				  (tmp = PyString_FromString(THUNARX_LIBDIR "/thunarx-python")));
 	Py_DECREF(tmp);
 	
 	/* import thunarx */
-	g_setenv("INSIDE_NAUTILUS_PYTHON", "", FALSE);
+	g_setenv("INSIDE_THUNARX_PYTHON", "", FALSE);
 	debug("import thunarx");
 	thunarx = PyImport_ImportModule("thunarx");
 	if (!thunarx) {
@@ -325,7 +325,7 @@ thunarx_module_initialize(GTypeModule *module)
 	gchar *user_extensions_dir;
 	const gchar *env_string;
 
-	env_string = g_getenv("NAUTILUS_PYTHON_DEBUG");
+	env_string = g_getenv("THUNARX_PYTHON_DEBUG");
 	if (env_string != NULL) {
 		thunarx_python_debug = g_parse_debug_string(env_string,
 													 thunarx_python_debug_keys,
@@ -337,7 +337,7 @@ thunarx_module_initialize(GTypeModule *module)
 
 	all_types = g_array_new(FALSE, FALSE, sizeof(GType));
 
-	thunarx_python_load_dir(module, NAUTILUS_EXTENSION_DIR "/python");
+	thunarx_python_load_dir(module, THUNARX_EXTENSION_DIR "/python");
 	user_extensions_dir = g_strdup_printf("%s/.thunarx/python-extensions/",
 										  g_get_home_dir());
 	thunarx_python_load_dir(module, user_extensions_dir);

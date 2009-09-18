@@ -52,5 +52,5 @@ initthunarx(void)
     d = PyModule_GetDict (m);
 	
     pythunarx_register_classes (d);
-    pythunarx_add_constants(m, "NAUTILUS_");    
+    pythunarx_add_constants(m, "THUNARX_");    
 }

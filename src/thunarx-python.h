@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef NAUTILUS_PYTHON_H
-#define NAUTILUS_PYTHON_H
+#ifndef THUNARX_PYTHON_H
+#define THUNARX_PYTHON_H
 
 #include <glib-object.h>
 #include <glib/gprintf.h>
@@ -33,16 +33,16 @@ typedef int Py_ssize_t;
 #endif
 
 typedef enum {
-    NAUTILUS_PYTHON_DEBUG_MISC = 1 << 0,
+    THUNARX_PYTHON_DEBUG_MISC = 1 << 0,
 } ThunarxPythonDebug;
 
 extern ThunarxPythonDebug thunarx_python_debug;
 
-#define debug(x) { if (thunarx_python_debug & NAUTILUS_PYTHON_DEBUG_MISC) \
+#define debug(x) { if (thunarx_python_debug & THUNARX_PYTHON_DEBUG_MISC) \
                        g_printf( "thunarx-python:" x "\n"); }
-#define debug_enter()  { if (thunarx_python_debug & NAUTILUS_PYTHON_DEBUG_MISC) \
+#define debug_enter()  { if (thunarx_python_debug & THUNARX_PYTHON_DEBUG_MISC) \
                              g_printf("%s: entered\n", __FUNCTION__); }
-#define debug_enter_args(x, y) { if (thunarx_python_debug & NAUTILUS_PYTHON_DEBUG_MISC) \
+#define debug_enter_args(x, y) { if (thunarx_python_debug & THUNARX_PYTHON_DEBUG_MISC) \
                                      g_printf("%s: entered " x "\n", __FUNCTION__, y); }
 
 
@@ -76,4 +76,4 @@ PyTypeObject *_PyThunarxPropertyPage_Type;
 PyTypeObject *_PyThunarxPropertyPageProvider_Type;
 #define PyThunarxPropertyPageProvider_Type (*_PyThunarxPropertyPageProvider_Type)
 
-#endif /* NAUTILUS_PYTHON_H */
+#endif /* THUNARX_PYTHON_H */

@@ -22,8 +22,8 @@
  * 
  */
 
-#ifndef NAUTILUS_PYTHON_OBJECT_H
-#define NAUTILUS_PYTHON_OBJECT_H
+#ifndef THUNARX_PYTHON_OBJECT_H
+#define THUNARX_PYTHON_OBJECT_H
 
 #include <Python.h>
 #include <glib-object.h>

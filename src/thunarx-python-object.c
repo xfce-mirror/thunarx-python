@@ -326,7 +326,7 @@ thunarx_python_object_update_file_info (ThunarxInfoProvider *provider,
 										 ThunarxOperationHandle **handle)
 {
 	ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
-    ThunarxOperationResult ret = NAUTILUS_OPERATION_COMPLETE;
+    ThunarxOperationResult ret = THUNARX_OPERATION_COMPLETE;
     PyObject *py_ret = NULL;
 	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
 	
@@ -455,31 +455,31 @@ thunarx_python_object_get_type (GTypeModule *module,
 
 	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxPropertyPageProvider_Type)) {
 		g_type_module_add_interface (module, gtype, 
-									 NAUTILUS_TYPE_PROPERTY_PAGE_PROVIDER,
+									 THUNARX_TYPE_PROPERTY_PAGE_PROVIDER,
 									 &property_page_provider_iface_info);
 	}
 
 	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxLocationWidgetProvider_Type)) {
 		g_type_module_add_interface (module, gtype,
-									 NAUTILUS_TYPE_LOCATION_WIDGET_PROVIDER,
+									 THUNARX_TYPE_LOCATION_WIDGET_PROVIDER,
 									 &location_widget_provider_iface_info);
 	}
 	
 	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxMenuProvider_Type)) {
 		g_type_module_add_interface (module, gtype, 
-									 NAUTILUS_TYPE_MENU_PROVIDER,
+									 THUNARX_TYPE_MENU_PROVIDER,
 									 &menu_provider_iface_info);
 	}
 
 	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxColumnProvider_Type)) {
 		g_type_module_add_interface (module, gtype, 
-									 NAUTILUS_TYPE_COLUMN_PROVIDER,
+									 THUNARX_TYPE_COLUMN_PROVIDER,
 									 &column_provider_iface_info);
 	}
 	
 	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxInfoProvider_Type)) {
 		g_type_module_add_interface (module, gtype, 
-									 NAUTILUS_TYPE_INFO_PROVIDER,
+									 THUNARX_TYPE_INFO_PROVIDER,
 									 &info_provider_iface_info);
 	}
 	
