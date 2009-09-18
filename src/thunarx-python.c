@@ -137,10 +137,7 @@ thunarx_python_load_file(GTypeModule *type_module, const gchar *filename)
 		if (!PyType_Check(value))
 			continue;
 
-		if (PyObject_IsSubclass(value, (PyObject*)&PyThunarxInfoProvider_Type) ||
-			PyObject_IsSubclass(value, (PyObject*)&PyThunarxLocationWidgetProvider_Type) ||
-			PyObject_IsSubclass(value, (PyObject*)&PyThunarxMenuProvider_Type) ||
-			PyObject_IsSubclass(value, (PyObject*)&PyThunarxPropertyPageProvider_Type)) {
+		if (PyObject_IsSubclass(value, (PyObject*)&PyThunarxMenuProvider_Type)) {
 			
 			gtype = thunarx_python_object_get_type(type_module, value);
 			g_array_append_val(all_types, gtype);
@@ -278,7 +275,7 @@ thunarx_python_init_python (void)
 	debug("sys.path.insert(0, ...)");
 	sys_path = PySys_GetObject("path");
 	PyList_Insert(sys_path, 0,
-				  (tmp = PyString_FromString(THUNARX_LIBDIR "/thunarx-python")));
+				  (tmp = PyString_FromString("/usr/lib/thunarx-1/thunarx-python")));
 	Py_DECREF(tmp);
 	
 	/* import thunarx */
@@ -303,13 +300,10 @@ thunarx_python_init_python (void)
 		return FALSE; \
 	}
 
-	IMPORT(InfoProvider, "InfoProvider");
-	IMPORT(LocationWidgetProvider, "LocationWidgetProvider");
+
 	IMPORT(Menu, "Menu");
 	IMPORT(MenuItem, "MenuItem");
 	IMPORT(MenuProvider, "MenuProvider");
-	IMPORT(PropertyPage, "PropertyPage");
-	IMPORT(PropertyPageProvider, "PropertyPageProvider");
 
 #undef IMPORT
 	

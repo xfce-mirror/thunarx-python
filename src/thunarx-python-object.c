@@ -30,12 +30,8 @@
 #include <pygobject.h>
 
 /* Thunarx extension headers */
-#include <thunarx/thunarx-file-info.h>
-#include <thunarx/thunarx-info-provider.h>
-#include <thunarx/thunarx-location-widget-provider.h>
 #include <thunarx/thunarx-menu-item.h>
 #include <thunarx/thunarx-menu-provider.h>
-#include <thunarx/thunarx-property-page-provider.h>
 
 #include <string.h>
 
@@ -95,90 +91,9 @@ static GObjectClass *parent_class;
     	}                                                              \
     }
 
-#define METHOD_NAME "get_property_pages"
+#define METHOD_NAME "get_file_actions"
 static GList *
-thunarx_python_object_get_property_pages (ThunarxPropertyPageProvider *provider,
-										   GList *files)
-{
-	ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
-    PyObject *py_files, *py_ret = NULL;
-    GList *ret = NULL;
-	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
-	
-  	debug_enter();
-
-	CHECK_METHOD_NAME(object->instance);
-
-	CONVERT_LIST(py_files, files);
-	
-    py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-								 "(N)", py_files);
-	HANDLE_RETVAL(py_ret);
-
-	HANDLE_LIST(py_ret, ThunarxPropertyPage, "thunarx.PropertyPage");
-	
- beach:
-	Py_XDECREF(py_ret);
-	pyg_gil_state_release(state);
-    return ret;
-}
-#undef METHOD_NAME
-
-
-static void
-thunarx_python_object_property_page_provider_iface_init (ThunarxPropertyPageProviderIface *iface)
-{
-	iface->get_pages = thunarx_python_object_get_property_pages;
-}
-
-#define METHOD_NAME "get_widget"
-static GtkWidget *
-thunarx_python_object_get_widget (ThunarxLocationWidgetProvider *provider,
-								   const char *uri,
-								   GtkWidget *window)
-{
-	ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
-	GtkWidget *ret = NULL;
-	PyObject *py_ret = NULL;
-	PyGObject *py_ret_gobj;
-	PyObject *py_uri = NULL;
-	PyGILState_STATE state = pyg_gil_state_ensure();
-
-	debug_enter();
-
-	CHECK_METHOD_NAME(object->instance);
-
-	py_uri = PyString_FromString(uri);
-
-	py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-								 "(NN)", py_uri,
-								 pygobject_new((GObject *)window));
-	HANDLE_RETVAL(py_ret);
-
-	py_ret_gobj = (PyGObject *)py_ret;
-	if (!pygobject_check(py_ret_gobj, &PyGtkWidget_Type)) {
-		PyErr_SetString(PyExc_TypeError,
-					    METHOD_NAME "should return a gtk.Widget");
-		goto beach;
-	}
-	ret = (GtkWidget *)g_object_ref(py_ret_gobj->obj);
-
- beach:
-	Py_XDECREF(py_ret);
-	pyg_gil_state_release(state);
-	return ret;
-}
-#undef METHOD_NAME
-
-static void
-thunarx_python_object_location_widget_provider_iface_init (ThunarxLocationWidgetProviderIface *iface)
-{
-	iface->get_widget = thunarx_python_object_get_widget;
-}
-
-#define METHOD_NAME "get_file_items"
-static GList *
-thunarx_python_object_get_file_items (ThunarxMenuProvider *provider,
+thunarx_python_object_get_file_actions (ThunarxMenuProvider *provider,
 									   GtkWidget *window,
 									   GList *files)
 {
@@ -206,9 +121,9 @@ thunarx_python_object_get_file_items (ThunarxMenuProvider *provider,
 }
 #undef METHOD_NAME
 
-#define METHOD_NAME "get_background_items"
+#define METHOD_NAME "get_folder_actions"
 static GList *
-thunarx_python_object_get_background_items (ThunarxMenuProvider *provider,
+thunarx_python_object_get_folder_actions (ThunarxMenuProvider *provider,
 											 GtkWidget *window,
 											 ThunarxFileInfo *file)
 {
@@ -237,95 +152,11 @@ thunarx_python_object_get_background_items (ThunarxMenuProvider *provider,
 }
 #undef METHOD_NAME
 
-#define METHOD_NAME "get_toolbar_items"
-static GList *
-thunarx_python_object_get_toolbar_items (ThunarxMenuProvider *provider,
-										  GtkWidget *window,
-										  ThunarxFileInfo *file)
-{
-	ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
-    GList *ret = NULL;
-    PyObject *py_ret = NULL;
-	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
-	
-  	debug_enter();
-
-	CHECK_METHOD_NAME(object->instance);
-
-    py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-								 "(NN)",
-								 pygobject_new((GObject *)window),
-								 pygobject_new((GObject *)file));
-	HANDLE_RETVAL(py_ret);
-
-	HANDLE_LIST(py_ret, ThunarxMenuItem, "thunarx.MenuItem");
-	
- beach:
-	Py_XDECREF(py_ret);
-	pyg_gil_state_release(state);
-    return ret;
-}
-#undef METHOD_NAME
-
 static void
 thunarx_python_object_menu_provider_iface_init (ThunarxMenuProviderIface *iface)
 {
-	iface->get_background_items = thunarx_python_object_get_background_items;
-	iface->get_toolbar_items = thunarx_python_object_get_toolbar_items;
-	iface->get_file_items = thunarx_python_object_get_file_items;
-}
-
-#define METHOD_NAME "cancel_update"
-static void
-thunarx_python_object_cancel_update (ThunarxInfoProvider *provider,
-									  ThunarxOperationHandle *handle)
-{
-  	debug_enter();
-}
-#undef METHOD_NAME
-
-#define METHOD_NAME "update_file_info"
-static ThunarxOperationResult
-thunarx_python_object_update_file_info (ThunarxInfoProvider *provider,
-										 ThunarxFile *file,
-										 GClosure *update_complete,
-										 ThunarxOperationHandle **handle)
-{
-	ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
-    ThunarxOperationResult ret = THUNARX_OPERATION_COMPLETE;
-    PyObject *py_ret = NULL;
-	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
-	
-  	debug_enter();
-
-	CHECK_METHOD_NAME(object->instance);
-
-    py_ret = PyObject_CallMethod(object->instance,
-								 METHOD_PREFIX METHOD_NAME, "(N)",
-								 pygobject_new((GObject*)file));
-	HANDLE_RETVAL(py_ret);
-
-
-	if (!PyInt_Check(py_ret)) {
-		PyErr_SetString(PyExc_TypeError,
-						METHOD_NAME " must return None or a int");
-		goto beach;
-	}
-
-	ret = PyInt_AsLong(py_ret);
-	
- beach:
-	Py_XDECREF(py_ret);
-	pyg_gil_state_release(state);
-    return ret;
-}
-#undef METHOD_NAME
-
-static void
-thunarx_python_object_info_provider_iface_init (ThunarxInfoProviderIface *iface)
-{
-	iface->cancel_update = thunarx_python_object_cancel_update;
-	iface->update_file_info = thunarx_python_object_update_file_info;
+	iface->get_folder_actions = thunarx_python_object_get_folder_actions;
+	iface->get_file_actions = thunarx_python_object_get_file_actions;
 }
 
 static void 
@@ -369,27 +200,9 @@ thunarx_python_object_get_type (GTypeModule *module,
 	GTypeInfo *info;
 	const char *type_name;
 	GType gtype;
-	  
-	static const GInterfaceInfo property_page_provider_iface_info = {
-		(GInterfaceInitFunc) thunarx_python_object_property_page_provider_iface_init,
-		NULL,
-		NULL
-	};
-
-	static const GInterfaceInfo location_widget_provider_iface_info = {
-		(GInterfaceInitFunc) thunarx_python_object_location_widget_provider_iface_init,
-		NULL,
-		NULL
-	};
 
 	static const GInterfaceInfo menu_provider_iface_info = {
 		(GInterfaceInitFunc) thunarx_python_object_menu_provider_iface_init,
-		NULL,
-		NULL
-	};
-
-	static const GInterfaceInfo info_provider_iface_info = {
-		(GInterfaceInitFunc) thunarx_python_object_info_provider_iface_init,
 		NULL,
 		NULL
 	};
@@ -413,29 +226,11 @@ thunarx_python_object_get_type (GTypeModule *module,
 										 type_name,
 										 info, 0);
 
-	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxPropertyPageProvider_Type)) {
-		g_type_module_add_interface (module, gtype, 
-									 THUNARX_TYPE_PROPERTY_PAGE_PROVIDER,
-									 &property_page_provider_iface_info);
-	}
-
-	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxLocationWidgetProvider_Type)) {
-		g_type_module_add_interface (module, gtype,
-									 THUNARX_TYPE_LOCATION_WIDGET_PROVIDER,
-									 &location_widget_provider_iface_info);
-	}
-	
 	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxMenuProvider_Type)) {
 		g_type_module_add_interface (module, gtype, 
 									 THUNARX_TYPE_MENU_PROVIDER,
 									 &menu_provider_iface_info);
 	}
 
-	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxInfoProvider_Type)) {
-		g_type_module_add_interface (module, gtype, 
-									 THUNARX_TYPE_INFO_PROVIDER,
-									 &info_provider_iface_info);
-	}
-	
 	return gtype;
 }

@@ -1,24 +1,6 @@
 ;; -*- scheme -*-
 ; object definitions ...
 
-(define-interface FileInfo
-  (in-module "Thunarx")
-  (c-name "ThunarxFileInfo")
-  (gtype-id "THUNARX_TYPE_FILE_INFO")
-)
-
-(define-interface InfoProvider
-  (in-module "Thunarx")
-  (c-name "ThunarxInfoProvider")
-  (gtype-id "THUNARX_TYPE_INFO_PROVIDER")
-)
-
-(define-interface LocationWidgetProvider
-  (in-module "Thunarx")
-  (c-name "ThunarxLocationWidgetProvider")
-  (gtype-id "THUNARX_TYPE_LOCATION_WIDGET_PROVIDER")
-)
-
 (define-object Menu
   (in-module "Thunarx")
   (parent "GObject")
@@ -37,19 +19,6 @@
   (in-module "Thunarx")
   (c-name "ThunarxMenuProvider")
   (gtype-id "THUNARX_TYPE_MENU_PROVIDER")
-)
-
-(define-object PropertyPage
-  (in-module "Thunarx")
-  (parent "GObject")
-  (c-name "ThunarxPropertyPage")
-  (gtype-id "THUNARX_TYPE_PROPERTY_PAGE")
-)
-
-(define-interface PropertyPageProvider
-  (in-module "Thunarx")
-  (c-name "ThunarxPropertyPageProvider")
-  (gtype-id "THUNARX_TYPE_PROPERTY_PAGE_PROVIDER")
 )
 
 ;; Enumerations and flags ...
@@ -71,132 +40,6 @@
 (define-function thunarx_operation_result_get_type
   (c-name "thunarx_operation_result_get_type")
   (return-type "GType")
-)
-
-;; From /usr/include/thunarx-1/libthunarx-extension/thunarx-file-info.h
-
-(define-function thunarx_file_info_list_copy
-  (c-name "thunarx_file_info_list_copy")
-  (return-type "GList*")
-  (parameters
-    '("GList*" "files")
-  )
-)
-
-(define-function thunarx_file_info_list_free
-  (c-name "thunarx_file_info_list_free")
-  (return-type "none")
-  (parameters
-    '("GList*" "files")
-  )
-)
-
-(define-function thunarx_file_info_get_type
-  (c-name "thunarx_file_info_get_type")
-  (return-type "GType")
-)
-
-(define-method is_gone
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_is_gone")
-  (return-type "gboolean")
-)
-
-(define-method get_file_type
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_get_file_type")
-  (return-type "GFileType")
-)
-
-(define-method get_location
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_get_location")
-  (return-type "GFile")
-)
-
-(define-method get_name
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_get_name")
-  (return-type "char*")
-)
-
-(define-method get_uri
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_get_uri")
-  (return-type "char*")
-)
-
-(define-method get_activation_uri
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_get_activation_uri")
-  (return-type "char*")
-)
-
-(define-method get_parent_uri
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_get_parent_uri")
-  (return-type "char*")
-)
-
-(define-method get_uri_scheme
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_get_uri_scheme")
-  (return-type "char*")
-)
-
-(define-method get_mime_type
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_get_mime_type")
-  (return-type "char*")
-)
-
-(define-method has_mime_type
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_has_mime_type")
-  (return-type "gboolean")
-  (parameters
-    '("const-char*" "mime_type")
-  )
-)
-
-(define-method is_directory
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_is_directory")
-  (return-type "gboolean")
-)
-
-(define-method add_emblem
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_add_emblem")
-  (return-type "none")
-  (parameters
-    '("const-char*" "emblem_name")
-  )
-)
-
-(define-method get_string_attribute
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_get_string_attribute")
-  (return-type "char*")
-  (parameters
-    '("const-char*" "attribute_name")
-  )
-)
-
-(define-method add_string_attribute
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_add_string_attribute")
-  (return-type "none")
-  (parameters
-    '("const-char*" "attribute_name")
-    '("const-char*" "value")
-  )
-)
-
-(define-method invalidate_extension_info
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_invalidate_extension_info")
-  (return-type "none")
 )
 
 ;; From /usr/include/thunarx-1/libthunarx-extension/thunarx-menu-item.h
@@ -254,22 +97,4 @@
   (of-object "ThunarxMenuItem")
   (c-name "thunarx_menu_item_activate")
   (return-type "none")
-)
-
-;; From /usr/include/thunarx-1/libthunarx-extension/thunarx-property-page.h
-
-(define-function thunarx_property_page_get_type
-  (c-name "thunarx_property_page_get_type")
-  (return-type "GType")
-)
-
-(define-function thunarx_property_page_new
-  (c-name "thunarx_property_page_new")
-  (is-constructor-of "ThunarxPropertyPage")
-  (return-type "ThunarxPropertyPage*")
-  (parameters
-    '("const-char*" "name")
-    '("GtkWidget*" "label")
-    '("GtkWidget*" "page")
-  )
 )
