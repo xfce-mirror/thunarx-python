@@ -1,0 +1,320 @@
+;; -*- scheme -*-
+; object definitions ...
+(define-object Column
+  (in-module "Thunarx")
+  (parent "GObject")
+  (c-name "ThunarxColumn")
+  (gtype-id "NAUTILUS_TYPE_COLUMN")
+)
+
+(define-interface ColumnProvider
+  (in-module "Thunarx")
+  (c-name "ThunarxColumnProvider")
+  (gtype-id "NAUTILUS_TYPE_COLUMN_PROVIDER")
+)
+
+(define-interface FileInfo
+  (in-module "Thunarx")
+  (c-name "ThunarxFileInfo")
+  (gtype-id "NAUTILUS_TYPE_FILE_INFO")
+)
+
+(define-interface InfoProvider
+  (in-module "Thunarx")
+  (c-name "ThunarxInfoProvider")
+  (gtype-id "NAUTILUS_TYPE_INFO_PROVIDER")
+)
+
+(define-interface LocationWidgetProvider
+  (in-module "Thunarx")
+  (c-name "ThunarxLocationWidgetProvider")
+  (gtype-id "NAUTILUS_TYPE_LOCATION_WIDGET_PROVIDER")
+)
+
+(define-object Menu
+  (in-module "Thunarx")
+  (parent "GObject")
+  (c-name "ThunarxMenu")
+  (gtype-id "NAUTILUS_TYPE_MENU")
+)
+
+(define-object MenuItem
+  (in-module "Thunarx")
+  (parent "GObject")
+  (c-name "ThunarxMenuItem")
+  (gtype-id "NAUTILUS_TYPE_MENU_ITEM")
+)
+
+(define-interface MenuProvider
+  (in-module "Thunarx")
+  (c-name "ThunarxMenuProvider")
+  (gtype-id "NAUTILUS_TYPE_MENU_PROVIDER")
+)
+
+(define-object PropertyPage
+  (in-module "Thunarx")
+  (parent "GObject")
+  (c-name "ThunarxPropertyPage")
+  (gtype-id "NAUTILUS_TYPE_PROPERTY_PAGE")
+)
+
+(define-interface PropertyPageProvider
+  (in-module "Thunarx")
+  (c-name "ThunarxPropertyPageProvider")
+  (gtype-id "NAUTILUS_TYPE_PROPERTY_PAGE_PROVIDER")
+)
+
+;; Enumerations and flags ...
+
+(define-enum OperationResult
+  (in-module "Thunarx")
+  (c-name "ThunarxOperationResult")
+  (gtype-id "NAUTILUS_TYPE_OPERATION_RESULT")
+  (values
+    '("complete" "NAUTILUS_OPERATION_COMPLETE")
+    '("failed" "NAUTILUS_OPERATION_FAILED")
+    '("in-progress" "NAUTILUS_OPERATION_IN_PROGRESS")
+  )
+)
+
+
+;; From /usr/include/thunarx/libthunarx-extension/thunarx-column.h
+
+(define-function thunarx_column_get_type
+  (c-name "thunarx_column_get_type")
+  (return-type "GType")
+)
+
+(define-function thunarx_column_new
+  (c-name "thunarx_column_new")
+  (is-constructor-of "ThunarxColumn")
+  (return-type "ThunarxColumn*")
+  (parameters
+    '("const-char*" "name")
+    '("const-char*" "attribute")
+    '("const-char*" "label")
+    '("const-char*" "description")
+  )
+)
+
+
+
+;; From /usr/include/thunarx/libthunarx-extension/thunarx-extension-types.h
+
+(define-function thunarx_operation_result_get_type
+  (c-name "thunarx_operation_result_get_type")
+  (return-type "GType")
+)
+
+;; From /usr/include/thunarx/libthunarx-extension/thunarx-file-info.h
+
+(define-function thunarx_file_info_list_copy
+  (c-name "thunarx_file_info_list_copy")
+  (return-type "GList*")
+  (parameters
+    '("GList*" "files")
+  )
+)
+
+(define-function thunarx_file_info_list_free
+  (c-name "thunarx_file_info_list_free")
+  (return-type "none")
+  (parameters
+    '("GList*" "files")
+  )
+)
+
+(define-function thunarx_file_info_get_type
+  (c-name "thunarx_file_info_get_type")
+  (return-type "GType")
+)
+
+(define-method is_gone
+  (of-object "ThunarxFileInfo")
+  (c-name "thunarx_file_info_is_gone")
+  (return-type "gboolean")
+)
+
+(define-method get_file_type
+  (of-object "ThunarxFileInfo")
+  (c-name "thunarx_file_info_get_file_type")
+  (return-type "GFileType")
+)
+
+(define-method get_location
+  (of-object "ThunarxFileInfo")
+  (c-name "thunarx_file_info_get_location")
+  (return-type "GFile")
+)
+
+(define-method get_name
+  (of-object "ThunarxFileInfo")
+  (c-name "thunarx_file_info_get_name")
+  (return-type "char*")
+)
+
+(define-method get_uri
+  (of-object "ThunarxFileInfo")
+  (c-name "thunarx_file_info_get_uri")
+  (return-type "char*")
+)
+
+(define-method get_activation_uri
+  (of-object "ThunarxFileInfo")
+  (c-name "thunarx_file_info_get_activation_uri")
+  (return-type "char*")
+)
+
+(define-method get_parent_location
+  (of-object "ThunarxFileInfo")
+  (c-name "thunarx_file_info_get_parent_location")
+  (return-type "GFile")
+)
+
+(define-method get_parent_uri
+  (of-object "ThunarxFileInfo")
+  (c-name "thunarx_file_info_get_parent_uri")
+  (return-type "char*")
+)
+
+(define-method get_uri_scheme
+  (of-object "ThunarxFileInfo")
+  (c-name "thunarx_file_info_get_uri_scheme")
+  (return-type "char*")
+)
+
+(define-method get_mime_type
+  (of-object "ThunarxFileInfo")
+  (c-name "thunarx_file_info_get_mime_type")
+  (return-type "char*")
+)
+
+(define-method is_mime_type
+  (of-object "ThunarxFileInfo")
+  (c-name "thunarx_file_info_is_mime_type")
+  (return-type "gboolean")
+  (parameters
+    '("const-char*" "mime_type")
+  )
+)
+
+(define-method is_directory
+  (of-object "ThunarxFileInfo")
+  (c-name "thunarx_file_info_is_directory")
+  (return-type "gboolean")
+)
+
+(define-method add_emblem
+  (of-object "ThunarxFileInfo")
+  (c-name "thunarx_file_info_add_emblem")
+  (return-type "none")
+  (parameters
+    '("const-char*" "emblem_name")
+  )
+)
+
+(define-method get_string_attribute
+  (of-object "ThunarxFileInfo")
+  (c-name "thunarx_file_info_get_string_attribute")
+  (return-type "char*")
+  (parameters
+    '("const-char*" "attribute_name")
+  )
+)
+
+(define-method add_string_attribute
+  (of-object "ThunarxFileInfo")
+  (c-name "thunarx_file_info_add_string_attribute")
+  (return-type "none")
+  (parameters
+    '("const-char*" "attribute_name")
+    '("const-char*" "value")
+  )
+)
+
+(define-method invalidate_extension_info
+  (of-object "ThunarxFileInfo")
+  (c-name "thunarx_file_info_invalidate_extension_info")
+  (return-type "none")
+)
+
+;; From /usr/include/thunarx/libthunarx-extension/thunarx-menu-item.h
+
+(define-function thunarx_menu_item_get_type
+  (c-name "thunarx_menu_item_get_type")
+  (return-type "GType")
+)
+
+(define-function thunarx_menu_new
+  (c-name "thunarx_menu_new")
+  (is-constructor-of "ThunarxMenu")
+  (return-type "ThunarxMenu*")
+)
+
+(define-method append_item
+  (of-object "ThunarxMenu")
+  (c-name "thunarx_menu_append_item")
+  (return-type "none")
+  (parameters
+    '("ThunarxMenuItem*" "item")
+  )
+)
+
+(define-method get_items
+  (of-object "ThunarxMenu")
+  (c-name "thunarx_menu_get_items")
+  (return-type "GList*")
+)
+
+(define-function thunarx_menu_item_list_free
+  (c-name "thunarx_menu_item_list_free")
+  (return-type "none")
+  (parameters
+    '("GList*", "item_list")
+  )
+)
+
+(define-function thunarx_menu_item_new
+  (c-name "thunarx_menu_item_new")
+  (is-constructor-of "ThunarxMenuItem")
+  (return-type "ThunarxMenuItem*")
+  (parameters
+    '("const-char*" "name")
+    '("const-char*" "label")
+    '("const-char*" "tip")
+    '("const-char*" "icon" (null-ok) (default "NULL"))
+  )
+)
+
+(define-method set_submenu
+  (of-object "ThunarxMenuItem")
+  (c-name "thunarx_menu_item_set_submenu")
+  (return-type "none")
+  (parameters
+    '("ThunarxMenu*" "menu")
+  )
+)
+
+(define-method activate
+  (of-object "ThunarxMenuItem")
+  (c-name "thunarx_menu_item_activate")
+  (return-type "none")
+)
+
+;; From /usr/include/thunarx/libthunarx-extension/thunarx-property-page.h
+
+(define-function thunarx_property_page_get_type
+  (c-name "thunarx_property_page_get_type")
+  (return-type "GType")
+)
+
+(define-function thunarx_property_page_new
+  (c-name "thunarx_property_page_new")
+  (is-constructor-of "ThunarxPropertyPage")
+  (return-type "ThunarxPropertyPage*")
+  (parameters
+    '("const-char*" "name")
+    '("GtkWidget*" "label")
+    '("GtkWidget*" "page")
+  )
+)
