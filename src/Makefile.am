@@ -43,10 +43,10 @@ libthunarx_la_SOURCES = \
 nodist_libthunarx_la_SOURCES = \
     thunarx.c
 
-thunarx.c: thunarx.defs thunarx.override
+thunarx.c: thunarx.defs
 
 CLEANFILES = thunarx.c
-EXTRA_DIST = thunarx.override thunarx.defs
+EXTRA_DIST = thunarx.defs
 
 .defs.c:
 	(cd $(srcdir)\
@@ -54,7 +54,6 @@ EXTRA_DIST = thunarx.override thunarx.defs
 	    --register $(PYGTK_DEFSDIR)/pango-types.defs \
             --register $(PYGTK_DEFSDIR)/gdk-types.defs \
             --register $(PYGTK_DEFSDIR)/gtk-types.defs \
-            --override $*.override \
             --prefix py$* $*.defs) > gen-$*.c \
         && cp gen-$*.c $*.c \
         && rm -f gen-$*.c
