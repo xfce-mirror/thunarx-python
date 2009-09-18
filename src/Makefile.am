@@ -13,7 +13,9 @@ libthunarx_python_la_LIBADD = \
     $(PYTHON_LIBS)
  
 libthunarx_python_la_LDFLAGS = \
-    -module -pthread
+	-avoid-version							\
+	-export-dynamic							\
+	-module								\
     $(PACKAGE_LDFLAGS)
  
 libthunarx_python_la_CPPFLAGS = \
@@ -26,10 +28,26 @@ libthunarx_python_la_CFLAGS = \
 pyexec_LTLIBRARIES = libthunarx.la
 pyexecdir = $(libdir)/thunarx-1/thunarx-python
 
-libthunarx_la_LIBADD = $(PACKAGE_LIBS)
-libthunarx_la_SOURCES = thunarxmodule.c
-nodist_libthunarx_la_SOURCES = thunarx.c
+libthunarx_la_CFLAGS = \
+    $(PACKAGE_CFLAGS) \
+    $(PYTHON_CFLAGS)
+    
+libthunarx_la_LDFLAGS = \
+    $(PACKAGE_LDFLAGS)      \
+    -module -avoid-version -export-symbols-regex initthunarx
+
+libthunarx_la_LIBADD = \
+    $(PACKAGE_LIBS) \
+    $(PYTHON_LIBS)
+    
+libthunarx_la_SOURCES = \
+    thunarxmodule.c
+
+nodist_libthunarx_la_SOURCES = \
+    thunarx.c
+
 thunarx.c: thunarx.defs thunarx.override
+
 CLEANFILES = thunarx.c
 EXTRA_DIST = thunarx.override thunarx.defs
 

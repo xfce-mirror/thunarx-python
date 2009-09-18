@@ -39,9 +39,9 @@ initthunarx(void)
 {
     PyObject *m, *d;
     
-    if (!g_getenv("INSIDE_NAUTILUS_PYTHON")) {
-	Py_FatalError("This module can only be used from thunarx");
-	return;
+    if (!g_getenv("INSIDE_THUNARX_PYTHON")) {
+	    Py_FatalError("This module can only be used from thunarx");
+	    return;
     }
 	
     init_pygobject ();
