@@ -9,8 +9,7 @@ thunarx_python_la_SOURCES = \
     thunarx_python.h
 
 thunarx_python_la_LIBADD = \
-    $(PACKAGE_LIBS)         \
-    $(PYTHON_LIBS)
+    $(PACKAGE_LIBS)
  
 thunarx_python_la_LDFLAGS = \
     -module -pthread
