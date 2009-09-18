@@ -137,8 +137,7 @@ thunarx_python_load_file(GTypeModule *type_module, const gchar *filename)
 		if (!PyType_Check(value))
 			continue;
 
-		if (PyObject_IsSubclass(value, (PyObject*)&PyThunarxColumnProvider_Type) ||
-			PyObject_IsSubclass(value, (PyObject*)&PyThunarxInfoProvider_Type) ||
+		if (PyObject_IsSubclass(value, (PyObject*)&PyThunarxInfoProvider_Type) ||
 			PyObject_IsSubclass(value, (PyObject*)&PyThunarxLocationWidgetProvider_Type) ||
 			PyObject_IsSubclass(value, (PyObject*)&PyThunarxMenuProvider_Type) ||
 			PyObject_IsSubclass(value, (PyObject*)&PyThunarxPropertyPageProvider_Type)) {
@@ -304,8 +303,6 @@ thunarx_python_init_python (void)
 		return FALSE; \
 	}
 
-	IMPORT(Column, "Column");
-	IMPORT(ColumnProvider, "ColumnProvider");
 	IMPORT(InfoProvider, "InfoProvider");
 	IMPORT(LocationWidgetProvider, "LocationWidgetProvider");
 	IMPORT(Menu, "Menu");

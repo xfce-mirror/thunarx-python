@@ -49,12 +49,6 @@ extern ThunarxPythonDebug thunarx_python_debug;
 PyTypeObject *_PyGtkWidget_Type;
 #define PyGtkWidget_Type (*_PyGtkWidget_Type)
 
-PyTypeObject *_PyThunarxColumn_Type;
-#define PyThunarxColumn_Type (*_PyThunarxColumn_Type)
-
-PyTypeObject *_PyThunarxColumnProvider_Type;
-#define PyThunarxColumnProvider_Type (*_PyThunarxColumnProvider_Type)
-
 PyTypeObject *_PyThunarxInfoProvider_Type;
 #define PyThunarxInfoProvider_Type (*_PyThunarxInfoProvider_Type)
 

@@ -32,7 +32,6 @@
 /* Thunarx extension headers */
 #include <thunarx/thunarx-file-info.h>
 #include <thunarx/thunarx-info-provider.h>
-#include <thunarx/thunarx-column-provider.h>
 #include <thunarx/thunarx-location-widget-provider.h>
 #include <thunarx/thunarx-menu-item.h>
 #include <thunarx/thunarx-menu-provider.h>
@@ -276,39 +275,6 @@ thunarx_python_object_menu_provider_iface_init (ThunarxMenuProviderIface *iface)
 	iface->get_file_items = thunarx_python_object_get_file_items;
 }
 
-#define METHOD_NAME "get_columns"
-static GList *
-thunarx_python_object_get_columns (ThunarxColumnProvider *provider)
-{
-	ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
-    GList *ret = NULL;
-    PyObject *py_ret;
-	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
-
-	debug_enter();
-		
-	CHECK_METHOD_NAME(object->instance);
-
-    py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-								 NULL);
-
-	HANDLE_RETVAL(py_ret);
-
-	HANDLE_LIST(py_ret, ThunarxColumn, "thunarx.Column");
-	
- beach:
-	pyg_gil_state_release(state);
-    return ret;
-}
-#undef METHOD_NAME
-
-static void
-thunarx_python_object_column_provider_iface_init (ThunarxColumnProviderIface *iface)
-{
-	iface->get_columns = thunarx_python_object_get_columns;
-}
-
-
 #define METHOD_NAME "cancel_update"
 static void
 thunarx_python_object_cancel_update (ThunarxInfoProvider *provider,
@@ -422,12 +388,6 @@ thunarx_python_object_get_type (GTypeModule *module,
 		NULL
 	};
 
-	static const GInterfaceInfo column_provider_iface_info = {
-		(GInterfaceInitFunc) thunarx_python_object_column_provider_iface_init,
-		NULL,
-		NULL
-	};
-
 	static const GInterfaceInfo info_provider_iface_info = {
 		(GInterfaceInitFunc) thunarx_python_object_info_provider_iface_init,
 		NULL,
@@ -471,12 +431,6 @@ thunarx_python_object_get_type (GTypeModule *module,
 									 &menu_provider_iface_info);
 	}
 
-	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxColumnProvider_Type)) {
-		g_type_module_add_interface (module, gtype, 
-									 THUNARX_TYPE_COLUMN_PROVIDER,
-									 &column_provider_iface_info);
-	}
-	
 	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxInfoProvider_Type)) {
 		g_type_module_add_interface (module, gtype, 
 									 THUNARX_TYPE_INFO_PROVIDER,
