@@ -21,6 +21,8 @@
 #include <config.h>
 #endif
 
+#include <Python.h>
+
 #include <exo/exo.h>
 
 #include <txp-provider.h>
@@ -29,10 +31,58 @@
 
 static GType type_list[1];
 
-
-
 /* delcare it here to make the compiler happy */
 G_MODULE_EXPORT void thunar_extension_initialize (ThunarxProviderPlugin *plugin);
+
+static gboolean thunarx_python_init_python (void);
+
+
+static gboolean 
+thunarx_python_init_python (void)
+{
+  GModule *libpython;
+  char *argv[] = { "thunarx", NULL };
+  
+  g_print("thunarx_python_init_python\n");
+
+  if (Py_IsInitialized())
+    return TRUE;
+
+  g_print ("g_module_open libpython\n");  
+  libpython = g_module_open ("/usr/lib/libpython2.6.so", 0);
+  if (!libpython)
+    g_warning ("g_module_open libpython failed: %s\n", g_module_error());
+  
+  g_print ("Py_Initialize\n");
+  Py_Initialize();
+  if (PyErr_Occurred())
+  {
+    PyErr_Print();
+    return FALSE;
+  }
+  
+  g_print ("PySys_SetArgv\n");
+  PySys_SetArgv (1, argv);
+  if (PyErr_Occurred())
+  {
+    PyErr_Print();
+    return FALSE;
+  }
+  
+  return TRUE;
+}
+
+
+
+static void
+thunarx_python_load_dir (const gchar *dirname)
+{
+  if(thunarx_python_init_python())
+    g_print ("python loaded\n");
+  else
+    g_print ("python not loaded\n");
+}
+
 
 G_MODULE_EXPORT void
 thunar_extension_initialize (ThunarxProviderPlugin *plugin)
@@ -48,7 +98,7 @@ thunar_extension_initialize (ThunarxProviderPlugin *plugin)
     }
 
 #ifdef G_ENABLE_DEBUG
-  g_message ("Initializing thunar-vcs-plugin extension");
+  g_message ("Initializing thunarx-python extension");
 #endif
 
   /* register the types provided by this plugin */
@@ -67,8 +117,11 @@ G_MODULE_EXPORT void
 thunar_extension_shutdown (void)
 {
 #ifdef G_ENABLE_DEBUG
-  g_message ("Shutting down thunar-vcs-plugin extension");
+  g_message ("Shutting down thunarx-python extension");
 #endif
+  
+  if (Py_IsInitialized())
+    Py_Finalize();
 }
 
 

@@ -107,17 +107,6 @@ txp_provider_get_file_actions (ThunarxMenuProvider *menu_provider,
                                GList               *files)
 {
   GList              *actions = NULL;
-  GtkWidget          *action = NULL;
-  
-  action = g_object_new (GTK_TYPE_ACTION,
-                         "name", "Txp::testitem1",
-                         "icon-name", NULL,
-                         "label", "TEST ITEM 1",
-                         NULL);
-  g_signal_connect (action, "activate", NULL, NULL);
-
-  actions = g_list_append (actions, action);
-
   return actions;
 }
 

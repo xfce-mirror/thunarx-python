@@ -23,7 +23,8 @@ thunarx_python_la_CFLAGS =						\
 	$(PLATFORM_CFLAGS)						\
 	$(THUNARX_CFLAGS)						\
 	$(EXO_CFLAGS)							\
-	$(LIBXFCE4UTIL_CFLAGS)
+	$(LIBXFCE4UTIL_CFLAGS)						\
+	$(PYTHON_CFLAGS)
 
 thunarx_python_la_LDFLAGS =						\
 	-avoid-version							\
@@ -32,6 +33,7 @@ thunarx_python_la_LDFLAGS =						\
 	$(PLATFORM_LDFLAGS)						\
 	$(THUNARX_LDFLAGS)						\
 	$(EXO_LDFLAGS)							\
-	$(LIBXFCE4UTIL_LDFLAGS)
+	$(LIBXFCE4UTIL_LDFLAGS)						\
+	$(PYTHON_LIBS)
 
 # vi:set ts=8 sw=8 noet ai nocindent:
