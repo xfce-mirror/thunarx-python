@@ -23,7 +23,7 @@
 
 #include <exo/exo.h>
 
-#include <thunarx-python/txp-provider.h>
+#include <txp-provider.h>
 
 
 

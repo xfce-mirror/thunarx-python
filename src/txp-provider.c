@@ -31,7 +31,7 @@
 
 #include <libxfce4util/libxfce4util.h>
 
-#include <thunarx-python/txp-provider.h>
+#include <txp-provider.h>
 
 
 static void   txp_provider_menu_provider_init   (ThunarxMenuProviderIface *iface);

@@ -97,6 +97,6 @@ AC_SUBST([PLATFORM_LDFLAGS])
 
 AC_OUTPUT([
 Makefile
-thunar-vcs-plugin/Makefile
+src/Makefile
 ])
 
