@@ -27,7 +27,8 @@
 
 #include <txp-provider.h>
 
-
+#define DEBUG_ENABLED 1
+#define debug(x) { if (DEBUG_ENABLED) g_print("thunarx-python: " x "\n"); }
 
 static GType type_list[1];
 
@@ -43,17 +44,17 @@ thunarx_python_init_python (void)
   GModule *libpython;
   char *argv[] = { "thunarx", NULL };
   
-  g_print("thunarx_python_init_python\n");
+  debug("thunarx_python_init_python");
 
   if (Py_IsInitialized())
     return TRUE;
 
-  g_print ("g_module_open libpython\n");  
+  debug ("g_module_open libpython");  
   libpython = g_module_open ("/usr/lib/libpython2.6.so", 0);
   if (!libpython)
-    g_warning ("g_module_open libpython failed: %s\n", g_module_error());
+    g_warning ("g_module_open libpython failed: %s", g_module_error());
   
-  g_print ("Py_Initialize\n");
+  debug ("Py_Initialize");
   Py_Initialize();
   if (PyErr_Occurred())
   {
@@ -61,7 +62,7 @@ thunarx_python_init_python (void)
     return FALSE;
   }
   
-  g_print ("PySys_SetArgv\n");
+  debug ("PySys_SetArgv");
   PySys_SetArgv (1, argv);
   if (PyErr_Occurred())
   {
@@ -77,10 +78,14 @@ thunarx_python_init_python (void)
 static void
 thunarx_python_load_dir (const gchar *dirname)
 {
-  if(thunarx_python_init_python())
-    g_print ("python loaded\n");
+  if (thunarx_python_init_python())
+  {
+    debug ("python loaded");
+  }
   else
-    g_print ("python not loaded\n");
+  {
+    debug ("python not loaded");
+  }
 }
 
 
@@ -97,15 +102,15 @@ thunar_extension_initialize (ThunarxProviderPlugin *plugin)
       return;
     }
 
-#ifdef G_ENABLE_DEBUG
-  g_message ("Initializing thunarx-python extension");
-#endif
+  debug ("Initializing thunarx-python extension");
 
   /* register the types provided by this plugin */
   txp_provider_register_type (plugin);
 
   /* setup the plugin provider type list */
   type_list[0] = TXP_TYPE_PROVIDER;
+  
+  thunarx_python_load_dir("/home/adam/Development/xfce/thunarx-python-modules");
 }
 
 
@@ -116,9 +121,7 @@ G_MODULE_EXPORT void thunar_extension_shutdown (void);
 G_MODULE_EXPORT void
 thunar_extension_shutdown (void)
 {
-#ifdef G_ENABLE_DEBUG
-  g_message ("Shutting down thunarx-python extension");
-#endif
+  debug ("Shutting down thunarx-python extension");
   
   if (Py_IsInitialized())
     Py_Finalize();
@@ -126,7 +129,7 @@ thunar_extension_shutdown (void)
 
 
 
-/* delcare it here to make the compiler happy */
+/* declare it here to make the compiler happy */
 G_MODULE_EXPORT void thunar_extension_list_types (const GType **types, gint *n_types);
 
 G_MODULE_EXPORT void
