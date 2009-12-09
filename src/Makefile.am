@@ -1,59 +1,37 @@
-thunar_extensiondir=$(libdir)/thunarx-1
 
-thunar_extension_LTLIBRARIES = libthunarx-python.la
+AM_CPPFLAGS =								\
+	-I$(top_builddir)						\
+	-I$(top_srcdir)							\
+	-DG_LOG_DOMAIN=\"thunarx-python\"				\
+	-DEXO_API_SUBJECT_TO_CHANGE					\
+	-DLIBEXECDIR=\"$(libexecdir)\"					\
+	$(PLATFORM_CPPFLAGS)
 
-libthunarx_python_la_SOURCES = \
-    thunarx_python-object.c                 \
-    thunarx_python-object.h                 \
-    thunarx_python.c                        \
-    thunarx_python.h
+extensionsdir = $(libdir)/thunarx-2
+extensions_LTLIBRARIES =						\
+	thunarx-python.la
 
-libthunarx_python_la_LIBADD = \
-    $(PACKAGE_LIBS)
- 
-libthunarx_python_la_LDFLAGS = \
+thunarx_python_la_SOURCES =						\
+	txp-provider.c							\
+	txp-provider.h							\
+	thunarx-python.c
+
+thunarx_python_la_CPPFLAGS =						\
+	$(AM_CPPFLAGS)
+
+thunarx_python_la_CFLAGS =						\
+	$(PLATFORM_CFLAGS)						\
+	$(THUNARX_CFLAGS)						\
+	$(EXO_CFLAGS)							\
+	$(LIBXFCE4UTIL_CFLAGS)
+
+thunarx_python_la_LDFLAGS =						\
 	-avoid-version							\
 	-export-dynamic							\
 	-module								\
-    $(PACKAGE_LDFLAGS)
- 
-libthunarx_python_la_CPPFLAGS = \
-    $(PACKAGE_CPPFLAGS)
- 
-libthunarx_python_la_CFLAGS = \
-    $(PACKAGE_CFLAGS)
- 
-pyexec_LTLIBRARIES = libthunarx.la
-pyexecdir = $(libdir)/thunarx-1/thunarx-python
+	$(PLATFORM_LDFLAGS)						\
+	$(THUNARX_LDFLAGS)						\
+	$(EXO_LDFLAGS)							\
+	$(LIBXFCE4UTIL_LDFLAGS)
 
-libthunarx_la_CFLAGS = \
-    $(PACKAGE_CFLAGS) \
-    $(PYTHON_CFLAGS)
-    
-libthunarx_la_LDFLAGS = \
-    $(PACKAGE_LDFLAGS)      \
-    -module -avoid-version -export-symbols-regex initthunarx
-
-libthunarx_la_LIBADD = \
-    $(PACKAGE_LIBS)
-    
-libthunarx_la_SOURCES = \
-    thunarxmodule.c
-
-nodist_libthunarx_la_SOURCES = \
-    thunarx.c
-
-thunarx.c: thunarx.defs
-
-CLEANFILES = thunarx.c
-EXTRA_DIST = thunarx.defs
-
-.defs.c:
-	(cd $(srcdir)\
-         && $(PYGTK_CODEGEN) \
-	    --register $(PYGTK_DEFSDIR)/pango-types.defs \
-            --register $(PYGTK_DEFSDIR)/gdk-types.defs \
-            --register $(PYGTK_DEFSDIR)/gtk-types.defs \
-            --prefix py$* $*.defs) > gen-$*.c \
-        && cp gen-$*.c $*.c \
-        && rm -f gen-$*.c
+# vi:set ts=8 sw=8 noet ai nocindent:
