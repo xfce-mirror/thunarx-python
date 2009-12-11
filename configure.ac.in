@@ -71,12 +71,35 @@ XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [2.6.0])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.6.0])
 XDT_CHECK_PACKAGE([GTHREAD], [gthread-2.0], [2.6.0])
 XDT_CHECK_PACKAGE([GOBJECT], [gobject-2.0], [2.6.0])
+XDT_CHECK_PACKAGE([PYGTK], [pygtk-2.0], [2.6.0])
+XDT_CHECK_PACKAGE([GNOMEPYTHON], [gnome-python-2.0], [2.12.0])
 
 PYTHON_CFLAGS="`python-config --includes`"
 PYTHON_LIBS="`python-config --ldflags`"
 
 AC_SUBST(PYTHON_CFLAGS)
 AC_SUBST(PYTHON_LIBS)
+
+THUNARX_LIBDIR=`pkg-config --variable=libdir thunarx-2`
+AC_SUBST(THUNARX_LIBDIR)
+AC_DEFINE_UNQUOTED(THUNARX_LIBDIR, "$THUNARX_LIBDIR", [Thunarx libdir])
+
+AC_MSG_CHECKING(for pygtk defs)
+PYGTK_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygtk-2.0`
+AC_SUBST(PYGTK_DEFSDIR)
+AC_MSG_RESULT($PYGTK_DEFSDIR)
+
+AC_MSG_CHECKING(for pygtk codegen)
+PYGTK_CODEGEN="/usr/bin/python `$PKG_CONFIG --variable=codegendir pygobject-2.0`/codegen.py"
+AC_SUBST(PYGTK_CODEGEN)
+AC_MSG_RESULT($PYGTK_CODEGEN)
+
+dnl ---------------------------------
+dnl Get thunar extensions directory
+dnl ---------------------------------
+THUNARX_EXTENSION_DIR=`$PKG_CONFIG --variable=extensionsdir thunarx-2`
+AC_SUBST(THUNARX_EXTENSION_DIR)
+AC_DEFINE_UNQUOTED(THUNARX_EXTENSION_DIR, "$THUNARX_EXTENSION_DIR", [Thunar's extensions directory])
 
 dnl ***********************************
 dnl *** Check for debugging support ***
