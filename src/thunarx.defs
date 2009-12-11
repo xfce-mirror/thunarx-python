@@ -137,30 +137,6 @@
   (return-type "GFile*")
 )
 
-(define-method add_emblem
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_add_emblem")
-  (return-type "none")
-  (parameters
-    '("const-gchar*" "emblem_name")
-  )
-)
-
-(define-method remove_emblem
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_remove_emblem")
-  (return-type "none")
-  (parameters
-    '("const-gchar*" "emblem_name")
-  )
-)
-
-(define-method remove_emblems
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_remove_emblems")
-  (return-type "none")
-)
-
 (define-method changed
   (of-object "ThunarxFileInfo")
   (c-name "thunarx_file_info_changed")
