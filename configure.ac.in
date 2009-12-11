@@ -65,11 +65,8 @@ dnl ***********************************
 dnl *** Check for required packages ***
 dnl ***********************************
 XDT_CHECK_PACKAGE([THUNARX], [thunarx-2], [1.0.1])
-XDT_CHECK_PACKAGE([EXO], [exo-0.3], [0.3.100])
-XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.6.0])
 XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [2.6.0])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.6.0])
-XDT_CHECK_PACKAGE([GTHREAD], [gthread-2.0], [2.6.0])
 XDT_CHECK_PACKAGE([GOBJECT], [gobject-2.0], [2.6.0])
 XDT_CHECK_PACKAGE([PYGTK], [pygtk-2.0], [2.6.0])
 XDT_CHECK_PACKAGE([GNOMEPYTHON], [gnome-python-2.0], [2.12.0])
@@ -110,19 +107,6 @@ dnl **************************************
 dnl *** Check for linker optimizations ***
 dnl **************************************
 XDT_FEATURE_LINKER_OPTS()
-
-dnl *********************************
-dnl *** Substitute platform flags ***
-dnl *********************************
-AC_MSG_CHECKING([PLATFORM_CPPFLAGS])
-AC_MSG_RESULT([$PLATFORM_CPPFLAGS])
-AC_SUBST([PLATFORM_CPPFLAGS])
-AC_MSG_CHECKING([PLATFORM_CFLAGS])
-AC_MSG_RESULT([$PLATFORM_CFLAGS])
-AC_SUBST([PLATFORM_CFLAGS])
-AC_MSG_CHECKING([PLATFORM_LDFLAGS])
-AC_MSG_RESULT([$PLATFORM_LDFLAGS])
-AC_SUBST([PLATFORM_LDFLAGS])
 
 AC_OUTPUT([
 Makefile
