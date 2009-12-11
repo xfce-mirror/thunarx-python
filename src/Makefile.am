@@ -27,8 +27,8 @@ thunarx_python_la_LDFLAGS =						\
 	-export-dynamic							\
 	-module								\
 	$(THUNARX_LDFLAGS)						\
-	$(PYTHON_LIBS)							\
-	$(PYGTK_LIBS)							\
+	$(PYTHON_LDFLAGS)						\
+	$(PYGTK_LDFLAGS)						\
 	$(GNOMEPYTHON_LIBS)
 
 pyexec_LTLIBRARIES = thunarx.la
@@ -40,7 +40,7 @@ thunarx_la_LDFLAGS =							\
 	-export-symbols-regex						\
 	initthunarx							\
 	$(THUNARX_LDFLAGS)						\
-	$(PYTHON_LDFLAGS)							\
+	$(PYTHON_LDFLAGS)						\
 	$(PYGTK_LDFLAGS)						\
 	$(GNOMEPYTHON_LDFLAGS)
 
