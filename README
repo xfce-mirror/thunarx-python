@@ -1,0 +1,3 @@
+Thunarx Python Bindings
+
+These are built to work with thunar master at http://git.xfce.org/xfce/thunar/ (as of 2009-12-11).  In order to build thunar master you will need to build libxfce4ui and libexo from git master as well (both at git.xfce.org). 
