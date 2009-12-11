@@ -40,14 +40,15 @@ thunarx_la_LDFLAGS =							\
 	-export-symbols-regex						\
 	initthunarx							\
 	$(THUNARX_LDFLAGS)						\
-	$(PYTHON_LIBS)							\
-	$(PYGTK_LIBS)							\
-	$(GNOMEPYTHON_LIBS)
+	$(PYTHON_LDFLAGS)							\
+	$(PYGTK_LDFLAGS)						\
+	$(GNOMEPYTHON_LDFLAGS)
 
 thunarx_la_LIBADD =							\
-	$(THUNARX_LIBDIR)						\
-	$(GNOMEPYTHON_LIBDIR)						\
-	$(PYGTK_LIBDIR)
+	$(THUNARX_LIBS)							\
+	$(PYTHON_LIBS)							\
+	$(GNOMEPYTHON_LIBS)						\
+	$(PYGTK_LIBS)
 
 thunarx_la_CFLAGS =							\
 	$(THUNARX_CFLAGS)						\

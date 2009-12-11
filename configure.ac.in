@@ -72,10 +72,12 @@ XDT_CHECK_PACKAGE([PYGTK], [pygtk-2.0], [2.6.0])
 XDT_CHECK_PACKAGE([GNOMEPYTHON], [gnome-python-2.0], [2.12.0])
 
 PYTHON_CFLAGS="`python-config --includes`"
-PYTHON_LIBS="`python-config --ldflags`"
+PYTHON_LIBS="`python-config --libs`"
+PYTHON_LDFLAGS="`python-config --ldflags`"
 
 AC_SUBST(PYTHON_CFLAGS)
 AC_SUBST(PYTHON_LIBS)
+AC_SUBST(PYTHON_LDFLAGS)
 
 THUNARX_LIBDIR=`pkg-config --variable=libdir thunarx-2`
 AC_SUBST(THUNARX_LIBDIR)
