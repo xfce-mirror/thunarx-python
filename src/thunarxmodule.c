@@ -50,7 +50,7 @@ initthunarx(void)
     m = Py_InitModule ("thunarx", pythunarx_functions);
     d = PyModule_GetDict (m);
 
-    pythunarx_register_classes(d);  
+    pythunarx_register_classes(d);
     
     if (PyErr_Occurred())
     {

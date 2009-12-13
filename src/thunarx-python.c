@@ -184,7 +184,7 @@ thunarx_python_init_python (void)
     return FALSE;
   }
 
-	/* Extract types and interfaces from nautilus */
+	/* Extract types and interfaces from thunarx */
 	mdict = PyModule_GetDict(thunarx);
 	
 	_PyGtkWidget_Type = pygobject_lookup_class(GTK_TYPE_WIDGET);
@@ -248,7 +248,7 @@ thunarx_python_load_file (ThunarxProviderPlugin *plugin, const gchar *filename)
       continue;
       
 		if (PyObject_IsSubclass(value, (PyObject*)&PyThunarxMenuProvider_Type) ||
-			PyObject_IsSubclass(value, (PyObject*)&PyThunarxPropertyPageProvider_Type)) {
+		    PyObject_IsSubclass(value, (PyObject*)&PyThunarxPropertyPageProvider_Type)) {
 			
 			new_type = thunarx_python_object_get_type(plugin, value);
 			g_array_append_val(all_types, new_type);
@@ -300,6 +300,7 @@ thunarx_python_load_dir (ThunarxProviderPlugin *plugin, const char *dirname)
 				PyList_Insert(sys_path, 0, py_path);
 				Py_DECREF(py_path);
 			}
+
 			thunarx_python_load_file(plugin, modulename);
 		}
 	}

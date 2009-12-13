@@ -1,50 +1,50 @@
 ;; -*- scheme -*-
 ; object definitions ...
-(define-object FileInfo
+(define-interface FileInfo
   (in-module "Thunarx")
   (c-name "ThunarxFileInfo")
   (gtype-id "THUNARX_TYPE_FILE_INFO")
 )
 
-(define-object MenuProvider
+(define-interface MenuProvider
   (in-module "Thunarx")
   (c-name "ThunarxMenuProvider")
   (gtype-id "THUNARX_TYPE_MENU_PROVIDER")
 )
 
-(define-object PreferencesProvider
+(define-interface PreferencesProvider
   (in-module "Thunarx")
   (c-name "ThunarxPreferencesProvider")
   (gtype-id "THUNARX_TYPE_PREFERENCES_PROVIDER")
 )
 
-(define-object PropertyPage
+(define-interface PropertyPage
   (in-module "Thunarx")
   (parent "GtkBin")
   (c-name "ThunarxPropertyPage")
   (gtype-id "THUNARX_TYPE_PROPERTY_PAGE")
 )
 
-(define-object PropertyPageProvider
+(define-interface PropertyPageProvider
   (in-module "Thunarx")
   (c-name "ThunarxPropertyPageProvider")
   (gtype-id "THUNARX_TYPE_PROPERTY_PAGE_PROVIDER")
 )
 
-(define-object ProviderPlugin
+(define-interface ProviderPlugin
   (in-module "Thunarx")
   (c-name "ThunarxProviderPlugin")
   (gtype-id "THUNARX_TYPE_PROVIDER_PLUGIN")
 )
 
-(define-object Renamer
+(define-interface Renamer
   (in-module "Thunarx")
   (parent "GtkVBox")
   (c-name "ThunarxRenamer")
   (gtype-id "THUNARX_TYPE_RENAMER")
 )
 
-(define-object RenamerProvider
+(define-interface RenamerProvider
   (in-module "Thunarx")
   (c-name "ThunarxRenamerProvider")
   (gtype-id "THUNARX_TYPE_RENAMER_PROVIDER")
