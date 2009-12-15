@@ -91,7 +91,7 @@ thunarx_python_object_menu_provider_iface_init (ThunarxMenuProviderIface *iface)
 {
 	iface->get_file_actions = thunarx_python_object_get_file_actions;
 	iface->get_folder_actions = thunarx_python_object_get_folder_actions;
-	//iface->get_dnd_actions = thunarx_python_object_get_dnd_actions;
+	iface->get_dnd_actions = thunarx_python_object_get_dnd_actions;
 }
 
 
@@ -159,6 +159,44 @@ beach:
   return ret;
 }
 #undef METHOD_NAME
+
+
+
+#define METHOD_NAME "get_dnd_actions"
+static GList *
+thunarx_python_object_get_dnd_actions (ThunarxMenuProvider *provider,
+                                        GtkWidget *window,
+                                        ThunarxFileInfo *folder,
+                                        GList *files)
+{
+  ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
+  GList *ret = NULL;
+  PyObject *py_ret = NULL, *py_files;
+	PyGILState_STATE state = pyg_gil_state_ensure();
+	
+  debug_enter();
+
+	CHECK_METHOD_NAME(object->instance);
+
+	CONVERT_LIST(py_files, files);
+
+  py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
+								 "(NN)", 
+								 pygobject_new((GObject *)window), 
+								 pygobject_new((GObject *)folder),
+								 py_files);
+
+	HANDLE_RETVAL(py_ret);
+
+	HANDLE_LIST(py_ret, GtkAction, "gtk.Action");
+
+beach:
+  Py_XDECREF(py_ret);
+  pyg_gil_state_release(state);
+  return ret;
+}
+#undef METHOD_NAME
+
 
 
 /*
