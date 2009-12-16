@@ -40,30 +40,6 @@ struct _ThunarxPythonObjectClass {
   PyObject *type;
 };
 
-static void
-thunarx_python_object_menu_provider_iface_init (ThunarxMenuProviderIface *iface);
-static GList *
-thunarx_python_object_get_file_actions (ThunarxMenuProvider *provider,
-                                        GtkWidget *window,
-                                        GList *files);
-static GList *
-thunarx_python_object_get_folder_actions (ThunarxMenuProvider *provider,
- 		  									                  GtkWidget *window,
-	  										                  ThunarxFileInfo *folder);
-static GList *
-thunarx_python_object_get_dnd_actions (ThunarxMenuProvider *provider,
- 		  									                  GtkWidget *window,
-	  										                  ThunarxFileInfo *folder,
-	  										                  GList *files);
-
-static void 
-thunarx_python_object_instance_init (ThunarxPythonObject *object);
-static void
-thunarx_python_object_finalize (GObject *object);
-static void
-thunarx_python_object_class_init (ThunarxPythonObjectClass *klass,
-								                  gpointer class_data);
-
 GType 
 thunarx_python_object_get_type (ThunarxProviderPlugin *plugin, PyObject *type);
 

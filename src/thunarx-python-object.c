@@ -32,6 +32,34 @@
 
 static GObjectClass *parent_class;
 
+static void 
+thunarx_python_object_instance_init (ThunarxPythonObject *object);
+static void
+thunarx_python_object_finalize (GObject *object);
+static void
+thunarx_python_object_class_init (ThunarxPythonObjectClass *klass,
+								                  gpointer class_data);
+								                  
+								                  
+
+static void thunarx_python_object_menu_provider_iface_init      (ThunarxMenuProviderIface *iface);
+static GList *thunarx_python_object_get_file_actions            (ThunarxMenuProvider      *provider,
+                                                                 GtkWidget                *window,
+                                                                 GList                    *files);
+static GList *thunarx_python_object_get_folder_actions          (ThunarxMenuProvider      *provider,
+                              									                 GtkWidget                *window,
+	                         		 								                   ThunarxFileInfo          *folder);
+static GList *thunarx_python_object_get_dnd_actions             (ThunarxMenuProvider      *provider,
+                       		  									                   GtkWidget                *window,
+	                        										                   ThunarxFileInfo          *folder,
+	                        										                   GList                    *files);
+
+
+static void thunarx_python_object_property_page_provider_iface_init      (ThunarxPropertyPageProviderIface *iface);
+static GList *thunarx_python_object_get_property_pages          (ThunarxMenuProviderIface *provider,
+										                                             GList                    *files);
+
+
 /* These macros assumes the following things:
  *   a METHOD_NAME is defined with is a string
  *   a goto label called beach
@@ -84,16 +112,6 @@ static GObjectClass *parent_class;
             Py_DECREF(py_item);                                         \
     	}                                                                 \
     }
-
-
-static void
-thunarx_python_object_menu_provider_iface_init (ThunarxMenuProviderIface *iface)
-{
-	iface->get_file_actions = thunarx_python_object_get_file_actions;
-	iface->get_folder_actions = thunarx_python_object_get_folder_actions;
-	iface->get_dnd_actions = thunarx_python_object_get_dnd_actions;
-}
-
 
 
 #define METHOD_NAME "get_file_actions"
@@ -199,7 +217,48 @@ beach:
 
 
 
+static void
+thunarx_python_object_menu_provider_iface_init (ThunarxMenuProviderIface *iface)
+{
+	iface->get_file_actions = thunarx_python_object_get_file_actions;
+	iface->get_folder_actions = thunarx_python_object_get_folder_actions;
+	iface->get_dnd_actions = thunarx_python_object_get_dnd_actions;
+}
+
 /*
+
+#define METHOD_NAME "get_property_pages"
+static GList *
+thunarx_python_object_get_property_pages (ThunarxMenuProviderIface *provider,
+										                      GList *files)
+{
+	ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
+  PyObject *py_files, *py_ret = NULL;
+  GList *ret = NULL;
+	PyGILState_STATE state = pyg_gil_state_ensure();
+	
+  debug_enter();
+
+	CHECK_METHOD_NAME(object->instance);
+
+	CONVERT_LIST(py_files, files);
+	
+  py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
+								 "(N)", py_files);
+	HANDLE_RETVAL(py_ret);
+
+	HANDLE_LIST(py_ret, ThunarxPropertyPage, "thunarx.PropertyPage");
+	
+beach:
+	Py_XDECREF(py_ret);
+	pyg_gil_state_release(state);
+  return ret;
+}
+#undef METHOD_NAME
+
+
+
+
 static void
 thunarx_python_object_property_page_provider_iface_init (ThunarxPropertyPageProviderIface *iface)
 {
@@ -281,7 +340,7 @@ thunarx_python_object_get_type (ThunarxProviderPlugin *plugin, PyObject *type)
 		NULL,
 		NULL
 	};
-	  
+
 	static const GInterfaceInfo property_page_provider_iface_info = {
 		(GInterfaceInitFunc) thunarx_python_object_property_page_provider_iface_init,
 		NULL,
