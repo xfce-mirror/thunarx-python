@@ -59,7 +59,6 @@ static void thunarx_python_object_property_page_provider_iface_init      (Thunar
 static GList *thunarx_python_object_get_property_pages          (ThunarxPropertyPageProvider *provider,
 										                                             GList                    *files);
 
-
 /* These macros assumes the following things:
  *   a METHOD_NAME is defined with is a string
  *   a goto label called beach
@@ -259,24 +258,16 @@ beach:
 
 
 
-
 static void
 thunarx_python_object_property_page_provider_iface_init (ThunarxPropertyPageProviderIface *iface)
 {
 	iface->get_pages = thunarx_python_object_get_property_pages;
 }
 
+
+
+
 /*
-
-static void
-thunarx_python_object_file_info_iface_init (ThunarxFileInfoIface *iface)
-{
-	iface->file_changed = thunarx_python_object_file_changed;
-	iface->file_renamed = thunarx_python_object_file_renamed;
-}
-
-
-
 static void
 thunarx_python_object_renamer_provider_iface_init (ThunarxRenamerProviderIface *iface)
 {
@@ -335,13 +326,7 @@ thunarx_python_object_get_type (ThunarxProviderPlugin *plugin, PyObject *type)
 	GTypeInfo *info;
 	const char *type_name;
 	GType gtype;
-/*
-	static const GInterfaceInfo file_info_iface_info = {
-		(GInterfaceInitFunc) thunarx_python_object_file_info_iface_init,
-		NULL,
-		NULL
-	};
-*/
+
 	static const GInterfaceInfo property_page_provider_iface_info = {
 		(GInterfaceInitFunc) thunarx_python_object_property_page_provider_iface_init,
 		NULL,
@@ -384,13 +369,7 @@ thunarx_python_object_get_type (ThunarxProviderPlugin *plugin, PyObject *type)
 										 G_TYPE_OBJECT,
 										 type_name,
 										 info, 0);
-/*
-	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxFileInfo_Type)) {
-		thunarx_provider_plugin_add_interface (plugin, gtype, 
-									 THUNARX_TYPE_FILE_INFO,
-									 &file_info_iface_info);
-	}
-*/
+
 	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxPropertyPageProvider_Type)) {
 		thunarx_provider_plugin_add_interface (plugin, gtype, 
 									 THUNARX_TYPE_PROPERTY_PAGE_PROVIDER,
