@@ -325,6 +325,7 @@ thunar_extension_initialize (ThunarxProviderPlugin *plugin)
 
   all_types = g_array_new(FALSE, FALSE, sizeof(GType));
   
+  thunarx_provider_plugin_set_resident (plugin, TRUE);  
   thunarx_python_load_dir(plugin, THUNARX_EXTENSION_DIR "/python");
 }
 
