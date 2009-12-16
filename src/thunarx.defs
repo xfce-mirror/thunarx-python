@@ -18,7 +18,7 @@
   (gtype-id "THUNARX_TYPE_PREFERENCES_PROVIDER")
 )
 
-(define-interface PropertyPage
+(define-object PropertyPage
   (in-module "Thunarx")
   (parent "GtkBin")
   (c-name "ThunarxPropertyPage")
@@ -37,7 +37,7 @@
   (gtype-id "THUNARX_TYPE_PROVIDER_PLUGIN")
 )
 
-(define-interface Renamer
+(define-object Renamer
   (in-module "Thunarx")
   (parent "GtkVBox")
   (c-name "ThunarxRenamer")
@@ -229,25 +229,6 @@
 )
 
 
-
-;; From thunarx-property-page-provider.h
-
-(define-function thunarx_property_page_provider_get_type
-  (c-name "thunarx_property_page_provider_get_type")
-  (return-type "GType")
-)
-
-(define-method get_pages
-  (of-object "ThunarxPropertyPageProvider")
-  (c-name "thunarx_property_page_provider_get_pages")
-  (return-type "GList*")
-  (parameters
-    '("GList*" "files")
-  )
-)
-
-
-
 ;; From thunarx-property-page.h
 
 (define-function thunarx_property_page_get_type
@@ -258,17 +239,9 @@
 (define-function thunarx_property_page_new
   (c-name "thunarx_property_page_new")
   (is-constructor-of "ThunarxPropertyPage")
-  (return-type "GtkWidget*")
+  (return-type "ThunarxPropertyPage*")
   (parameters
     '("const-gchar*" "label")
-  )
-)
-
-(define-function thunarx_property_page_new_with_label_widget
-  (c-name "thunarx_property_page_new_with_label_widget")
-  (return-type "GtkWidget*")
-  (parameters
-    '("GtkWidget*" "label_widget")
   )
 )
 

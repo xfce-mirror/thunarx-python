@@ -56,7 +56,7 @@ static GList *thunarx_python_object_get_dnd_actions             (ThunarxMenuProv
 
 
 static void thunarx_python_object_property_page_provider_iface_init      (ThunarxPropertyPageProviderIface *iface);
-static GList *thunarx_python_object_get_property_pages          (ThunarxMenuProviderIface *provider,
+static GList *thunarx_python_object_get_property_pages          (ThunarxPropertyPageProvider *provider,
 										                                             GList                    *files);
 
 
@@ -225,11 +225,11 @@ thunarx_python_object_menu_provider_iface_init (ThunarxMenuProviderIface *iface)
 	iface->get_dnd_actions = thunarx_python_object_get_dnd_actions;
 }
 
-/*
+
 
 #define METHOD_NAME "get_property_pages"
 static GList *
-thunarx_python_object_get_property_pages (ThunarxMenuProviderIface *provider,
+thunarx_python_object_get_property_pages (ThunarxPropertyPageProvider *provider,
 										                      GList *files)
 {
 	ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
@@ -242,9 +242,10 @@ thunarx_python_object_get_property_pages (ThunarxMenuProviderIface *provider,
 	CHECK_METHOD_NAME(object->instance);
 
 	CONVERT_LIST(py_files, files);
-	
+
   py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
 								 "(N)", py_files);
+
 	HANDLE_RETVAL(py_ret);
 
 	HANDLE_LIST(py_ret, ThunarxPropertyPage, "thunarx.PropertyPage");
@@ -265,7 +266,7 @@ thunarx_python_object_property_page_provider_iface_init (ThunarxPropertyPageProv
 	iface->get_pages = thunarx_python_object_get_property_pages;
 }
 
-
+/*
 
 static void
 thunarx_python_object_file_info_iface_init (ThunarxFileInfoIface *iface)
@@ -340,13 +341,13 @@ thunarx_python_object_get_type (ThunarxProviderPlugin *plugin, PyObject *type)
 		NULL,
 		NULL
 	};
-
+*/
 	static const GInterfaceInfo property_page_provider_iface_info = {
 		(GInterfaceInitFunc) thunarx_python_object_property_page_provider_iface_init,
 		NULL,
 		NULL
 	};
-*/
+
 	static const GInterfaceInfo menu_provider_iface_info = {
 		(GInterfaceInitFunc) thunarx_python_object_menu_provider_iface_init,
 		NULL,
@@ -389,13 +390,13 @@ thunarx_python_object_get_type (ThunarxProviderPlugin *plugin, PyObject *type)
 									 THUNARX_TYPE_FILE_INFO,
 									 &file_info_iface_info);
 	}
-
+*/
 	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxPropertyPageProvider_Type)) {
 		thunarx_provider_plugin_add_interface (plugin, gtype, 
 									 THUNARX_TYPE_PROPERTY_PAGE_PROVIDER,
 									 &property_page_provider_iface_info);
 	}
-*/
+
 	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxMenuProvider_Type)) {
 		thunarx_provider_plugin_add_interface (plugin, gtype, 
 									 THUNARX_TYPE_MENU_PROVIDER,
