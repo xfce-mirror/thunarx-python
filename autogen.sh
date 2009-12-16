@@ -16,6 +16,8 @@ EOF
   exit 1
 }
 
+ACLOCAL_AMFLAGS="-I m4"
+
 XDT_AUTOGEN_REQUIRED_VERSION="4.7.0" exec xdt-autogen $@
 
 # vi:set ts=2 sw=2 et ai:

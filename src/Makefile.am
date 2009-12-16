@@ -4,7 +4,9 @@ AM_CPPFLAGS =								\
 	-I$(top_srcdir)							\
 	-DG_LOG_DOMAIN=\"thunarx-python\"				\
 	-DEXO_API_SUBJECT_TO_CHANGE					\
-	-DLIBEXECDIR=\"$(libexecdir)\"
+	-DLIBEXECDIR=\"$(libexecdir)\"					\
+	-DPY_LIB_LOC=\"$(PYTHON_LIB_LOC)\"				\
+	-DPYTHON_VERSION=\"$(PYTHON_VERSION)\"
 
 extensionsdir = $(libdir)/thunarx-2
 extensions_LTLIBRARIES =						\
