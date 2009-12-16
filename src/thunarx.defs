@@ -219,7 +219,7 @@
   (return-type "GType")
 )
 
-(define-method get_actions
+(define-method get_preferences_actions
   (of-object "ThunarxPreferencesProvider")
   (c-name "thunarx_preferences_provider_get_actions")
   (return-type "GList*")

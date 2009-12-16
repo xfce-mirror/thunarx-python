@@ -248,7 +248,8 @@ thunarx_python_load_file (ThunarxProviderPlugin *plugin, const gchar *filename)
       continue;
       
 		if (PyObject_IsSubclass(value, (PyObject*)&PyThunarxMenuProvider_Type) ||
-		    PyObject_IsSubclass(value, (PyObject*)&PyThunarxPropertyPageProvider_Type)) {
+		    PyObject_IsSubclass(value, (PyObject*)&PyThunarxPropertyPageProvider_Type) ||
+		    PyObject_IsSubclass(value, (PyObject*)&PyThunarxPreferencesProvider_Type)) {
 			
 			new_type = thunarx_python_object_get_type(plugin, value);
 			g_array_append_val(all_types, new_type);

@@ -55,9 +55,13 @@ static GList *thunarx_python_object_get_dnd_actions             (ThunarxMenuProv
 	                        										                   GList                    *files);
 
 
-static void thunarx_python_object_property_page_provider_iface_init      (ThunarxPropertyPageProviderIface *iface);
-static GList *thunarx_python_object_get_property_pages          (ThunarxPropertyPageProvider *provider,
-										                                             GList                    *files);
+static void thunarx_python_object_property_page_provider_iface_init (ThunarxPropertyPageProviderIface *iface);
+static GList *thunarx_python_object_get_property_pages          (ThunarxPropertyPageProvider  *provider,
+										                                             GList                        *files);
+
+static void   thunarx_python_object_preferences_provider_iface_init (ThunarxPreferencesProviderIface *iface);
+static GList *thunarx_python_object_get_preferences_actions     (ThunarxPreferencesProvider   *provider,
+										                                             GtkWidget                    *window);
 
 /* These macros assumes the following things:
  *   a METHOD_NAME is defined with is a string
@@ -273,15 +277,46 @@ thunarx_python_object_renamer_provider_iface_init (ThunarxRenamerProviderIface *
 {
 	iface->get_renamers = thunarx_python_object_get_renamers;
 }
+*/
+
+
+
+#define METHOD_NAME "get_preferences_actions"
+static GList *
+thunarx_python_object_get_preferences_actions (ThunarxPreferencesProvider *provider,
+										                           GtkWidget *window)
+{
+	ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
+  PyObject *py_ret = NULL;
+  GList *ret = NULL;
+	PyGILState_STATE state = pyg_gil_state_ensure();
+	
+  debug_enter();
+
+	CHECK_METHOD_NAME(object->instance);
+
+  py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
+								 "(N)", pygobject_new((GObject *)window));
+
+	HANDLE_RETVAL(py_ret);
+
+	HANDLE_LIST(py_ret, GtkAction, "Gtk.Action");
+	
+beach:
+	Py_XDECREF(py_ret);
+	pyg_gil_state_release(state);
+  return ret;
+}
+#undef METHOD_NAME
 
 
 
 static void
 thunarx_python_object_preferences_provider_iface_init (ThunarxPreferencesProviderIface *iface)
 {
-	iface->get_actions = thunarx_python_object_get_actions;
+	iface->get_actions = thunarx_python_object_get_preferences_actions;
 }
-*/
+
 
 
 static void 
@@ -344,13 +379,13 @@ thunarx_python_object_get_type (ThunarxProviderPlugin *plugin, PyObject *type)
 		NULL,
 		NULL
 	};
-
+*/
 	static const GInterfaceInfo preferences_provider_iface_info = {
 		(GInterfaceInitFunc) thunarx_python_object_preferences_provider_iface_init,
 		NULL,
 		NULL
 	};
-*/
+
 	debug_enter_args("type=%s", PyString_AsString(PyObject_GetAttrString(type, "__name__")));
 	info = g_new0 (GTypeInfo, 1);
 	
@@ -387,12 +422,12 @@ thunarx_python_object_get_type (ThunarxProviderPlugin *plugin, PyObject *type)
 									 THUNARX_TYPE_RENAMER_PROVIDER,
 									 &renamer_provider_iface_info);
 	}
-	
+*/
 	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxPreferencesProvider_Type)) {
 		thunarx_provider_plugin_add_interface (plugin, gtype, 
 									 THUNARX_TYPE_PREFERENCES_PROVIDER,
 									 &preferences_provider_iface_info);
 	}
-*/	
+	
 	return gtype;
 }
