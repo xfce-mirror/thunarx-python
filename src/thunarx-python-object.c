@@ -63,6 +63,9 @@ static void   thunarx_python_object_preferences_provider_iface_init (ThunarxPref
 static GList *thunarx_python_object_get_preferences_actions     (ThunarxPreferencesProvider   *provider,
 										                                             GtkWidget                    *window);
 
+static void   thunarx_python_object_renamer_provider_iface_init (ThunarxRenamerProviderIface  *iface);
+static GList *thunarx_python_object_get_renamers                (ThunarxRenamerProvider       *provider);
+
 /* These macros assumes the following things:
  *   a METHOD_NAME is defined with is a string
  *   a goto label called beach
@@ -262,6 +265,34 @@ beach:
 
 
 
+#define METHOD_NAME "get_renamers"
+static GList *
+thunarx_python_object_get_renamers (ThunarxRenamerProvider *provider)
+{
+	ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
+  PyObject *py_ret = NULL;
+  GList *ret = NULL;
+	PyGILState_STATE state = pyg_gil_state_ensure();
+	
+  debug_enter();
+
+	CHECK_METHOD_NAME(object->instance);
+
+  py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME, "");
+
+	HANDLE_RETVAL(py_ret);
+
+	HANDLE_LIST(py_ret, ThunarxRenamer, "thunarx.Renamer");
+	
+beach:
+	Py_XDECREF(py_ret);
+	pyg_gil_state_release(state);
+  return ret;
+}
+#undef METHOD_NAME
+
+
+
 static void
 thunarx_python_object_property_page_provider_iface_init (ThunarxPropertyPageProviderIface *iface)
 {
@@ -271,13 +302,13 @@ thunarx_python_object_property_page_provider_iface_init (ThunarxPropertyPageProv
 
 
 
-/*
+
 static void
 thunarx_python_object_renamer_provider_iface_init (ThunarxRenamerProviderIface *iface)
 {
 	iface->get_renamers = thunarx_python_object_get_renamers;
 }
-*/
+
 
 
 
@@ -373,13 +404,13 @@ thunarx_python_object_get_type (ThunarxProviderPlugin *plugin, PyObject *type)
 		NULL,
 		NULL
 	};
-/*
+
 	static const GInterfaceInfo renamer_provider_iface_info = {
 		(GInterfaceInitFunc) thunarx_python_object_renamer_provider_iface_init,
 		NULL,
 		NULL
 	};
-*/
+
 	static const GInterfaceInfo preferences_provider_iface_info = {
 		(GInterfaceInitFunc) thunarx_python_object_preferences_provider_iface_init,
 		NULL,
@@ -416,13 +447,13 @@ thunarx_python_object_get_type (ThunarxProviderPlugin *plugin, PyObject *type)
 									 THUNARX_TYPE_MENU_PROVIDER,
 									 &menu_provider_iface_info);
 	}
-/*
+
 	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxRenamerProvider_Type)) {
 		thunarx_provider_plugin_add_interface (plugin, gtype, 
 									 THUNARX_TYPE_RENAMER_PROVIDER,
 									 &renamer_provider_iface_info);
 	}
-*/
+
 	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxPreferencesProvider_Type)) {
 		thunarx_provider_plugin_add_interface (plugin, gtype, 
 									 THUNARX_TYPE_PREFERENCES_PROVIDER,
