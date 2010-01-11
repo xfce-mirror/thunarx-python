@@ -8,7 +8,7 @@ AM_CPPFLAGS =								\
 	-DPY_LIB_LOC=\"$(PYTHON_LIB_LOC)\"				\
 	-DPYTHON_VERSION=\"$(PYTHON_VERSION)\"
 
-extensionsdir = $(libdir)/thunarx-2
+extensionsdir = $(THUNARX_LIBDIR)/thunarx-@THUNARX_API_VERSION@
 extensions_LTLIBRARIES =						\
 	thunarx-python.la
 
