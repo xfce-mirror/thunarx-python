@@ -28,6 +28,12 @@
 #include "thunarx-python.h"
 #include "thunarx-python-object.h"
 
+static const GDebugKey thunarx_python_debug_keys[] = {
+  {"all", THUNARX_PYTHON_DEBUG_ALL},
+};
+static const guint thunarx_python_ndebug_keys = sizeof (thunarx_python_debug_keys) / sizeof (GDebugKey);
+ThunarxPythonDebug thunarx_python_debug;
+
 static GArray *all_types = NULL;
 
 G_MODULE_EXPORT void thunar_extension_initialize (ThunarxProviderPlugin *plugin);
@@ -232,7 +238,6 @@ thunarx_python_load_file (ThunarxProviderPlugin *plugin, const gchar *filename)
   }
   
   main_locals = PyModule_GetDict(main_module);
-  g_print("Attempting to load module %s\n", filename);
   module = PyImport_ImportModuleEx((char *) filename, main_locals, main_locals, NULL);
   if (!module)
   {
@@ -314,6 +319,18 @@ G_MODULE_EXPORT void
 thunar_extension_initialize (ThunarxProviderPlugin *plugin)
 {
   const gchar *mismatch;
+  const gchar *env_string;
+
+	env_string = g_getenv("THUNARX_PYTHON_DEBUG");
+	if (env_string != NULL)
+	{
+		thunarx_python_debug = g_parse_debug_string(env_string,
+													 thunarx_python_debug_keys,
+													 thunarx_python_ndebug_keys);
+		env_string = NULL;
+  }
+
+  debug_enter();
 
   /* verify that the thunarx versions are compatible */
   mismatch = thunarx_check_version (THUNARX_MAJOR_VERSION, THUNARX_MINOR_VERSION, THUNARX_MICRO_VERSION);
@@ -322,8 +339,6 @@ thunar_extension_initialize (ThunarxProviderPlugin *plugin)
       g_warning ("Version mismatch: %s", mismatch);
       return;
     }
-
-  debug ("Initializing thunarx-python extension");
 
   all_types = g_array_new(FALSE, FALSE, sizeof(GType));
   
@@ -336,7 +351,7 @@ thunar_extension_initialize (ThunarxProviderPlugin *plugin)
 G_MODULE_EXPORT void
 thunar_extension_shutdown (void)
 {
-  debug ("Shutting down thunarx-python extension");
+  debug_enter();
   
   if (Py_IsInitialized())
     Py_Finalize();

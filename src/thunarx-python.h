@@ -30,11 +30,17 @@ typedef int Py_ssize_t;
 #define PY_SSIZE_T_MIN INT_MIN
 #endif
 
-#define DEBUG_ENABLED 1
-#define debug(x) { if (DEBUG_ENABLED) g_print("thunarx-python: " x "\n"); }
-#define debug_enter()  { if (DEBUG_ENABLED) \
+typedef enum {
+    THUNARX_PYTHON_DEBUG_ALL = 1 << 0,
+} ThunarxPythonDebug;
+
+extern ThunarxPythonDebug thunarx_python_debug;
+
+#define debug(x) { if (thunarx_python_debug & THUNARX_PYTHON_DEBUG_ALL) \
+                         g_print("thunarx-python: " x "\n"); }
+#define debug_enter()  { if (thunarx_python_debug & THUNARX_PYTHON_DEBUG_ALL) \
                              g_printf("%s: entered\n", __FUNCTION__); }
-#define debug_enter_args(x, y) { if (DEBUG_ENABLED) \
+#define debug_enter_args(x, y) { if (thunarx_python_debug & THUNARX_PYTHON_DEBUG_ALL) \
                                      g_printf("%s: entered " x "\n", __FUNCTION__, y); }
 
 PyTypeObject *_PyGtkWidget_Type;
