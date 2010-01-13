@@ -107,6 +107,11 @@ PYGTK_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygtk-2.0`
 AC_SUBST(PYGTK_DEFSDIR)
 AC_MSG_RESULT($PYGTK_DEFSDIR)
 
+AC_MSG_CHECKING(for pygobject defs)
+PYGOBJECT_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygobject-2.0`
+AC_SUBST(PYGOBJECT_DEFSDIR)
+AC_MSG_RESULT($PYGOBJECT_DEFSDIR)
+
 AC_MSG_CHECKING(for pygtk codegen)
 PYGTK_CODEGEN="/usr/bin/python `$PKG_CONFIG --variable=codegendir pygobject-2.0`/codegen.py"
 AC_SUBST(PYGTK_CODEGEN)

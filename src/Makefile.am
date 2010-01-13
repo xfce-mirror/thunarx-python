@@ -70,6 +70,8 @@ EXTRA_DIST = thunarx.override thunarx.defs
 	    --register $(PYGTK_DEFSDIR)/pango-types.defs \
             --register $(PYGTK_DEFSDIR)/gdk-types.defs \
             --register $(PYGTK_DEFSDIR)/gtk-types.defs \
+            --register $(PYGOBJECT_DEFSDIR)/gio-types.defs \
+            --register $(PYGOBJECT_DEFSDIR)/unix-types.defs \
             --override $*.override \
             --prefix py$* $*.defs) > gen-$*.c \
         && cp gen-$*.c $*.c \
