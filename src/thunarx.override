@@ -24,6 +24,67 @@ headers
 
 #include <thunarx/thunarx.h>
 
+static PyObject *
+pylt_wrap_gobj_list(GList *list)
+{
+	GList *l;
+	PyObject *item, *ret;
+
+	ret = PyList_New(0);
+
+	if (ret == NULL)
+		return NULL;
+
+	for (l = list; l != NULL; l = l->next)
+	{
+		item = pygobject_new((GObject *)l->data);
+
+		if (item == NULL)
+		{
+			Py_DECREF(ret);
+			return NULL;
+		}
+
+		PyList_Append(ret, item);
+		Py_DECREF(item);
+	}
+
+	return ret;
+}
+
+GList *
+pylt_unwrap_gobj_list(PyObject *py_items, PyTypeObject *type, gboolean *ok)
+{
+	int len, i;
+	GList *items;
+
+	*ok = TRUE;
+
+	len = PyList_Size(py_items);
+
+	for (i = 0; i < len; i++)
+	{
+		PyObject *item = PyList_GetItem(py_items, i);
+
+		if (!pygobject_check(item, type))
+		{
+			char *err = g_strdup_printf("list item not a %s", type->tp_name);
+
+			PyErr_SetString(PyExc_TypeError, err);
+
+			g_free(err);
+			g_list_free(items);
+			*ok = FALSE;
+			return NULL;
+		}
+
+		items = g_list_append(items, pygobject_get(item));
+	}
+
+	return items;
+}
+
+
 %%
 modulename thunarx
 %%
@@ -37,3 +98,139 @@ import gtk.Action as PyGtkAction_Type
 ignore-glob
   *_get_type
 %%
+override ThunarxRenamer__proxy_do_get_actions noargs
+static GList*
+_wrap_ThunarxRenamer__proxy_do_get_actions(ThunarxRenamer *self, GtkWindow *window, GList *files)
+{
+    PyGILState_STATE __py_state;
+    PyObject *py_self;
+    PyObject *py_window;
+    PyObject *py_files;
+    GList *retval = NULL;
+    PyObject *py_retval;
+    PyObject *py_args;
+    PyObject *py_method;
+    
+    __py_state = pyg_gil_state_ensure();
+    py_self = pygobject_new((GObject *) self);
+    if (!py_self) {
+        if (PyErr_Occurred())
+            PyErr_Print();
+        pyg_gil_state_release(__py_state);
+        return NULL;
+    }
+    if (window)
+        py_window = pygobject_new((GObject *) window);
+    else {
+        Py_INCREF(Py_None);
+        py_window = Py_None;
+    }
+
+    GList *l;
+    py_files = PyList_New(0);
+		for (l = files; l; l = l->next) {
+      PyObject *obj = pygobject_new((GObject*)l->data);
+			PyList_Append(py_files, obj);
+			Py_DECREF(obj);
+		}
+    
+    py_args = PyTuple_New(2);
+    PyTuple_SET_ITEM(py_args, 0, py_window);
+    PyTuple_SET_ITEM(py_args, 1, py_files);
+    
+    py_method = PyObject_GetAttrString(py_self, "do_get_actions");
+    if (!py_method) {
+        if (PyErr_Occurred())
+            PyErr_Print();
+        Py_DECREF(py_args);
+        Py_DECREF(py_self);
+        pyg_gil_state_release(__py_state);
+        return NULL;
+    }
+    py_retval = PyObject_CallObject(py_method, py_args);
+    if (!py_retval) {
+        if (PyErr_Occurred())
+            PyErr_Print();
+        Py_XDECREF(py_retval);
+        Py_DECREF(py_method);
+        Py_DECREF(py_args);
+        Py_DECREF(py_self);
+        pyg_gil_state_release(__py_state);
+        return NULL;
+    }
+
+    Py_ssize_t i = 0;
+    if (!PySequence_Check(py_retval) || PyString_Check(py_retval)) {
+        if (PyErr_Occurred())
+            PyErr_Print();
+        Py_XDECREF(py_retval);
+        Py_DECREF(py_method);
+        Py_DECREF(py_args);
+        Py_DECREF(py_self);
+        pyg_gil_state_release(__py_state);
+        return NULL;
+    }
+    for (i = 0; i < PySequence_Size (py_retval); i++) {
+	    PyGObject *py_item;
+	    py_item = (PyGObject*)PySequence_GetItem (py_retval, i);
+	    if (!pygobject_check(py_item, &PyGtkAction_Type)) {
+        if (PyErr_Occurred())
+            PyErr_Print();
+        Py_XDECREF(py_retval);
+        Py_DECREF(py_method);
+        Py_DECREF(py_args);
+        Py_DECREF(py_self);
+        pyg_gil_state_release(__py_state);
+        return NULL;
+	    }
+	    
+	    retval = g_list_append (retval, g_object_ref(py_item->obj));
+      Py_DECREF(py_item);
+    }
+    
+    Py_XDECREF(py_retval);
+    Py_DECREF(py_method);
+    Py_DECREF(py_args);
+    Py_DECREF(py_self);
+    pyg_gil_state_release(__py_state);
+    
+    return retval;
+}
+%%
+define ThunarxRenamer.do_get_actions kwargs classmethod
+static PyObject *
+_wrap_thunarx_renamer_do_get_actions(PyObject *cls, PyObject *args, PyObject *kwargs)
+{
+    gpointer klass;
+    static char *kwlist[] = { "self", "window", "files", NULL };
+    PyGObject *self;
+    PyObject *window, *py_files;
+    GList *files;
+    GList *ret;
+    gboolean ok;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,"O!O!O!:ThunarxRenamer.get_actions", kwlist, &PyThunarxRenamer_Type, &self, &PyGtkWidget_Type, &window, &PyList_Type, &py_files))
+      return NULL;
+
+    files = pylt_unwrap_gobj_list(py_files, &PyGtkAction_Type, &ok);
+    
+    if (!ok)
+      return NULL;
+
+    klass = g_type_class_ref(pyg_type_from_object(cls));
+    if (THUNARX_RENAMER_CLASS(klass)->get_actions)
+        ret = THUNARX_RENAMER_CLASS(klass)->get_actions(THUNARX_RENAMER(self->obj), GTK_WINDOW(window), files);
+    else {
+        PyErr_SetString(PyExc_NotImplementedError, "virtual method ThunarxRenamer.get_actions not implemented");
+        g_type_class_unref(klass);
+        return NULL;
+    }
+    g_type_class_unref(klass);
+    if (ret) {
+        PyObject *py_ret = pylt_wrap_gobj_list(ret);
+        g_free(ret);
+        return py_ret;
+    }
+    Py_INCREF(Py_None);
+    return Py_None;
+}

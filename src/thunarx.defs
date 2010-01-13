@@ -419,7 +419,7 @@
   )
 )
 
-(define-method process
+(define-virtual process
   (of-object "ThunarxRenamer")
   (c-name "thunarx_renamer_process")
   (return-type "gchar*")
@@ -430,7 +430,7 @@
   )
 )
 
-(define-method load
+(define-virtual load
   (of-object "ThunarxRenamer")
   (c-name "thunarx_renamer_load")
   (return-type "none")
@@ -439,7 +439,7 @@
   )
 )
 
-(define-method save
+(define-virtual save
   (of-object "ThunarxRenamer")
   (c-name "thunarx_renamer_save")
   (return-type "none")
@@ -448,7 +448,7 @@
   )
 )
 
-(define-method get_actions
+(define-virtual get_actions
   (of-object "ThunarxRenamer")
   (c-name "thunarx_renamer_get_actions")
   (return-type "GList*")
@@ -458,7 +458,7 @@
   )
 )
 
-(define-method changed
+(define-virtual changed
   (of-object "ThunarxRenamer")
   (c-name "thunarx_renamer_changed")
   (return-type "none")
