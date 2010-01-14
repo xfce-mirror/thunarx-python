@@ -31,13 +31,13 @@ typedef struct _ThunarxPythonObject       ThunarxPythonObject;
 typedef struct _ThunarxPythonObjectClass  ThunarxPythonObjectClass;
 
 struct _ThunarxPythonObject {
-  GObject parent_slot;
-  PyObject *instance;
+    GObject parent_slot;
+    PyObject *instance;
 };
 
 struct _ThunarxPythonObjectClass {
-  GObjectClass parent_slot;
-  PyObject *type;
+    GObjectClass parent_slot;
+    PyObject *type;
 };
 
 GType 
