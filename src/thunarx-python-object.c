@@ -75,6 +75,13 @@ static GList *thunarx_python_object_get_renamers                (ThunarxRenamerP
 #define CHECK_METHOD_NAME(self)                                         \
 	if (!PyObject_HasAttrString(self, METHOD_NAME))                       \
 		goto beach;
+
+#define CHECK_OBJECT(object)										                        \
+  	if (object->instance == NULL)									                      \
+  	{																                                    \
+  		g_object_unref (object);									                        \
+  		goto beach;													                              \
+  	}																                                    \
 	
 #define CONVERT_LIST(py_files, files)                                   \
 	{                                                                     \
@@ -133,6 +140,7 @@ thunarx_python_object_get_file_actions (ThunarxMenuProvider *provider,
 	
   debug_enter();
 
+  CHECK_OBJECT(object);
 	CHECK_METHOD_NAME(object->instance);
 
 	CONVERT_LIST(py_files, files);
@@ -166,6 +174,7 @@ thunarx_python_object_get_folder_actions (ThunarxMenuProvider *provider,
 	
   debug_enter();
 
+  CHECK_OBJECT(object);
 	CHECK_METHOD_NAME(object->instance);
 
   py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
@@ -200,6 +209,7 @@ thunarx_python_object_get_dnd_actions (ThunarxMenuProvider *provider,
 	
   debug_enter();
 
+  CHECK_OBJECT(object);
 	CHECK_METHOD_NAME(object->instance);
 
 	CONVERT_LIST(py_files, files);
@@ -245,6 +255,7 @@ thunarx_python_object_get_property_pages (ThunarxPropertyPageProvider *provider,
 	
   debug_enter();
 
+  CHECK_OBJECT(object);
 	CHECK_METHOD_NAME(object->instance);
 
 	CONVERT_LIST(py_files, files);
@@ -276,6 +287,7 @@ thunarx_python_object_get_renamers (ThunarxRenamerProvider *provider)
 	
   debug_enter();
 
+  CHECK_OBJECT(object);
 	CHECK_METHOD_NAME(object->instance);
 
   py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME, "");
@@ -324,6 +336,7 @@ thunarx_python_object_get_preferences_actions (ThunarxPreferencesProvider *provi
 	
   debug_enter();
 
+  CHECK_OBJECT(object);
 	CHECK_METHOD_NAME(object->instance);
 
   py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
@@ -368,7 +381,8 @@ thunarx_python_object_finalize (GObject *object)
 {
   debug_enter();
 
-	Py_DECREF(((ThunarxPythonObject *)object)->instance);
+  if (((ThunarxPythonObject *)object)->instance != NULL)
+  	Py_DECREF(((ThunarxPythonObject *)object)->instance);
 }
 
 static void
