@@ -38,7 +38,7 @@ static void
 thunarx_python_object_finalize (GObject *object);
 static void
 thunarx_python_object_class_init (ThunarxPythonObjectClass *klass,
-								                  gpointer class_data);
+								  gpointer                  class_data);
 								                  
 								                  
 
@@ -47,21 +47,21 @@ static GList *thunarx_python_object_get_file_actions            (ThunarxMenuProv
                                                                  GtkWidget                *window,
                                                                  GList                    *files);
 static GList *thunarx_python_object_get_folder_actions          (ThunarxMenuProvider      *provider,
-                              									                 GtkWidget                *window,
-	                         		 								                   ThunarxFileInfo          *folder);
+                              									 GtkWidget                *window,
+	                         		 							 ThunarxFileInfo          *folder);
 static GList *thunarx_python_object_get_dnd_actions             (ThunarxMenuProvider      *provider,
-                       		  									                   GtkWidget                *window,
-	                        										                   ThunarxFileInfo          *folder,
-	                        										                   GList                    *files);
+                       		  									 GtkWidget                *window,
+	                        									 ThunarxFileInfo          *folder,
+	                        									 GList                    *files);
 
 
-static void thunarx_python_object_property_page_provider_iface_init (ThunarxPropertyPageProviderIface *iface);
-static GList *thunarx_python_object_get_property_pages          (ThunarxPropertyPageProvider  *provider,
-										                                             GList                        *files);
+static void thunarx_python_object_property_page_provider_iface_init (ThunarxPropertyPageProviderIface   *iface);
+static GList *thunarx_python_object_get_property_pages              (ThunarxPropertyPageProvider        *provider,
+										                             GList                              *files);
 
-static void   thunarx_python_object_preferences_provider_iface_init (ThunarxPreferencesProviderIface *iface);
-static GList *thunarx_python_object_get_preferences_actions     (ThunarxPreferencesProvider   *provider,
-										                                             GtkWidget                    *window);
+static void   thunarx_python_object_preferences_provider_iface_init (ThunarxPreferencesProviderIface    *iface);
+static GList *thunarx_python_object_get_preferences_actions         (ThunarxPreferencesProvider         *provider,
+										                             GtkWidget                          *window);
 
 static void   thunarx_python_object_renamer_provider_iface_init (ThunarxRenamerProviderIface  *iface);
 static GList *thunarx_python_object_get_renamers                (ThunarxRenamerProvider       *provider);
@@ -72,58 +72,64 @@ static GList *thunarx_python_object_get_renamers                (ThunarxRenamerP
  *   the return value is called ret
  */
 
-#define CHECK_METHOD_NAME(self)                                         \
-	if (!PyObject_HasAttrString(self, METHOD_NAME))                       \
+#define CHECK_METHOD_NAME(self)                                             \
+	if (!PyObject_HasAttrString(self, METHOD_NAME))                         \
 		goto beach;
 
-#define CHECK_OBJECT(object)										                        \
-  	if (object->instance == NULL)									                      \
-  	{																                                    \
-  		g_object_unref (object);									                        \
-  		goto beach;													                              \
-  	}																                                    \
+#define CHECK_OBJECT(object)										        \
+  	if (object->instance == NULL)									        \
+  	{																        \
+  		g_object_unref (object);									        \
+  		goto beach;													        \
+  	}																        \
 	
-#define CONVERT_LIST(py_files, files)                                   \
-	{                                                                     \
+#define CONVERT_LIST(py_files, files)                                       \
+	{                                                                       \
 		GList *l;                                                           \
-    py_files = PyList_New(0);                                           \
-		for (l = files; l; l = l->next) {                                   \
-      PyObject *obj = pygobject_new((GObject*)l->data);                 \
-			PyList_Append(py_files, obj);							                        \
-			Py_DECREF(obj);                                                   \
+        py_files = PyList_New(0);                                           \
+		for (l = files; l; l = l->next)                                     \
+		{                                                                   \
+            PyObject *obj = pygobject_new((GObject*)l->data);               \
+			PyList_Append(py_files, obj);							        \
+			Py_DECREF(obj);                                                 \
 		}                                                                   \
 	}
 
-#define HANDLE_RETVAL(py_ret)                                           \
-  if (!py_ret) {                                                        \
-		PyErr_Print();                                                      \
+#define HANDLE_RETVAL(py_ret)                                               \
+    if (!py_ret)                                                            \
+    {                                                                       \
+        PyErr_Print();                                                      \
 		goto beach;                                                         \
- 	}                                                                     \
- 	else if (py_ret == Py_None) {                                         \
+ 	}                                                                       \
+ 	else if (py_ret == Py_None)                                             \
+ 	{                                                                       \
  		goto beach;                                                         \
 	}
 
-#define HANDLE_LIST(py_ret, type, type_name)                            \
-    {                                                                   \
-      Py_ssize_t i = 0;                                                 \
-    	if (!PySequence_Check(py_ret) || PyString_Check(py_ret)) {        \
+#define HANDLE_LIST(py_ret, type, type_name)                                \
+    {                                                                       \
+        Py_ssize_t i = 0;                                                   \
+    	if (!PySequence_Check(py_ret) || PyString_Check(py_ret))            \
+    	{                                                                   \
     		PyErr_SetString(PyExc_TypeError,                                \
-    						METHOD_NAME " must return a sequence");                 \
+    						METHOD_NAME " must return a sequence");         \
     		goto beach;                                                     \
-    	}                                                                 \
-    	for (i = 0; i < PySequence_Size (py_ret); i++) {                  \
+    	}                                                                   \
+    	for (i = 0; i < PySequence_Size (py_ret); i++)                      \
+    	{                                                                   \
     		PyGObject *py_item;                                             \
     		py_item = (PyGObject*)PySequence_GetItem (py_ret, i);           \
-    		if (!pygobject_check(py_item, &Py##type##_Type)) {              \
-    			PyErr_SetString(PyExc_TypeError,                              \
-    							METHOD_NAME                                           \
-    							" must return a sequence of "                         \
-    							type_name);                                           \
-    			goto beach;                                                   \
+    		if (!pygobject_check(py_item, &Py##type##_Type))                \
+    		{                                                               \
+    			PyErr_SetString(PyExc_TypeError,                            \
+    							METHOD_NAME                                 \
+    							" must return a sequence of "               \
+    							type_name);                                 \
+    			goto beach;                                                 \
     		}                                                               \
     		ret = g_list_append (ret, (type*) g_object_ref(py_item->obj));  \
-            Py_DECREF(py_item);                                         \
-    	}                                                                 \
+            Py_DECREF(py_item);                                             \
+    	}                                                                   \
     }
 
 
@@ -133,29 +139,29 @@ thunarx_python_object_get_file_actions (ThunarxMenuProvider *provider,
                                         GtkWidget *window,
                                         GList *files)
 {
-  ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
-  GList *ret = NULL;
-  PyObject *py_ret = NULL, *py_files;
-	PyGILState_STATE state = pyg_gil_state_ensure();
-	
-  debug_enter();
+    ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
+    GList *ret = NULL;
+    PyObject *py_ret = NULL, *py_files;
+    PyGILState_STATE state = pyg_gil_state_ensure();
 
-  CHECK_OBJECT(object);
-	CHECK_METHOD_NAME(object->instance);
+    debug_enter();
 
-	CONVERT_LIST(py_files, files);
+    CHECK_OBJECT(object);
+    CHECK_METHOD_NAME(object->instance);
 
-  py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-								 "(NN)", pygobject_new((GObject *)window), py_files);
+    CONVERT_LIST(py_files, files);
 
-	HANDLE_RETVAL(py_ret);
+    py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
+							     "(NN)", pygobject_new((GObject *)window), py_files);
 
-	HANDLE_LIST(py_ret, GtkAction, "gtk.Action");
+    HANDLE_RETVAL(py_ret);
+
+    HANDLE_LIST(py_ret, GtkAction, "gtk.Action");
 
 beach:
-  Py_XDECREF(py_ret);
-  pyg_gil_state_release(state);
-  return ret;
+    Py_XDECREF(py_ret);
+    pyg_gil_state_release(state);
+    return ret;
 }
 #undef METHOD_NAME
 
@@ -163,33 +169,33 @@ beach:
 
 #define METHOD_NAME "get_folder_actions"
 static GList *
-thunarx_python_object_get_folder_actions (ThunarxMenuProvider *provider,
- 		  									                  GtkWidget *window,
-	  										                  ThunarxFileInfo *folder)
+thunarx_python_object_get_folder_actions (ThunarxMenuProvider   *provider,
+ 		  								  GtkWidget             *window,
+	  									  ThunarxFileInfo       *folder)
 {
-	ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
-  GList *ret = NULL;
-  PyObject *py_ret = NULL;
-	PyGILState_STATE state = pyg_gil_state_ensure();
-	
-  debug_enter();
+    ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
+    GList *ret = NULL;
+    PyObject *py_ret = NULL;
+    PyGILState_STATE state = pyg_gil_state_ensure();
 
-  CHECK_OBJECT(object);
-	CHECK_METHOD_NAME(object->instance);
+    debug_enter();
 
-  py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-								 "(NN)",
-								 pygobject_new((GObject *)window),
-								 pygobject_new((GObject *)folder));
-								 
-	HANDLE_RETVAL(py_ret);
+    CHECK_OBJECT(object);
+    CHECK_METHOD_NAME(object->instance);
 
-	HANDLE_LIST(py_ret, GtkAction, "gtk.Action");
+    py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
+						         "(NN)",
+						         pygobject_new((GObject *)window),
+						         pygobject_new((GObject *)folder));
+						     
+    HANDLE_RETVAL(py_ret);
+
+    HANDLE_LIST(py_ret, GtkAction, "gtk.Action");
 	
 beach:
-  Py_XDECREF(py_ret);
-  pyg_gil_state_release(state);
-  return ret;
+    Py_XDECREF(py_ret);
+    pyg_gil_state_release(state);
+    return ret;
 }
 #undef METHOD_NAME
 
@@ -197,37 +203,37 @@ beach:
 
 #define METHOD_NAME "get_dnd_actions"
 static GList *
-thunarx_python_object_get_dnd_actions (ThunarxMenuProvider *provider,
-                                        GtkWidget *window,
-                                        ThunarxFileInfo *folder,
-                                        GList *files)
+thunarx_python_object_get_dnd_actions (ThunarxMenuProvider  *provider,
+                                       GtkWidget            *window,
+                                       ThunarxFileInfo      *folder,
+                                       GList                *files)
 {
-  ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
-  GList *ret = NULL;
-  PyObject *py_ret = NULL, *py_files;
-	PyGILState_STATE state = pyg_gil_state_ensure();
-	
-  debug_enter();
+    ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
+    GList *ret = NULL;
+    PyObject *py_ret = NULL, *py_files;
+    PyGILState_STATE state = pyg_gil_state_ensure();
 
-  CHECK_OBJECT(object);
-	CHECK_METHOD_NAME(object->instance);
+    debug_enter();
 
-	CONVERT_LIST(py_files, files);
+    CHECK_OBJECT(object);
+    CHECK_METHOD_NAME(object->instance);
 
-  py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-								 "(NN)", 
-								 pygobject_new((GObject *)window), 
-								 pygobject_new((GObject *)folder),
-								 py_files);
+    CONVERT_LIST(py_files, files);
 
-	HANDLE_RETVAL(py_ret);
+    py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
+							     "(NN)", 
+							     pygobject_new((GObject *)window), 
+							     pygobject_new((GObject *)folder),
+							     py_files);
 
-	HANDLE_LIST(py_ret, GtkAction, "gtk.Action");
+    HANDLE_RETVAL(py_ret);
+
+    HANDLE_LIST(py_ret, GtkAction, "gtk.Action");
 
 beach:
-  Py_XDECREF(py_ret);
-  pyg_gil_state_release(state);
-  return ret;
+    Py_XDECREF(py_ret);
+    pyg_gil_state_release(state);
+    return ret;
 }
 #undef METHOD_NAME
 
@@ -246,31 +252,31 @@ thunarx_python_object_menu_provider_iface_init (ThunarxMenuProviderIface *iface)
 #define METHOD_NAME "get_property_pages"
 static GList *
 thunarx_python_object_get_property_pages (ThunarxPropertyPageProvider *provider,
-										                      GList *files)
+										  GList                       *files)
 {
-	ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
-  PyObject *py_files, *py_ret = NULL;
-  GList *ret = NULL;
-	PyGILState_STATE state = pyg_gil_state_ensure();
-	
-  debug_enter();
+    ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
+    PyObject *py_files, *py_ret = NULL;
+    GList *ret = NULL;
+    PyGILState_STATE state = pyg_gil_state_ensure();
 
-  CHECK_OBJECT(object);
-	CHECK_METHOD_NAME(object->instance);
+    debug_enter();
 
-	CONVERT_LIST(py_files, files);
+    CHECK_OBJECT(object);
+    CHECK_METHOD_NAME(object->instance);
 
-  py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-								 "(N)", py_files);
+    CONVERT_LIST(py_files, files);
 
-	HANDLE_RETVAL(py_ret);
+    py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
+							     "(N)", py_files);
 
-	HANDLE_LIST(py_ret, ThunarxPropertyPage, "thunarx.PropertyPage");
+    HANDLE_RETVAL(py_ret);
+
+    HANDLE_LIST(py_ret, ThunarxPropertyPage, "thunarx.PropertyPage");
 	
 beach:
-	Py_XDECREF(py_ret);
-	pyg_gil_state_release(state);
-  return ret;
+    Py_XDECREF(py_ret);
+    pyg_gil_state_release(state);
+    return ret;
 }
 #undef METHOD_NAME
 
@@ -280,26 +286,26 @@ beach:
 static GList *
 thunarx_python_object_get_renamers (ThunarxRenamerProvider *provider)
 {
-	ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
-  PyObject *py_ret = NULL;
-  GList *ret = NULL;
-	PyGILState_STATE state = pyg_gil_state_ensure();
-	
-  debug_enter();
+    ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
+    PyObject *py_ret = NULL;
+    GList *ret = NULL;
+    PyGILState_STATE state = pyg_gil_state_ensure();
 
-  CHECK_OBJECT(object);
-	CHECK_METHOD_NAME(object->instance);
+    debug_enter();
 
-  py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME, "");
+    CHECK_OBJECT(object);
+    CHECK_METHOD_NAME(object->instance);
 
-	HANDLE_RETVAL(py_ret);
+    py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME, "");
 
-	HANDLE_LIST(py_ret, ThunarxRenamer, "thunarx.Renamer");
-	
+    HANDLE_RETVAL(py_ret);
+
+    HANDLE_LIST(py_ret, ThunarxRenamer, "thunarx.Renamer");
+
 beach:
-	Py_XDECREF(py_ret);
-	pyg_gil_state_release(state);
-  return ret;
+    Py_XDECREF(py_ret);
+    pyg_gil_state_release(state);
+    return ret;
 }
 #undef METHOD_NAME
 
@@ -313,8 +319,6 @@ thunarx_python_object_property_page_provider_iface_init (ThunarxPropertyPageProv
 
 
 
-
-
 static void
 thunarx_python_object_renamer_provider_iface_init (ThunarxRenamerProviderIface *iface)
 {
@@ -323,33 +327,32 @@ thunarx_python_object_renamer_provider_iface_init (ThunarxRenamerProviderIface *
 
 
 
-
 #define METHOD_NAME "get_preferences_actions"
 static GList *
 thunarx_python_object_get_preferences_actions (ThunarxPreferencesProvider *provider,
-										                           GtkWidget *window)
+										       GtkWidget                  *window)
 {
-	ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
-  PyObject *py_ret = NULL;
-  GList *ret = NULL;
-	PyGILState_STATE state = pyg_gil_state_ensure();
-	
-  debug_enter();
+    ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
+    PyObject *py_ret = NULL;
+    GList *ret = NULL;
+    PyGILState_STATE state = pyg_gil_state_ensure();
 
-  CHECK_OBJECT(object);
-	CHECK_METHOD_NAME(object->instance);
+    debug_enter();
 
-  py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-								 "(N)", pygobject_new((GObject *)window));
+    CHECK_OBJECT(object);
+    CHECK_METHOD_NAME(object->instance);
 
-	HANDLE_RETVAL(py_ret);
+    py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
+						        "(N)", pygobject_new((GObject *)window));
 
-	HANDLE_LIST(py_ret, GtkAction, "Gtk.Action");
+    HANDLE_RETVAL(py_ret);
+
+    HANDLE_LIST(py_ret, GtkAction, "Gtk.Action");
 	
 beach:
-	Py_XDECREF(py_ret);
-	pyg_gil_state_release(state);
-  return ret;
+    Py_XDECREF(py_ret);
+    pyg_gil_state_release(state);
+    return ret;
 }
 #undef METHOD_NAME
 
@@ -366,28 +369,28 @@ thunarx_python_object_preferences_provider_iface_init (ThunarxPreferencesProvide
 static void 
 thunarx_python_object_instance_init (ThunarxPythonObject *object)
 {
-	ThunarxPythonObjectClass *class;
-  debug_enter();
+    ThunarxPythonObjectClass *class;
+    debug_enter();
 
-	class = (ThunarxPythonObjectClass*)(((GTypeInstance*)object)->g_class);
+    class = (ThunarxPythonObjectClass*)(((GTypeInstance*)object)->g_class);
 
-	object->instance = PyObject_CallObject(class->type, NULL);
-	if (object->instance == NULL)
-		PyErr_Print();
+    object->instance = PyObject_CallObject(class->type, NULL);
+    if (object->instance == NULL)
+	    PyErr_Print();
 }
 
 static void
 thunarx_python_object_finalize (GObject *object)
 {
-  debug_enter();
+    debug_enter();
 
-  if (((ThunarxPythonObject *)object)->instance != NULL)
-  	Py_DECREF(((ThunarxPythonObject *)object)->instance);
+    if (((ThunarxPythonObject *)object)->instance != NULL)
+        Py_DECREF(((ThunarxPythonObject *)object)->instance);
 }
 
 static void
 thunarx_python_object_class_init (ThunarxPythonObjectClass *klass,
-								                  gpointer class_data)
+								  gpointer                  class_data)
 {
 	debug_enter();
 
@@ -401,7 +404,8 @@ thunarx_python_object_class_init (ThunarxPythonObjectClass *klass,
 
 
 GType 
-thunarx_python_object_get_type (ThunarxProviderPlugin *plugin, PyObject *type)
+thunarx_python_object_get_type (ThunarxProviderPlugin   *plugin, 
+                                PyObject                *type)
 {
 	GTypeInfo *info;
 	const char *type_name;
@@ -450,25 +454,29 @@ thunarx_python_object_get_type (ThunarxProviderPlugin *plugin, PyObject *type)
 										 type_name,
 										 info, 0);
 
-	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxPropertyPageProvider_Type)) {
+	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxPropertyPageProvider_Type))
+	{
 		thunarx_provider_plugin_add_interface (plugin, gtype, 
 									 THUNARX_TYPE_PROPERTY_PAGE_PROVIDER,
 									 &property_page_provider_iface_info);
 	}
 
-	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxMenuProvider_Type)) {
+	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxMenuProvider_Type))
+	{
 		thunarx_provider_plugin_add_interface (plugin, gtype, 
 									 THUNARX_TYPE_MENU_PROVIDER,
 									 &menu_provider_iface_info);
 	}
 
-	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxRenamerProvider_Type)) {
+	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxRenamerProvider_Type))
+	{
 		thunarx_provider_plugin_add_interface (plugin, gtype, 
 									 THUNARX_TYPE_RENAMER_PROVIDER,
 									 &renamer_provider_iface_info);
 	}
 
-	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxPreferencesProvider_Type)) {
+	if (PyObject_IsSubclass(type, (PyObject*)&PyThunarxPreferencesProvider_Type))
+	{
 		thunarx_provider_plugin_add_interface (plugin, gtype, 
 									 THUNARX_TYPE_PREFERENCES_PROVIDER,
 									 &preferences_provider_iface_info);
