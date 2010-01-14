@@ -157,6 +157,7 @@ thunarx_python_object_get_file_actions (ThunarxMenuProvider *provider,
     HANDLE_LIST(py_ret, GtkAction, "gtk.Action");
 
 beach:
+    Py_XDECREF(py_files);
     Py_XDECREF(py_ret);
     pyg_gil_state_release(state);
     return ret;
@@ -229,6 +230,7 @@ thunarx_python_object_get_dnd_actions (ThunarxMenuProvider  *provider,
     HANDLE_LIST(py_ret, GtkAction, "gtk.Action");
 
 beach:
+    Py_XDECREF(py_files);
     Py_XDECREF(py_ret);
     pyg_gil_state_release(state);
     return ret;
@@ -272,6 +274,7 @@ thunarx_python_object_get_property_pages (ThunarxPropertyPageProvider *provider,
     HANDLE_LIST(py_ret, ThunarxPropertyPage, "thunarx.PropertyPage");
 	
 beach:
+    Py_XDECREF(py_files);
     Py_XDECREF(py_ret);
     pyg_gil_state_release(state);
     return ret;
