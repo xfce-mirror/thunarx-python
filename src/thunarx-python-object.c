@@ -89,9 +89,7 @@ static GList *thunarx_python_object_get_renamers                (ThunarxRenamerP
         py_files = PyList_New(0);                                           \
 		for (l = files; l; l = l->next)                                     \
 		{                                                                   \
-            PyObject *obj = pygobject_new((GObject*)l->data);               \
-			PyList_Append(py_files, obj);							        \
-			Py_DECREF(obj);                                                 \
+			PyList_Append(py_files, pygobject_new((GObject*)l->data));		\
 		}                                                                   \
 	}
 
