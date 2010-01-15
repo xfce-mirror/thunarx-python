@@ -75,6 +75,7 @@ XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [2.6.0])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.6.0])
 XDT_CHECK_PACKAGE([GOBJECT], [gobject-2.0], [2.6.0])
 XDT_CHECK_PACKAGE([PYGTK], [pygtk-2.0], [2.6.0])
+XDT_CHECK_PACKAGE([PYGOBJECT], [pygobject-2.0], [2.16.0])
 XDT_CHECK_PACKAGE([GNOMEPYTHON], [gnome-python-2.0], [2.12.0])
 
 PYTHON_CFLAGS="`python-config --includes`"

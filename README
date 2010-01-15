@@ -4,8 +4,9 @@ These bindings allow one to create python plugins for Thunar.
 
 Dependencies
 ------------
- * thunar (0.4.0 or later)
+ * thunar (1.1 or later)
  * pygtk (2.6.0 or later)
+ * pygobject (2.16 or later)
  * gnome-python (2.12.0 or later)
  
  
