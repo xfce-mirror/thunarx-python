@@ -2,13 +2,26 @@ Thunarx Python Bindings
 
 These bindings allow one to create python plugins for Thunar.
 
+Install
+-----------
+To install, run the following commands:
+  $ ./configure
+  $ make
+  $ sudo make install
+  
+If you have built thunar into a non-standard prefix, thunarx-python will be
+installed there, but make sure pkg-config knows where it is.  You may have to 
+update your PKG_CONFIG_PATH environment variable to include your thunar's 
+pkgconfig path.
+
+    export PKG_CONFIG_PATH="/path/to/thunar/lib/pkgconfig"
+
 Dependencies
 ------------
  * thunar (1.1 or later)
  * pygtk (2.6.0 or later)
  * pygobject (2.16 or later)
  * gnome-python (2.12.0 or later)
- 
  
 Debugging
 -----------
