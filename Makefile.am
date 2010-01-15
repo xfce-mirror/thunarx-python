@@ -1,5 +1,5 @@
+SUBDIRS = src docs
 
-SUBDIRS = src
 distclean-local:
 	rm -rf *.spec *.cache *~
 

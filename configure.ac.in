@@ -125,5 +125,7 @@ XDT_FEATURE_LINKER_OPTS()
 AC_OUTPUT([
 Makefile
 src/Makefile
+docs/Makefile
+docs/examples/Makefile
 ])
 
