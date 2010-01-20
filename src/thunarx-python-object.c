@@ -139,7 +139,7 @@ thunarx_python_object_get_file_actions (ThunarxMenuProvider *provider,
 {
     ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
     GList *ret = NULL;
-    PyObject *py_ret = NULL, *py_files = NULL;
+    PyObject *py_ret = NULL, *py_files;
     PyGILState_STATE state = pyg_gil_state_ensure();
 
     debug_enter();
@@ -157,7 +157,6 @@ thunarx_python_object_get_file_actions (ThunarxMenuProvider *provider,
     HANDLE_LIST(py_ret, GtkAction, "gtk.Action");
 
 beach:
-    Py_XDECREF(py_files);
     Py_XDECREF(py_ret);
     pyg_gil_state_release(state);
     return ret;
@@ -209,7 +208,7 @@ thunarx_python_object_get_dnd_actions (ThunarxMenuProvider  *provider,
 {
     ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
     GList *ret = NULL;
-    PyObject *py_ret = NULL, *py_files = NULL;
+    PyObject *py_ret = NULL, *py_files;
     PyGILState_STATE state = pyg_gil_state_ensure();
 
     debug_enter();
@@ -230,7 +229,6 @@ thunarx_python_object_get_dnd_actions (ThunarxMenuProvider  *provider,
     HANDLE_LIST(py_ret, GtkAction, "gtk.Action");
 
 beach:
-    Py_XDECREF(py_files);
     Py_XDECREF(py_ret);
     pyg_gil_state_release(state);
     return ret;
@@ -255,7 +253,7 @@ thunarx_python_object_get_property_pages (ThunarxPropertyPageProvider *provider,
 										  GList                       *files)
 {
     ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
-    PyObject *py_files = NULL, *py_ret = NULL;
+    PyObject *py_files, *py_ret = NULL;
     GList *ret = NULL;
     PyGILState_STATE state = pyg_gil_state_ensure();
 
@@ -274,7 +272,6 @@ thunarx_python_object_get_property_pages (ThunarxPropertyPageProvider *provider,
     HANDLE_LIST(py_ret, ThunarxPropertyPage, "thunarx.PropertyPage");
 	
 beach:
-    Py_XDECREF(py_files);
     Py_XDECREF(py_ret);
     pyg_gil_state_release(state);
     return ret;
