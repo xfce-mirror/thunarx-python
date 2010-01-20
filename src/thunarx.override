@@ -393,6 +393,8 @@ _wrap_thunarx_file_info_set_emblem(PyGObject *self, PyObject *args)
     g_object_set_qdata_full (G_OBJECT (self->obj), thunar_file_emblem_names_quark,
                                   emblem_names, (GDestroyNotify) g_strfreev);
 
+    g_free(emblem);
+
     Py_INCREF(Py_None);
     return Py_None;
 }
