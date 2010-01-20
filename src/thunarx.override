@@ -370,3 +370,29 @@ _wrap_ThunarxRenamer__proxy_do_save(ThunarxRenamer  *self,
     Py_DECREF(py_self);
     pyg_gil_state_release(__py_state);
 }
+%%
+define ThunarxFileInfo.set_emblem args
+static PyObject *
+_wrap_thunarx_file_info_set_emblem(PyGObject *self, PyObject *args)
+{
+    gchar  *emblem;
+    gchar **emblem_names = NULL;
+    static GQuark thunar_file_emblem_names_quark;
+    
+    thunar_file_emblem_names_quark = g_quark_from_static_string ("thunar-file-emblem-names");
+    
+    if (!PyArg_ParseTuple(args, "z:ThunarxFileInfo.set_emblem", &emblem))
+        return;
+
+    if (emblem != NULL)
+    {
+        emblem = g_strconcat("emblem-", emblem);
+        emblem_names = g_strsplit (emblem, ";", -1);
+    }
+    
+    g_object_set_qdata_full (G_OBJECT (self->obj), thunar_file_emblem_names_quark,
+                                  emblem_names, (GDestroyNotify) g_strfreev);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}

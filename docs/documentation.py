@@ -120,6 +120,12 @@ class FileInfo:
         """
         pass
 
+    def set_emblem(self, emblem):
+        """
+        @type   emblem  string
+        """
+        pass
+
     def changed(self):
         pass
     
