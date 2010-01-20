@@ -122,7 +122,7 @@ class FileInfo:
 
     def set_emblem(self, emblem):
         """
-        @type   emblem  string
+        @type   emblem  string or None
         """
         pass
 
