@@ -386,7 +386,7 @@ _wrap_thunarx_file_info_set_emblem(PyGObject *self, PyObject *args)
 
     if (emblem != NULL)
     {
-        emblem = g_strconcat("emblem-", emblem);
+        emblem = g_strconcat("emblem-", emblem, NULL);
         emblem_names = g_strsplit (emblem, ";", -1);
     }
     
