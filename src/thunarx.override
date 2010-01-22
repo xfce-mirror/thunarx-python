@@ -24,65 +24,6 @@ headers
 
 #include <thunarx/thunarx.h>
 
-static PyObject *
-_glist_to_pyobject (GList *list)
-{
-	GList *l;
-	PyObject *item, *ret;
-
-	ret = PyList_New (0);
-
-	for (l = list; l != NULL; l = l->next)
-	{
-		item = pygobject_new ((GObject *)l->data);
-
-		if (item == NULL)
-		{
-			Py_DECREF (ret);
-			return NULL;
-		}
-
-		PyList_Append (ret, item);
-		Py_DECREF (item);
-	}
-
-	return ret;
-}
-
-GList *
-_pyobject_to_glist (PyObject        *py_items, 
-                    PyTypeObject    *type, 
-                    gboolean        *ok)
-{
-	int len, i;
-	GList *items;
-
-	*ok = TRUE;
-
-	len = PyList_Size (py_items);
-
-	for (i = 0; i < len; i++)
-	{
-		PyObject *item = PyList_GetItem (py_items, i);
-
-		if (!pygobject_check (item, type))
-		{
-			char *err = g_strdup_printf ("list item not a %s", type->tp_name);
-
-			PyErr_SetString (PyExc_TypeError, err);
-
-			g_free (err);
-			g_list_free (items);
-			*ok = FALSE;
-			return NULL;
-		}
-
-		items = g_list_append (items, pygobject_get(item));
-	}
-
-	return items;
-}
-
 GHashTable *
 _pyobject_to_ghashtable (PyObject   *py_dict, 
                          GHashTable *hashtable)
@@ -369,32 +310,4 @@ _wrap_ThunarxRenamer__proxy_do_save(ThunarxRenamer  *self,
     Py_DECREF(py_args);
     Py_DECREF(py_self);
     pyg_gil_state_release(__py_state);
-}
-%%
-define ThunarxFileInfo.set_emblem args
-static PyObject *
-_wrap_thunarx_file_info_set_emblem(PyGObject *self, PyObject *args)
-{
-    gchar  *emblem;
-    gchar **emblem_names = NULL;
-    static GQuark thunar_file_emblem_names_quark;
-    
-    thunar_file_emblem_names_quark = g_quark_from_static_string ("thunar-file-emblem-names");
-    
-    if (!PyArg_ParseTuple(args, "z:ThunarxFileInfo.set_emblem", &emblem))
-        return;
-
-    if (emblem != NULL)
-    {
-        emblem = g_strconcat("emblem-", emblem, NULL);
-        emblem_names = g_strsplit (emblem, ";", -1);
-    }
-    
-    g_object_set_qdata_full (G_OBJECT (self->obj), thunar_file_emblem_names_quark,
-                                  emblem_names, (GDestroyNotify) g_strfreev);
-
-    g_free(emblem);
-
-    Py_INCREF(Py_None);
-    return Py_None;
 }
