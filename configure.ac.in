@@ -30,7 +30,6 @@ dnl ***************************
 dnl *** Initialize automake ***
 dnl ***************************
 AM_INIT_AUTOMAKE([1.8 dist-bzip2 tar-ustar])
-AC_PREFIX_DEFAULT([$(pkg-config --variable prefix thunarx-2 || echo /usr)])
 AM_CONFIG_HEADER([config.h])
 AM_MAINTAINER_MODE()
 
@@ -68,10 +67,24 @@ AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
 AM_CHECK_PYTHON_LIBS(,[AC_MSG_ERROR(could not find Python lib)])
 
 
+dnl ***************************
+dnl *** Determine the installed thunarx version ***
+dnl ***************************
+if test "`pkg-config --variable prefix thunarx-2`" != ""; then
+    THUNARX_API_VERSION=2
+    AC_PREFIX_DEFAULT([$(pkg-config --variable prefix thunarx-2 || echo /usr)])
+    XDT_CHECK_PACKAGE([THUNARX], [thunarx-2], [1.0.1])
+else
+    THUNARX_API_VERSION=1
+    AC_PREFIX_DEFAULT([$(pkg-config --variable prefix thunarx-1 || echo /usr)])
+    XDT_CHECK_PACKAGE([THUNARX], [thunarx-1], [0.4.0])
+fi
+AC_SUBST(THUNARX_API_VERSION)
+
+
 dnl ***********************************
 dnl *** Check for required packages ***
 dnl ***********************************
-XDT_CHECK_PACKAGE([THUNARX], [thunarx-2])
 XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [2.6.0])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.6.0])
 XDT_CHECK_PACKAGE([GOBJECT], [gobject-2.0], [2.6.0])
@@ -87,7 +100,7 @@ AC_SUBST(PYTHON_CFLAGS)
 AC_SUBST(PYTHON_LIBS)
 AC_SUBST(PYTHON_LDFLAGS)
 
-THUNARX_LIBDIR=`pkg-config --variable=libdir thunarx-2`
+THUNARX_LIBDIR=`pkg-config --variable=libdir thunarx-${THUNARX_API_VERSION}`
 AC_SUBST(THUNARX_LIBDIR)
 AC_DEFINE_UNQUOTED(THUNARX_LIBDIR, "$THUNARX_LIBDIR", [Thunarx libdir])
 
@@ -109,7 +122,7 @@ AC_MSG_RESULT($PYGTK_CODEGEN)
 dnl ---------------------------------
 dnl Get thunar extensions directory
 dnl ---------------------------------
-THUNARX_EXTENSION_DIR=`$PKG_CONFIG --variable=extensionsdir thunarx-2`
+THUNARX_EXTENSION_DIR=`$PKG_CONFIG --variable=extensionsdir thunarx-${THUNARX_API_VERSION}`
 AC_SUBST(THUNARX_EXTENSION_DIR)
 AC_DEFINE_UNQUOTED(THUNARX_EXTENSION_DIR, "$THUNARX_EXTENSION_DIR", [Thunar's extensions directory])
 

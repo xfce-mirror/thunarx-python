@@ -119,24 +119,6 @@
   (return-type "gboolean")
 )
 
-(define-method get_file_info
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_get_file_info")
-  (return-type "GFileInfo*")
-)
-
-(define-method get_filesystem_info
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_get_filesystem_info")
-  (return-type "GFileInfo*")
-)
-
-(define-method get_location
-  (of-object "ThunarxFileInfo")
-  (c-name "thunarx_file_info_get_location")
-  (return-type "GFile*")
-)
-
 (define-method changed
   (of-object "ThunarxFileInfo")
   (c-name "thunarx_file_info_changed")

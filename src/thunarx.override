@@ -311,3 +311,70 @@ _wrap_ThunarxRenamer__proxy_do_save(ThunarxRenamer  *self,
     Py_DECREF(py_self);
     pyg_gil_state_release(__py_state);
 }
+%%
+define ThunarxFileInfo.get_file_info
+static PyObject *
+_wrap_thunarx_file_info_get_file_info(PyGObject *self)
+{
+#if THUNARX_API_VERSION >= 2
+    GFileInfo *ret;
+    
+    ret = thunarx_file_info_get_file_info(THUNARX_FILE_INFO(self->obj));
+    
+    /* pygobject_new handles NULL checking */
+    return pygobject_new((GObject *)ret);
+#else
+    g_warning("thunarx_file_info.get_file_info is not implemented for your version of Thunar");
+
+    Py_DECREF(Py_None);
+    return Py_None;
+#endif
+}
+%%
+define ThunarxFileInfo.get_filesystem_info
+static PyObject *
+_wrap_thunarx_file_info_get_filesystem_info(PyGObject *self)
+{
+#if THUNARX_API_VERSION >= 2
+    GFileInfo *ret;
+    
+    ret = thunarx_file_info_get_filesystem_info(THUNARX_FILE_INFO(self->obj));
+    
+    /* pygobject_new handles NULL checking */
+    return pygobject_new((GObject *)ret);
+#else
+    g_warning("thunarx_file_info.get_filesystem_info is not implemented for your version of Thunar");
+        
+    Py_DECREF(Py_None);
+    return Py_None;
+#endif
+}
+%%
+define ThunarxFileInfo.get_location
+static PyObject *
+_wrap_thunarx_file_info_get_location(PyGObject *self)
+{
+#if THUNARX_API_VERSION >= 2
+    GFile *ret;
+    
+    ret = thunarx_file_info_get_location(THUNARX_FILE_INFO(self->obj));
+    
+    /* pygobject_new handles NULL checking */
+    return pygobject_new((GObject *)ret);
+#else
+    g_warning("thunarx_file_info.get_location is not implemented for your version of Thunar");
+
+    Py_DECREF(Py_None);
+    return Py_None;
+#endif
+}
+%%
+define ThunarxFileInfo.get_vfs_info
+static PyObject *
+_wrap_thunarx_file_info_get_vfs_info(PyGObject *self)
+{
+    g_warning("thunarx_file_info.get_vfs_info is not implemented for your version of Thunar");
+
+    Py_DECREF(Py_None);
+    return Py_None;
+}

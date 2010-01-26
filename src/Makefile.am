@@ -6,9 +6,10 @@ AM_CPPFLAGS =								\
 	-DEXO_API_SUBJECT_TO_CHANGE					\
 	-DLIBEXECDIR=\"$(libexecdir)\"					\
 	-DPY_LIB_LOC=\"$(PYTHON_LIB_LOC)\"				\
-	-DPYTHON_VERSION=\"$(PYTHON_VERSION)\"
+	-DPYTHON_VERSION=\"$(PYTHON_VERSION)\"				\
+	-DTHUNARX_API_VERSION=$(THUNARX_API_VERSION)
 
-extensionsdir = $(THUNARX_LIBDIR)/thunarx-2
+extensionsdir = $(THUNARX_LIBDIR)/thunarx-$(THUNARX_API_VERSION)
 extensions_LTLIBRARIES =						\
 	thunarx-python.la
 
@@ -70,8 +71,6 @@ EXTRA_DIST = thunarx.override thunarx.defs
 	    --register $(PYGTK_DEFSDIR)/pango-types.defs \
             --register $(PYGTK_DEFSDIR)/gdk-types.defs \
             --register $(PYGTK_DEFSDIR)/gtk-types.defs \
-            --register $(PYGOBJECT_DEFSDIR)/gio-types.defs \
-            --register $(PYGOBJECT_DEFSDIR)/unix-types.defs \
             --override $*.override \
             --prefix py$* $*.defs) > gen-$*.c \
         && cp gen-$*.c $*.c \
