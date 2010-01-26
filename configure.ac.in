@@ -72,11 +72,11 @@ dnl *** Determine the installed thunarx version ***
 dnl ***************************
 if test "`pkg-config --variable prefix thunarx-2`" != ""; then
     THUNARX_API_VERSION=2
-    AC_PREFIX_DEFAULT([$(pkg-config --variable prefix thunarx-2 || echo /usr)])
-    XDT_CHECK_PACKAGE([THUNARX], [thunarx-2], [1.0.1])
+    prefix=`pkg-config --variable prefix thunarx-2`
+    XDT_CHECK_PACKAGE([THUNARX], [thunarx-2], [1.1.0])
 else
     THUNARX_API_VERSION=1
-    AC_PREFIX_DEFAULT([$(pkg-config --variable prefix thunarx-1 || echo /usr)])
+    prefix=`pkg-config --variable prefix thunarx-1`
     XDT_CHECK_PACKAGE([THUNARX], [thunarx-1], [0.4.0])
 fi
 AC_SUBST(THUNARX_API_VERSION)
@@ -143,3 +143,12 @@ docs/Makefile
 docs/examples/Makefile
 ])
 
+dnl ***************************
+dnl *** Print configuration ***
+dnl ***************************
+echo
+echo "Build Configuration:"
+echo
+
+echo "Prefix: $prefix"
+echo
