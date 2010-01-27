@@ -378,3 +378,35 @@ _wrap_thunarx_file_info_get_vfs_info(PyGObject *self)
     Py_DECREF(Py_None);
     return Py_None;
 }
+%%
+override thunarx_property_page_new
+static int
+_wrap_thunarx_property_page_new(PyGObject *self, PyObject *args)
+{
+    PyGObject *arg;
+    char *label;
+    GtkWidget *label_widget;
+
+    if (!PyArg_ParseTuple(args,"O:ThunarxPropertyPage.__init__", &arg))
+        return -1;
+
+    if (PyObject_TypeCheck(arg, &PyString_Type))
+    {
+        label = PyString_AsString((PyObject *)arg);
+        Py_DECREF(arg);
+        self->obj = (GObject *)thunarx_property_page_new(label);
+    }
+    else if (PyObject_TypeCheck(arg, &PyGtkWidget_Type))
+    {
+        label_widget = GTK_WIDGET(arg->obj);
+        Py_DECREF(arg);
+        self->obj = (GObject *)thunarx_property_page_new_with_label_widget(label_widget);
+    }
+
+    if (!self->obj) {
+        PyErr_SetString(PyExc_RuntimeError, "could not create ThunarxPropertyPage object");
+        return -1;
+    }
+    pygobject_register_wrapper((PyObject *)self);
+    return 0;
+}
