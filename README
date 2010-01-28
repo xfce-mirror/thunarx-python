@@ -5,16 +5,16 @@ These bindings allow one to create python plugins for Thunar.
 Install
 -----------
 To install, run the following commands:
-  $ ./configure
+  $ ./configure (or ./autogen.sh if building from git)
   $ make
-  $ sudo make install
+  $ make install
   
 If you have built thunar into a non-standard prefix, thunarx-python will be
 installed there, but make sure pkg-config knows where it is.  You may have to 
 update your PKG_CONFIG_PATH environment variable to include your thunar's 
 pkgconfig path.
 
-    export PKG_CONFIG_PATH="/path/to/thunar/lib/pkgconfig"
+    export PKG_CONFIG_PATH="/thunar_prefix/lib/pkgconfig"
 
 Dependencies
 ------------
