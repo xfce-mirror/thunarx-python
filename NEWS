@@ -1,3 +1,8 @@
+0.2.1:
+    - Override the thunarx.PropertyPage constructor to allow for a string or
+        GtkWidget label
+    - Updated the README file with some corrections and clarifications
+
 0.2.0:
     - Allow thunarx-python to run on all versions of thunar (>= 0.4.0)
 
