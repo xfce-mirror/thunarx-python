@@ -1,0 +1,289 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="class-thunarx-python-file-info">
+  <refnamediv>
+    <refname>thunarx.FileInfo</refname>
+    <refpurpose>thunarx.FileInfo Reference</refpurpose>
+  </refnamediv>
+
+<!-- ******************************* -->
+<!-- BEGIN OF NAUTILUS-PYTHON SYNOPSIS -->
+<!-- ******************************* -->
+
+  <refsect1>
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+        <ooclass><classname>thunarx.FileInfo</classname></ooclass>
+        <ooclass><classname><link linkend="class-ginterface">gobject.GInterface</link></classname></ooclass>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-thunarx-python-file-info--get-name">get_name</link></methodname>
+            <methodparam></methodparam>
+        </methodsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-thunarx-python-file-info--get-uri">get_uri</link></methodname>
+            <methodparam></methodparam>
+        </methodsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-thunarx-python-file-info--get-parent-uri">get_parent_uri</link></methodname>
+            <methodparam></methodparam>
+        </methodsynopsis>
+        
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-thunarx-python-file-info--get-uri-scheme">get_uri_scheme</link></methodname>
+            <methodparam></methodparam>
+        </methodsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-thunarx-python-file-info--get-mime-type">get_mime_type</link></methodname>
+            <methodparam></methodparam>
+        </methodsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-thunarx-python-file-info--has-mime-type">has_mime_type</link></methodname>
+            <methodparam><parameter role="keyword">mime_type</parameter></methodparam>
+        </methodsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-thunarx-python-file-info--is-directory">is_directory</link></methodname>
+            <methodparam></methodparam>
+        </methodsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-thunarx-python-file-info--get-file-info">get_file_info</link></methodname>
+            <methodparam></methodparam>
+        </methodsynopsis>
+        
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-thunarx-python-file-info--get-filesystem-info">get_filesystem_info</link></methodname>
+            <methodparam></methodparam>
+        </methodsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-thunarx-python-file-info--get-location">get_location</link></methodname>
+            <methodparam></methodparam>
+        </methodsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-thunarx-python-file-info--changed">changed</link></methodname>
+            <methodparam></methodparam>
+        </methodsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-thunarx-python-file-info--renamed">renamed</link></methodname>
+            <methodparam></methodparam>
+        </methodsynopsis>
+    </classsynopsis>
+  </refsect1>
+
+<!-- ********************************* -->
+<!-- BEGIN OF ANCESTRY -->
+<!-- ********************************* -->
+
+<refsect1>
+    <title>Ancestry</title>
+
+<synopsis>+-- <link linkend="class-ginterface">gobject.GInterface</link>
+    +-- <link linkend="class-thunarx-python-file-info">thunarx.FileInfo</link>
+</synopsis>
+</refsect1>
+
+
+<!-- ********************************** -->
+<!-- BEGIN OF DESCRIPTION -->
+<!-- ********************************** -->
+
+  <refsect1 id="description-file-info">
+    <title>Description</title>
+
+      <para>
+        Each <link linkend="class-thunarx-python-file-info"><classname>thunarx.FileInfo</classname></link> object is an abstraction
+        of a real file.
+      </para>
+
+  </refsect1>
+
+
+<!-- ******************************** -->
+<!-- BEGIN OF METHODS -->
+<!-- ******************************** -->
+
+<refsect1>
+    <title>Public Methods</title>
+
+    <refsect2 id="method-thunarx-python-file-info--get-name">
+        <title>thunarx.FileInfo.get_name</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>get_name</methodname>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>Returns the real name of the file represented by file_info in the local file system encoding.</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+
+    <refsect2 id="method-thunarx-python-file-info--get-uri">
+        <title>thunarx.FileInfo.get_uri</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>get_uri</methodname>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>Returns the escaped, fully qualified URI of the file object represented by file_info.</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+
+    <refsect2 id="method-thunarx-python-file-info--get-parent-uri">
+        <title>thunarx.FileInfo.get_parent_uri</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>get_parent_uri</methodname>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>Returns the URI to the parent file of file_info or NULL if file_info has no parent. Note that the parent URI may be of a different type than the URI of file_info. For example, the parent of "file:///" is "computer:///".</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+
+    <refsect2 id="method-thunarx-python-file-info--get-uri-scheme">
+        <title>thunarx.FileInfo.get_uri_scheme</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>get_uri_scheme</methodname>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>Returns the URI scheme of the file represented by file_info. E.g. if file_info refers to the file "file:///usr/home", the return value will be "file".</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+
+    <refsect2 id="method-thunarx-python-file-info--get-mime-type">
+        <title>thunarx.FileInfo.get_mime_type</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>get_mime_type</methodname>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>Returns the MIME-type of the file represented by file_info or NULL if no MIME-type is known for file_info.</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+
+    <refsect2 id="method-thunarx-python-file-info--has-mime-type">
+        <title>thunarx.FileInfo.get_mime_type</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>get_mime_type</methodname>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>
+Checks whether file_info is of the given mime_type or whether the MIME-type of file_info is a subclass of mime_type.
+
+This is the preferred way for most extensions to check whether they support a given file or not, and you should consider using this method rather than thunarx.FileInfo.get_mime_type(). A simple example would be a menu extension that performs a certain action on text files. In this case you want to check whether a given thunarx.FileInfo refers to any kind of text file, not only to "text/plain" (e.g. this also includes "text/xml" and "application/x-desktop").
+
+But you should be aware that this method may take some time to test whether mime_type is valid for file_info, so don't call it too often.
+                </simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+
+    <refsect2 id="method-thunarx-python-file-info--is-directory">
+        <title>thunarx.FileInfo.is_directory</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>is_directory</methodname>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>Checks whether file_info refers to a directory.</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+
+    <refsect2 id="method-thunarx-python-file-info--get-file-info">
+        <title>thunarx.FileInfo.get_file_info</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>get_file_info</methodname>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>Returns the GFileInfo object associated with file_info, which includes additional information about the file_info as queried from GIO earlier.</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+
+    <refsect2 id="method-thunarx-python-file-info--get-filesystem-info">
+        <title>thunarx.FileInfo.get_filesystem_info</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>get_filesystem_info</methodname>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>Returns the GFileInfo which includes additional information about the filesystem file_info resides on.</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+
+    <refsect2 id="method-thunarx-python-file-info--get-location">
+        <title>thunarx.FileInfo.get_location</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>get_location</methodname>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>Returns the GFile file_info points to. The GFile is a more powerful tool than just the URI or the path.</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+
+    <refsect2 id="method-thunarx-python-file-info--changed">
+        <title>thunarx.FileInfo.changed</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>changed</methodname>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>Emits the ::changed signal on file_info. This method should not be invoked by Thunar plugins, instead the file manager itself will use this method to emit ::changed whenever it notices a change on file_info.</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+
+    <refsect2 id="method-thunarx-python-file-info--renamed">
+        <title>thunarx.FileInfo.renamed</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>renamed</methodname>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>
+Emits the ::renamed signal on file_info. This method should not be invoked by Thunar plugins, instead the file manager will emit this signal whenever the user renamed the file_info.
+
+The plugins should instead connect to the ::renamed signal and update it's internal state and it's user interface after the file manager renamed a file.
+                </simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+
+</refsect1>
+
+
+</refentry>
+

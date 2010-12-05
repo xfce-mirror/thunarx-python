@@ -1,0 +1,158 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="class-thunarx-python-menu-provider">
+  <refnamediv>
+    <refname>thunarx.MenuProvider</refname>
+    <refpurpose>thunarx.MenuProvider Reference</refpurpose>
+  </refnamediv>
+
+<!-- ******************************* -->
+<!-- BEGIN OF SYNOPSIS -->
+<!-- ******************************* -->
+
+  <refsect1>
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+      <ooclass><classname>thunarx.MenuProvider</classname></ooclass>
+
+      <methodsynopsis language="python">
+        <methodname><link linkend="method-thunarx-python-menu-provider--get-file-actions">get_file_actions</link></methodname>
+        <methodparam><parameter role="keyword">window</parameter></methodparam>
+        <methodparam><parameter role="keyword">files</parameter></methodparam>
+      </methodsynopsis>
+
+      <methodsynopsis language="python">
+        <methodname><link linkend="method-thunarx-python-menu-provider--get-folder-actions">get_folder_actions</link></methodname>
+        <methodparam><parameter role="keyword">window</parameter></methodparam>
+        <methodparam><parameter role="keyword">folder</parameter></methodparam>
+      </methodsynopsis>
+      
+      <methodsynopsis language="python">
+        <methodname><link linkend="method-thunarx-python-menu-provider--get-dnd-actions">get_dnd_actions</link></methodname>
+        <methodparam><parameter role="keyword">window</parameter></methodparam>
+        <methodparam><parameter role="keyword">folder</parameter></methodparam>
+        <methodparam><parameter role="keyword">files</parameter></methodparam>
+      </methodsynopsis>
+    </classsynopsis>
+  </refsect1>
+
+<!-- ********************************** -->
+<!-- BEGIN OF DESCRIPTION -->
+<!-- ********************************** -->
+
+  <refsect1 id="description-menu-provider">
+    <title>Description</title>
+
+      <para>
+        The interface to extensions that provide additional menu items
+      </para>        
+  </refsect1>
+
+<!-- ****************************** -->
+<!-- BEGIN OF METHODS -->
+<!-- ****************************** -->
+
+  <refsect1>
+        <title>Passive Methods</title>
+
+        <refsect2 id="method-thunarx-python-menu-provider--get-file-actions">
+          <title>thunarx.MenuProvider.get_file_actions</title>
+
+          <programlisting><methodsynopsis language="python">
+            <methodname>get_file_actions</methodname>
+            <methodparam><parameter role="keyword">window</parameter></methodparam>
+            <methodparam><parameter role="keyword">files</parameter></methodparam>
+          </methodsynopsis></programlisting>
+
+          <variablelist>
+            <varlistentry>
+                <term><parameter role="keyword">window</parameter>&nbsp;:</term>
+                <listitem><simpara>the current <link linkend="class-gtkwindow"><classname>gtk.Window</classname></link> instance</simpara></listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><parameter role="keyword">menu</parameter>&nbsp;:</term>
+                <listitem><simpara>a list of <link linkend="class-thunarx-python-file-info"><classname>thunarx.FileInfo</classname></link> objects.</simpara></listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>a list of gtk.Action objects</simpara></listitem>
+            </varlistentry>
+          </variablelist>
+
+          <para>
+            The <methodname>get_file_actions</methodname>() method returns a list of
+            gtk.Action objects.
+          </para>
+        </refsect2>
+
+        <refsect2 id="method-thunarx-python-menu-provider--get-folder-actions">
+          <title>thunarx.MenuProvider.get_folder_actions</title>
+
+          <programlisting><methodsynopsis language="python">
+            <methodname>get_folder_actions</methodname>
+            <methodparam><parameter role="keyword">window</parameter></methodparam>
+            <methodparam><parameter role="keyword">folder</parameter></methodparam>
+          </methodsynopsis></programlisting>
+
+          <variablelist>
+            <varlistentry>
+                <term><parameter role="keyword">window</parameter>&nbsp;:</term>
+                <listitem><simpara>the current <link linkend="class-gtkwindow"><classname>gtk.Window</classname></link> instance</simpara></listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><parameter role="keyword">folder</parameter>&nbsp;:</term>
+                <listitem><simpara>the current folder, as a <link linkend="class-thunarx-python-file-info"><classname>thunarx.FileInfo</classname></link> object.</simpara></listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>a list of gtk.Action objects</simpara></listitem>
+            </varlistentry>
+          </variablelist>
+
+          <para>
+            The <methodname>get_folder_actions</methodname>() method returns a list of
+            gtk.Action objects.
+          </para>
+        </refsect2>
+        
+        <refsect2 id="method-thunarx-python-menu-provider--get-dnd-actions">
+          <title>thunarx.MenuProvider.get_dnd_actions</title>
+
+          <programlisting><methodsynopsis language="python">
+            <methodname>get_dnd_actions</methodname>
+            <methodparam><parameter role="keyword">window</parameter></methodparam>
+            <methodparam><parameter role="keyword">folder</parameter></methodparam>
+            <methodparam><parameter role="keyword">files</parameter></methodparam>
+          </methodsynopsis></programlisting>
+
+          <variablelist>
+            <varlistentry>
+                <term><parameter role="keyword">window</parameter>&nbsp;:</term>
+                <listitem><simpara>the current <link linkend="class-gtkwindow"><classname>gtk.Window</classname></link> instance</simpara></listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><parameter role="keyword">folder</parameter>&nbsp;:</term>
+                <listitem><simpara>the current folder, as a <link linkend="class-thunarx-python-file-info"><classname>thunarx.FileInfo</classname></link> object.</simpara></listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><parameter role="keyword">files</parameter>&nbsp;:</term>
+                <listitem><simpara>a list of the currently selected files, as a <link linkend="class-thunarx-python-file-info"><classname>thunarx.FileInfo</classname></link> objects.</simpara></listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>a list of gtk.Action objects</simpara></listitem>
+            </varlistentry>
+          </variablelist>
+
+          <para>
+            The <methodname>get_dnd_actions</methodname>() method returns a list of
+            gtk.Action objects.
+          </para>
+        </refsect2>
+    </refsect1>
+
+</refentry>
+

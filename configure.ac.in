@@ -66,6 +66,8 @@ dnl **************************************************
 AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
 AM_CHECK_PYTHON_LIBS(,[AC_MSG_ERROR(could not find Python lib)])
 
+dnl Check for gtk-doc
+GTK_DOC_CHECK(1.9)
 
 dnl ***************************
 dnl *** Determine the installed thunarx version ***
@@ -119,12 +121,33 @@ PYGTK_CODEGEN="/usr/bin/python `$PKG_CONFIG --variable=codegendir pygobject-2.0`
 AC_SUBST(PYGTK_CODEGEN)
 AC_MSG_RESULT($PYGTK_CODEGEN)
 
+PYGOBJECT_DATADIR=`$PKG_CONFIG --variable=datadir pygobject-2.0`
+AC_SUBST(PYGOBJECT_DATADIR)
+
+PYGOBJECT_PYGDOCS="`$PKG_CONFIG --variable=pygdocs pygobject-2.0`"
+AC_SUBST(PYGOBJECT_PYGDOCS)
+
+PYGOBJECT_FIXXREF="$PYTHON `$PKG_CONFIG --variable=fixxref pygobject-2.0`"
+AC_SUBST(PYGOBJECT_FIXXREF)
+
 dnl ---------------------------------
 dnl Get thunar extensions directory
 dnl ---------------------------------
 THUNARX_EXTENSION_DIR=`$PKG_CONFIG --variable=extensionsdir thunarx-${THUNARX_API_VERSION}`
 AC_SUBST(THUNARX_EXTENSION_DIR)
 AC_DEFINE_UNQUOTED(THUNARX_EXTENSION_DIR, "$THUNARX_EXTENSION_DIR", [Thunar's extensions directory])
+
+dnl ---------------------------------
+dnl Check for gtk-doc dependencies
+dnl ---------------------------------
+if test "${enable_gtk_doc}" != no; then
+    dnl Check for xsltproc
+    AC_PATH_PROG([XSLTPROC], [xsltproc])
+    if test -z "$XSLTPROC"; then
+        echo " disabling generation of docs"
+        enable_gtk_doc=no
+    fi
+fi
 
 dnl ***********************************
 dnl *** Check for debugging support ***
@@ -141,6 +164,7 @@ Makefile
 src/Makefile
 docs/Makefile
 docs/examples/Makefile
+docs/reference/entities.docbook
 ])
 
 dnl ***************************
@@ -150,5 +174,6 @@ echo
 echo "Build Configuration:"
 echo
 
-echo "Prefix: $prefix"
+echo "      Prefix: $prefix"
+echo "      Documentation: ${enable_gtk_doc}"
 echo

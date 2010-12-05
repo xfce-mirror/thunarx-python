@@ -7,4 +7,9 @@ rpm: dist
 	rpmbuild -ta $(PACKAGE)-$(VERSION).tar.gz
 	@rm -f $(PACKAGE)-$(VERSION).tar.gz
 
-# vi:set ts=8 sw=8 noet ai nocindent:
+dist-hook:
+	echo "==== DIST HOOK ===="
+	echo "`pwd`" 
+	mv $(srcdir)/docs/html $(distdir)/docs 
+
+DISTCHECK_CONFIGURE_FLAGS=--enable-gtk-doc

@@ -1,0 +1,49 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<chapter id="thunarx-python-overview-example"
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+
+    <title>A Simple Extension</title>
+
+    <para>Create an empty file with the following code:</para>
+    
+    <example>
+        <title>A Simple Extension</title>
+        <programlisting>
+import thunarx
+import gtk
+
+class ThunarxMenuProviderPlugin(thunarx.MenuProvider):
+    def __init__(self):
+        pass
+    
+    def get_file_actions(self, window, files):
+        return [gtk.Action("TMP:TestFileAction", "PyFileAction", "Python File Action", gtk.STOCK_FILE)]
+    
+    def get_folder_actions(self, window, folder):
+        return [gtk.Action("TMP:TestFolderAction", "PyFolderAction", "Python Folder Action", gtk.STOCK_DIRECTORY)]
+        </programlisting>
+    </example>
+    
+    <para>Save this file as TestExtension.py in the /usr/lib/thunarx-1/python folder (or thunarx-2). 
+    You may need to create this folder. To run, open the terminal and type:</para>
+    
+    <informalexample>
+        <programlisting>
+$ killall thunar
+$ thunar</programlisting>
+    </informalexample>
+
+    <para>Once Thunar starts, right-click on a file and you should see a new menu item, 
+    "PyFileAction". It is as simple as that!</para>
+    
+    <para>As mentioned above, in order to 
+    get loaded by Thunar, a python extension must import the thunarx module, 
+    create a class derived from a thunarx *Provider, then create the methods that 
+    will be called by Thunar when it requests information from its providers. 
+    In this case, when someone right-clicks on a file, Thunar will ask all of its 
+    MenuProviders for additional menu items to show the user. When folders or files are clicked, 
+    the get_file_actions method is called and a list of gtk.Action objects is expected.</para>
+
+</chapter>

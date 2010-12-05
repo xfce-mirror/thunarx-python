@@ -1,0 +1,74 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="class-thunarx-python-property-page-provider">
+  <refnamediv>
+    <refname>thunarx.PropertyPageProvider</refname>
+    <refpurpose>thunarx.PropertyPageProvider Reference</refpurpose>
+  </refnamediv>
+
+<!-- ******************************* -->
+<!-- BEGIN OF SYNOPSIS -->
+<!-- ******************************* -->
+
+  <refsect1>
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+      <ooclass><classname>thunarx.PropertyPageProvider</classname></ooclass>
+
+      <methodsynopsis language="python">
+        <methodname><link linkend="method-thunarx-property-page-provider--get-pages">get_pages</link></methodname>
+        <methodparam><parameter role="keyword">files</parameter></methodparam>
+      </methodsynopsis>
+    </classsynopsis>
+  </refsect1>
+
+<!-- ********************************** -->
+<!-- BEGIN OF DESCRIPTION -->
+<!-- ********************************** -->
+
+  <refsect1 id="description-property-page-provider">
+    <title>Description</title>
+
+      <para>
+      To add a property page to the file properties dialog, extensions must implement the ThunarxPropertyPageProvider interface. This interface has only one virtual method, get_pages, that is passed a list of thunarx.FileInfo objects and returns a list of thunarx.PropertyPage objects. 
+      </para>
+  </refsect1>
+
+<!-- ****************************** -->
+<!-- BEGIN OF METHODS -->
+<!-- ****************************** -->
+
+  <refsect1>
+        <title>Passive Methods</title>
+
+        <refsect2 id="method-thunarx-property-page-provider--get-pages">
+          <title>thunarx.PropertyPageProvider.get_pages</title>
+
+          <programlisting><methodsynopsis language="python">
+            <methodname>get_pages</methodname>
+              <methodparam></methodparam>
+          </methodsynopsis></programlisting>
+
+          <variablelist>
+            <varlistentry>
+	            <term><parameter role="keyword">files</parameter>&nbsp;:</term>
+	            <listitem><simpara>a list of <link linkend="class-thunarx-python-file-info"><classname>thunarx.FileInfo</classname></link> objects.</simpara></listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><emphasis>Returns</emphasis>&nbsp;:</term>
+              <listitem><simpara>a list of <link linkend="class-thunarx-python-property-page"><classname>thunarx.PropertyPage</classname></link> objects</simpara></listitem>
+            </varlistentry>
+          </variablelist>
+
+          <para>
+                This function is called by Thunar when it wants property page items from the extension.  
+                It is called in the main thread before a property page is shown, so it should return quickly.
+          </para>
+        </refsect2>
+    </refsect1>
+
+</refentry>
+

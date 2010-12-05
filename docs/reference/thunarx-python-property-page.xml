@@ -1,0 +1,217 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="class-thunarx-python-property-page">
+  <refnamediv>
+    <refname>thunarx.PropertyPage</refname>
+    <refpurpose>thunarx.PropertyPage Reference</refpurpose>
+  </refnamediv>
+
+<!-- ******************************* -->
+<!-- BEGIN OF NAUTILUS-PYTHON SYNOPSIS -->
+<!-- ******************************* -->
+
+  <refsect1>
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+        <ooclass><classname>thunarx.PropertyPage</classname></ooclass>
+        <ooclass><classname><link linkend="class-gobject">gobject.GObject</link></classname></ooclass>
+
+        <constructorsynopsis language="python">
+            <methodname><link linkend="constructor-thunarx-property-page">thunarx.PropertyPage</link></methodname>
+            <methodparam><parameter role="keyword">label</parameter></methodparam>
+        </constructorsynopsis>
+
+        <constructorsynopsis language="python">
+            <methodname><link linkend="constructor-thunarx-property-page">thunarx.PropertyPage</link></methodname>
+            <methodparam><parameter role="keyword">label_widget</parameter></methodparam>
+        </constructorsynopsis>
+        
+      <methodsynopsis language="python">
+        <methodname><link linkend="method-thunarx-python-property-page--get-label">get_label</link></methodname>
+      </methodsynopsis>
+
+      <methodsynopsis language="python">
+        <methodname><link linkend="method-thunarx-python-property-page--set-label">set_label</link></methodname>
+            <methodparam><parameter role="keyword">label</parameter></methodparam>
+      </methodsynopsis>
+
+      <methodsynopsis language="python">
+        <methodname><link linkend="method-thunarx-python-property-page--get-label-widget">get_label_widget</link></methodname>
+      </methodsynopsis>
+
+      <methodsynopsis language="python">
+        <methodname><link linkend="method-thunarx-python-property-page--set-label-widget">set_label_widget</link></methodname>
+            <methodparam><parameter role="keyword">label_widget</parameter></methodparam>
+      </methodsynopsis>
+    </classsynopsis>
+  </refsect1>
+
+<!-- ********************************* -->
+<!-- BEGIN OF ANCESTRY -->
+<!-- ********************************* -->
+
+<refsect1>
+    <title>Ancestry</title>
+
+<synopsis>+-- <link linkend="class-gobject">gobject.GObject</link>
+    +-- <link linkend="class-thunarx-python-property-page">thunarx.PropertyPage</link>
+</synopsis>
+</refsect1>
+
+
+<!-- ********************************** -->
+<!-- BEGIN OF DESCRIPTION -->
+<!-- ********************************** -->
+
+  <refsect1 id="description-property-page">
+    <title>Description</title>
+
+      <para>
+        A <link linkend="class-thunarx-python-property-page"><classname>thunarx.PropertyPage</classname></link> object is returned by <link linkend="class-thunarx-python-property-page-provider"><classname>thunarx.PropertyPageProvider</classname></link> extensions.
+      </para>
+
+  </refsect1>
+
+
+<!-- *********************************** -->
+<!-- BEGIN OF PROPERTIES -->
+<!-- *********************************** -->
+
+<refsect1>
+    <title>Properties</title>
+
+    <blockquote role="properties">
+      <informaltable pgwide="1" frame="none">
+      <tgroup cols="3">
+        <colspec column="1" colwidth="1in"/>
+        <colspec column="2" colwidth="1in"/>
+        <colspec column="3" colwidth="4in"/>
+          <tbody>
+      
+            <row valign="top">
+              <entry>"label"</entry>
+              <entry>The label displayed in the notebook tab.</entry>
+              <entry>Read-Write</entry>
+            </row>
+      
+            <row valign="top">
+              <entry>"label-widget"</entry>
+              <entry>The label widget displayed in the notebook tab.  Default value: None</entry>
+              <entry>Read-Write</entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </blockquote>
+</refsect1>
+
+
+<!-- ************************************ -->
+<!-- BEGIN OF CONSTRUCTOR -->
+<!-- ************************************ -->
+
+<refsect1 id="constructor-thunarx-property-page">
+  <title>Constructor</title>
+
+  <programlisting><constructorsynopsis language="python">
+        <methodname>thunarx.PropertyPage</methodname>
+        <methodparam><parameter role="keyword">label</parameter></methodparam>
+  </constructorsynopsis></programlisting>
+
+  <variablelist>
+    <varlistentry>
+	    <term><parameter role="keyword">label</parameter>&nbsp;:</term>
+	    <listitem><simpara>the user-visible label for the property page</simpara></listitem>
+    </varlistentry>
+  </variablelist>
+
+  <para>
+    Creates a new <link linkend="class-thunarx-python-property-page"><classname>thunarx.PropertyPage</classname></link> object.
+  </para>
+</refsect1>
+
+<refsect1 id="constructor-thunarx-property-page-label-widget">
+  <title>Constructor</title>
+
+  <programlisting><constructorsynopsis language="python">
+        <methodname>thunarx.PropertyPage</methodname>
+        <methodparam><parameter role="keyword">label_widget</parameter></methodparam>
+  </constructorsynopsis></programlisting>
+    
+  <variablelist>
+    <varlistentry>
+	    <term><parameter role="keyword">label_widget</parameter>&nbsp;:</term>
+	    <listitem><simpara>the user-visible label widget for the property page</simpara></listitem>
+    </varlistentry>
+  </variablelist>
+
+  <para>
+    Creates a new <link linkend="class-thunarx-python-property-page-label-widget"><classname>thunarx.PropertyPage</classname></link> object.
+  </para>
+</refsect1>
+
+<!-- ******************************** -->
+<!-- BEGIN OF METHODS -->
+<!-- ******************************** -->
+
+<refsect1>
+    <title>Public Methods</title>
+
+    <refsect2 id="method-thunarx-python-property-page--get-label">
+        <title>thunarx.FileInfo.get_label</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>get_label</methodname>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>the text in the label or NULL</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+
+    <refsect2 id="method-thunarx-python-property-page--set-label">
+        <title>thunarx.FileInfo.set_label</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>set_label</methodname>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>Sets the text of the label.</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+
+    <refsect2 id="method-thunarx-python-property-page--get-label-widget">
+        <title>thunarx.FileInfo.get_label_widget</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>get_label_widget</methodname>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>Returns the label widget for the property_page.</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+    
+    <refsect2 id="method-thunarx-python-property-page--set-label-widget">
+        <title>thunarx.FileInfo.set_label_widget</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>set_label_widget</methodname>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>Sets the label widget for the property_page. This is the widget that will appear in the notebook header for the property_page.</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+
+</refsect1>
+</refentry>
