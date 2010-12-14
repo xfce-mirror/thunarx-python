@@ -13,6 +13,8 @@ PDF_STYLE = $(PYGOBJECT_DATADIR)/pygobject/xsl/pdf-style.xsl
 
 XMLFILES = 							\
 	reference/thunarx-python-ref.xml			\
+	reference/thunarx-python-overview.xml			\
+	reference/thunarx-python-overview-example.xml			\
 	reference/thunarx-python-class-reference.xml			\
 	reference/thunarx-python-provider-reference.xml			\
 	reference/thunarx-python-menu-provider.xml \
