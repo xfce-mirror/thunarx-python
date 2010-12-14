@@ -1,3 +1,7 @@
+0.2.2:
+    - Add gtk-doc documentation
+    - Fixed dependency information in the README file
+
 0.2.1:
     - Override the thunarx.PropertyPage constructor to allow for a string or
         GtkWidget label

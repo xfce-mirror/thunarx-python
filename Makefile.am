@@ -10,6 +10,6 @@ rpm: dist
 dist-hook:
 	echo "==== DIST HOOK ===="
 	echo "`pwd`" 
-	mv $(srcdir)/docs/html $(distdir)/docs 
+	test -d "$(srcdir)/docs/html" && mv $(srcdir)/docs/html $(distdir)/docs || echo
 
 DISTCHECK_CONFIGURE_FLAGS=--enable-gtk-doc
