@@ -1,0 +1,142 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="class-thunarx-python-renamer-provider">
+  <refnamediv>
+    <refname>thunarx.RenamerProvider</refname>
+    <refpurpose>thunarx.RenamerProvider Reference</refpurpose>
+  </refnamediv>
+
+<!-- ******************************* -->
+<!-- BEGIN OF SYNOPSIS -->
+<!-- ******************************* -->
+
+  <refsect1>
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+      <ooclass><classname>thunarx.RenamerProvider</classname></ooclass>
+
+      <methodsynopsis language="python">
+        <methodname><link linkend="method-thunarx-renamer-provider--get-pages">get_pages</link></methodname>
+        <methodparam><parameter role="keyword">files</parameter></methodparam>
+      </methodsynopsis>
+    </classsynopsis>
+  </refsect1>
+
+<!-- ********************************** -->
+<!-- BEGIN OF DESCRIPTION -->
+<!-- ********************************** -->
+
+  <refsect1 id="description-renamer-provider">
+    <title>Description</title>
+
+      <para>
+The thunarx.RenamerProvider interface is implemented by extensions which provide additional bulk renamers that should be used by the bulk rename dialog in Thunar.
+      </para>
+      
+      <example>
+        <title>A thunarx.RenamerProvider Extension</title>
+        <programlisting>
+import thunarx
+import gtk
+import gobject
+
+class ThunarxPythonRenamer(thunarx.Renamer):
+    __gtype_name__ = "ThunarxPythonRenamer"
+    prefix = gobject.property(type=str)
+    
+    def __init__(self):
+        thunarx.Renamer.__init__(self)
+
+        # Set properties to be saved in the settings files
+        self.set_property("prefix", "__")
+        
+        self.set_name("Example Python Renamer")
+        self.set_help_url("http://www.google.com")
+     
+        hbox = gtk.HBox(0, False)
+        
+        label = gtk.Label("Prefix:")
+        hbox.pack_start(label, False, False, 0)
+        
+        self.entry = gtk.Entry()
+        self.entry.set_text(self.get_property("prefix"))
+        self.entry.connect("changed", self.entry_changed)
+        hbox.pack_start(self.entry, False, False, 0)
+        
+        label.show()
+        self.entry.show()
+        self.add(hbox)
+        hbox.show()
+    
+    def do_process(self, file, text, index):
+        prefix = self.entry.get_text()
+        return prefix + text
+
+    def entry_changed(self, widget):
+        self.set_property("prefix", widget.get_text())
+        
+        # Emitting this will cause the do_process method to be called
+        self.emit("changed")
+
+    def do_get_actions(self, window, files):
+        return [gtk.Action("TPR:SomeAction", "Some Action", None, gtk.STOCK_OPEN)]
+
+    def do_load(self, settings):
+        """
+        Loads settings saved in ~/.config/Thunar/renamerrc
+        """
+        if settings.haskey("Prefix"):
+            self.set_property("prefix", settings["Prefix"])
+            self.entry.set_text(self.get_property("prefix"))
+
+    def do_save(self, settings):
+        """
+        If do_save is overriden, you must rebuild the settings dictionary and then
+        return it.
+        """
+        settings["Prefix"] = self.get_property("prefix")
+        return settings
+
+class ThunarxRenamerPlugin(thunarx.RenamerProvider):
+    def __init__(self):
+        pass
+    
+    def get_renamers(self):
+        return [ThunarxPythonRenamer()]
+        </programlisting>
+      </example>
+  </refsect1>
+
+<!-- ****************************** -->
+<!-- BEGIN OF METHODS -->
+<!-- ****************************** -->
+
+  <refsect1>
+        <title>Passive Methods</title>
+
+        <refsect2 id="method-thunarx-renamer-provider--get-renamers">
+          <title>thunarx.RenamerProvider.get_renamers</title>
+
+          <programlisting><methodsynopsis language="python">
+            <methodname>get_renamers</methodname>
+            <methodparam><parameter role="keyword">files</parameter></methodparam>
+          </methodsynopsis></programlisting>
+
+          <variablelist>
+            <varlistentry>
+              <term><emphasis>Returns</emphasis>&nbsp;:</term>
+              <listitem><simpara>the list of thunarx.Renamer objects provided by the specified provider.</simpara></listitem>
+            </varlistentry>
+          </variablelist>
+
+          <para>
+Returns the list of ThunarxRenamers provided by the specified provider.
+          </para>
+        </refsect2>
+    </refsect1>
+
+</refentry>
+

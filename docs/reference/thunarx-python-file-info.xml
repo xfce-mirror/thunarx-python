@@ -109,6 +109,31 @@
   </refsect1>
 
 
+<!-- ****************************************** -->
+<!-- BEGIN OF SIGNAL PROTOTYPES -->
+<!-- ****************************************** -->
+
+<refsect1>
+    <title>Signals</title>
+    <variablelist>
+      <varlistentry>
+        <term><link linkend="signal-thunarx-python-file-info--changed">"changed"</link></term>
+        <listitem>
+          <methodsynopsis language="python"><methodname>callback</methodname>
+          </methodsynopsis>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><link linkend="signal-thunarx-python-file-info--renamed">"renamed"</link></term>
+        <listitem>
+          <methodsynopsis language="python"><methodname>callback</methodname>
+          </methodsynopsis>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+</refsect1>
+
+
 <!-- ******************************** -->
 <!-- BEGIN OF METHODS -->
 <!-- ******************************** -->
@@ -182,11 +207,15 @@
     </refsect2>
 
     <refsect2 id="method-thunarx-python-file-info--has-mime-type">
-        <title>thunarx.FileInfo.get_mime_type</title>
+        <title>thunarx.FileInfo.has_mime_type</title>
         <programlisting><methodsynopsis language="python">
-            <methodname>get_mime_type</methodname>
+            <methodname>has_mime_type</methodname>
         </methodsynopsis></programlisting>
         <variablelist>
+            <varlistentry>
+	            <term><parameter role="keyword">mime_type</parameter>&nbsp;:</term>
+	            <listitem><simpara>the mime_type to check for</simpara></listitem>
+            </varlistentry>
             <varlistentry>
                 <term><emphasis>Returns</emphasis>&nbsp;:</term>
                 <listitem><simpara>
@@ -284,6 +313,37 @@ The plugins should instead connect to the ::renamed signal and update it's inter
 
 </refsect1>
 
+
+
+<!-- ******************************** -->
+<!-- BEGIN OF SIGNAL DETAILS -->
+<!-- ******************************** --> 
+ 
+<refsect1>
+    <title>Signal Details</title>
+
+  <refsect2 id="signal-thunarx-python-file-info--changed">
+    <title>The "changed" thunarx.FileInfo Signal</title>
+
+    <para>
+Emitted whenever the system notices a change to file_info.
+</para><para>
+Thunar plugins should use this signal to stay informed about changes to a file_info for which they currently display information (i.e. in a thunarx.PropertyPage), and update it's user interface whenever a change is noticed on file_info.
+    </para>
+
+  </refsect2>
+  
+  <refsect2 id="signal-thunarx-python-file-info--renamed">
+    <title>The "renamed" thunarx.FileInfo Signal</title>
+
+    <para>
+Emitted when the file_info is renamed to another name.
+</para><para>
+For example, within Thunar, ThunarFolder uses this signal to reregister it's VFS directory monitor, after the corresponding file was renamed.
+    </para>
+
+  </refsect2>
+</refsect1>
 
 </refentry>
 

@@ -1,0 +1,105 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="class-thunarx-python-preferences-provider">
+  <refnamediv>
+    <refname>thunarx.PreferencesProvider</refname>
+    <refpurpose>thunarx.PreferencesProvider Reference</refpurpose>
+  </refnamediv>
+
+<!-- ******************************* -->
+<!-- BEGIN OF SYNOPSIS -->
+<!-- ******************************* -->
+
+  <refsect1>
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+      <ooclass><classname>thunarx.PreferencesProvider</classname></ooclass>
+
+      <methodsynopsis language="python">
+        <methodname><link linkend="method-thunarx-preferences-provider--get-actions">get_actions</link></methodname>
+        <methodparam><parameter role="keyword">window</parameter></methodparam>
+      </methodsynopsis>
+    </classsynopsis>
+  </refsect1>
+
+<!-- ********************************** -->
+<!-- BEGIN OF DESCRIPTION -->
+<!-- ********************************** -->
+
+  <refsect1 id="description-preferences-provider">
+    <title>Description</title>
+
+      <para>
+The thunarx.PreferencesProvider interface is implemented by extensions that want to register additional actions in the preferences menu of the file manager. In general this should only be done by extensions that are closely tied to the file manager (for example, the thunar-uca is such an extension, while an extension that just adds Compress file and Uncompress file to the context menu of compressed files should not add their own preferences to the file manager menu, because it should use desktop-wide settings for archive managers instead).
+</para><para>
+The gtk.Action objects returned from the thunarx.PreferencesProvider.get_actions() method must be namespaced with the model to avoid collision with internal file manager actions and actions provided by other extensions. For example, the preferences action provided by the thunar-uca extension is called ThunarUca::manage-actions.
+      </para>
+  </refsect1>
+
+<example>
+    <title>A thunarx.PreferencesProvider plugin</title>
+    <programlisting>
+import thunarx
+import gtk
+
+class ThunarxPreferencesPlugin(thunarx.PreferencesProvider):
+    def __init__(self):
+        pass
+    
+    def get_preferences_actions(self, window):
+        action = gtk.Action("TPP:PrefItem", "My Example Preferences", None, None)
+        action.connect("activate", self.__open_preferences, window)
+        return action,
+    
+    def __open_preferences(self, action, window):
+        dialog = gtk.Dialog("My dialog",
+            window,
+            gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+            (gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
+            gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
+
+        dialog.show()
+        dialog.run()
+        dialog.destroy()
+    </programlisting>
+</example>
+
+<!-- ****************************** -->
+<!-- BEGIN OF METHODS -->
+<!-- ****************************** -->
+
+  <refsect1>
+        <title>Passive Methods</title>
+
+        <refsect2 id="method-thunarx-preferences-provider--get-actions">
+          <title>thunarx.PreferencesProvider.get_actions</title>
+
+          <programlisting><methodsynopsis language="python">
+            <methodname>get_actions</methodname>
+              <methodparam></methodparam>
+          </methodsynopsis></programlisting>
+
+          <variablelist>
+            <varlistentry>
+	            <term><parameter role="keyword">window</parameter>&nbsp;:</term>
+	            <listitem><simpara>a gtk.Window</simpara></listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><emphasis>Returns</emphasis>&nbsp;:</term>
+              <listitem><simpara>the list of gtk.Action objects that provider has to offer as preferences within window.</simpara></listitem>
+            </varlistentry>
+          </variablelist>
+
+          <para>
+Returns the list of GtkActions that provider has to offer as preferences within window. These actions will usually be added to the builtin list of preferences in the "Edit" menu of the file manager's window.
+</para><para>
+Plugin writers that implement this interface should make sure to choose descriptive action names and tooltips, and not to crowd the "Edit" menu too much. That said, think twice before implementing this interface, as too many preference actions will render the file manager useless over time!
+          </para>
+        </refsect2>
+    </refsect1>
+
+</refentry>
+

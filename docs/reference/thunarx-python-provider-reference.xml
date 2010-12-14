@@ -7,5 +7,7 @@
     <title>Provider Interfaces</title>
     <xi:include href="thunarx-python-menu-provider.xml"/>
     <xi:include href="thunarx-python-property-page-provider.xml"/>
+    <xi:include href="thunarx-python-renamer-provider.xml"/>
+    <xi:include href="thunarx-python-preferences-provider.xml"/>
 </chapter>
 
