@@ -1,3 +1,11 @@
+0.2.3:
+    - Fix the python macros to work with python3
+    - Fix the main Makefile.am to only build the docs folder if 
+        --gtk-docs-enable is set
+    - The overview docs now properly includes the example script.  This fixes an
+        install bug
+    - Add support for importing the pygtk module as a PyCapsule
+
 0.2.2:
     - Add gtk-doc documentation
     - Fixed dependency information in the README file
