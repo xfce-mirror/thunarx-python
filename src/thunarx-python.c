@@ -82,20 +82,30 @@ thunarx_python_init_pygtk(void)
     PyObject *pygtk = PyImport_ImportModule("gtk._gtk");
     if (pygtk != NULL)
     {
-		PyObject *module_dict = PyModule_GetDict(pygtk);
-		PyObject *cobject = PyDict_GetItemString(module_dict, "_PyGtk_API");
-		if (PyCObject_Check(cobject))
+#ifdef Py_CAPSULE_H
+		void *capsule = PyCapsule_Import("gtk._gtk._PyGtk_API", 0);
+		if (capsule)
 		{
-			_PyGtk_API = (struct _PyGtk_FunctionStruct*)
-				PyCObject_AsVoidPtr(cobject);
+			_PyGtk_API = (struct _PyGtk_FunctionStruct*)capsule;
 		}
-		else
+#endif
+		if (!_PyGtk_API)
 		{
-            PyErr_SetString(PyExc_RuntimeError,
-                            "could not find _PyGtk_API object");
-			PyErr_Print();
-			return FALSE;
-        }
+			PyObject *module_dict = PyModule_GetDict(pygtk);
+			PyObject *cobject = PyDict_GetItemString(module_dict, "_PyGtk_API");
+			if (PyCObject_Check(cobject))
+			{
+				_PyGtk_API = (struct _PyGtk_FunctionStruct*)
+					PyCObject_AsVoidPtr(cobject);
+			}
+			else
+			{
+				PyErr_SetString(PyExc_RuntimeError,
+				                "could not find _PyGtk_API object");
+				PyErr_Print();
+				return FALSE;
+			}
+		}
     }
     else
     {
