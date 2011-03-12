@@ -28,5 +28,7 @@
 such as Fedora, put Thunarx-Python extensions in $PREFIX/lib64/thunarx-1/python  (or thunarx-1). </para>
     </note>
 
+    <xi:include href="thunarx-python-overview-example.xml"/>
+
 </chapter>
 
