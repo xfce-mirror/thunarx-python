@@ -1,4 +1,8 @@
-SUBDIRS = src docs
+SUBDIRS = src
+
+if ENABLE_GTK_DOC
+SUBDIRS += docs
+endif
 
 distclean-local:
 	rm -rf *.spec *.cache *~
