@@ -367,6 +367,7 @@ thunarx_python_load_dir (ThunarxProviderPlugin  *plugin,
 G_MODULE_EXPORT void
 thunar_extension_initialize (ThunarxProviderPlugin *plugin)
 {
+    gchar *user_extensions_dir;
     const gchar *mismatch;
     const gchar *env_string;
 
@@ -391,7 +392,17 @@ thunar_extension_initialize (ThunarxProviderPlugin *plugin)
 
     all_types = g_array_new(FALSE, FALSE, sizeof(GType));
 
-    thunarx_provider_plugin_set_resident (plugin, TRUE);  
+    thunarx_provider_plugin_set_resident (plugin, TRUE);
+
+	// Look in the new global path, $DATADIR/thunarx-python/extensions
+	thunarx_python_load_dir(plugin, DATADIR "/thunarx-python/extensions");
+
+	// Look in XDG_DATA_DIR, ~/.local/share/thunarx-python/extensions
+	user_extensions_dir = g_build_filename(g_get_user_data_dir(), 
+		"thunarx-python", "extensions", NULL);
+	thunarx_python_load_dir(plugin, user_extensions_dir);
+	g_free(user_extensions_dir);
+	
     thunarx_python_load_dir(plugin, THUNARX_EXTENSION_DIR "/python");
 }
 

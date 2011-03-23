@@ -2,6 +2,7 @@
 AM_CPPFLAGS =								\
 	-I$(top_builddir)						\
 	-I$(top_srcdir)							\
+	-DDATADIR=\"$(datadir)\"					\
 	-DG_LOG_DOMAIN=\"thunarx-python\"				\
 	-DEXO_API_SUBJECT_TO_CHANGE					\
 	-DLIBEXECDIR=\"$(libexecdir)\"					\

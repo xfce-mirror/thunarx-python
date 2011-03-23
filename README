@@ -16,6 +16,12 @@ pkgconfig path.
 
     export PKG_CONFIG_PATH="/thunar_prefix/lib/pkgconfig"
 
+Running Extensions
+------------------
+As of thunarx-python 0.3.0, scripts are loaded from $XDG_DATA_DIR/thunarx-python/extensions,
+which includes ~/.local/share and /usr/share (or whatever your $XDG_DATA_DIR is 
+set to).  Simply copy your python scripts into that folder and restart thunar.
+
 Dependencies
 ------------
  * thunar (0.4.0 or later)
