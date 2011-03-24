@@ -1,6 +1,6 @@
 SUBDIRS = examples
 
-docsdir = $(datadir)/doc/$(PACKAGE)
+docsdir = $(docdir)
 docs_DATA = documentation.py
 
 BUILDDIR = $(top_builddir)/docs
