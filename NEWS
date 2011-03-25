@@ -1,3 +1,11 @@
+0.3.0:
+    - Look for python extensions in $XDG_DATA_DIR/thunarx-python/extensions now. 	No longer look in /usr/lib/thunarx-1/python.
+    - Fix PyCapsule support for the pygobject module
+    - Don't hard-code the docs directory in the Makefile.am files
+    - Use g_return_val_if_fail in override function instead of g_return_if_fail
+    - Updated documentation and moved examples to its own folder
+    - Removed the dependency on gnome-python2, there was no need for it.
+
 0.2.3:
     - Fix the python macros to work with python3
     - Fix the main Makefile.am to only build the docs folder if 
