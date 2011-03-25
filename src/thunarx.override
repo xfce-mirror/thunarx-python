@@ -31,7 +31,7 @@ _pyobject_to_ghashtable (PyObject   *py_dict,
     Py_ssize_t pos = 0;
     PyObject *py_key, *py_value;
     
-    g_return_if_fail (py_dict != NULL);
+    g_return_val_if_fail (py_dict != NULL, NULL);
 
     while (PyDict_Next (py_dict, &pos, &py_key, &py_value))
     {
