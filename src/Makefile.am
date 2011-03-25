@@ -23,8 +23,7 @@ thunarx_python_la_SOURCES =						\
 thunarx_python_la_CFLAGS =						\
 	$(THUNARX_CFLAGS)						\
 	$(PYTHON_CFLAGS)						\
-	$(PYGTK_CFLAGS)							\
-	$(GNOMEPYTHON_CFLAGS)
+	$(PYGTK_CFLAGS)							
 
 thunarx_python_la_LDFLAGS =						\
 	-avoid-version							\
@@ -32,8 +31,7 @@ thunarx_python_la_LDFLAGS =						\
 	-module								\
 	$(THUNARX_LDFLAGS)						\
 	$(PYTHON_LDFLAGS)						\
-	$(PYGTK_LDFLAGS)						\
-	$(GNOMEPYTHON_LIBS)
+	$(PYGTK_LDFLAGS)						
 
 pyexec_LTLIBRARIES = thunarx.la
 pyexecdir = $(THUNARX_LIBDIR)/thunarx-python
@@ -45,20 +43,17 @@ thunarx_la_LDFLAGS =							\
 	initthunarx							\
 	$(THUNARX_LDFLAGS)						\
 	$(PYTHON_LDFLAGS)						\
-	$(PYGTK_LDFLAGS)						\
-	$(GNOMEPYTHON_LDFLAGS)
+	$(PYGTK_LDFLAGS)						
 
 thunarx_la_LIBADD =							\
 	$(THUNARX_LIBS)							\
 	$(PYTHON_LIBS)							\
-	$(GNOMEPYTHON_LIBS)						\
 	$(PYGTK_LIBS)
 
 thunarx_la_CFLAGS =							\
 	$(THUNARX_CFLAGS)						\
 	$(PYTHON_CFLAGS)						\
-	$(PYGTK_CFLAGS)							\
-	$(GNOMEPYTHON_CFLAGS)
+	$(PYGTK_CFLAGS)							
 
 thunarx_la_SOURCES = thunarxmodule.c
 nodist_thunarx_la_SOURCES = thunarx.c
