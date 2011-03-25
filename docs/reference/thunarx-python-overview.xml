@@ -22,10 +22,10 @@
     the main class from a thunarx module class will be loaded</para>
     
     <note>
-<title>A note about the standard python extensions install path</title>
+<title>Where to install python extensions</title>
 
-<para>The system-wide install path is $PREFIX/lib/thunarx-2/python (or thunarx-1). However, some 64 bit distributions, 
-such as Fedora, put Thunarx-Python extensions in $PREFIX/lib64/thunarx-1/python  (or thunarx-1). </para>
+<para>As of thunarx-python 0.3.0, python extensions are installed in $XDG_DATA_DIR/thunarx-python/extensions where $XDG_DATA_DIR 
+        could be /usr/share for a global install or ~/.local/share for a local install.</para>
     </note>
 
     <xi:include href="thunarx-python-overview-example.xml"/>
