@@ -23,7 +23,7 @@ XMLFILES = 							\
 	reference/thunarx-python-file-info.xml
 
 HTMLdir = $(datadir)/gtk-doc/html/thunarx-python
-HTML_DATA =						\
+HTMLFILES =						\
 	html/index.html					\
 	html/index.sgml					\
 	html/thunarx-python-overview.html \
@@ -44,14 +44,13 @@ CSSdir = $(HTMLdir)
 CSS_DATA = $(CSS_FILES)
 
 BUILT_SOURCES = 		\
-	build_stamp 		\
 	reference/builddate.xml	\
-	$(HTML_DATA)
+	$(HTMLFILES)
 
 CLEANFILES = 			\
-	build_stamp 		\
 	thunarx-python-ref.*	\
-	reference/builddate.xml
+	reference/builddate.xml \
+	$(HTMLFILES)
 
 EXTRA_DIST = 		\
 	$(XMLFILES) 
@@ -60,14 +59,12 @@ REFERENCE_DEPS = 	\
 	reference 	\
 	$(XMLFILES)
 
-$(HTML_DATA): build_stamp
-
 if ENABLE_GTK_DOC
 
 reference/builddate.xml: $(REFERENCE_DEPS)
 	$(PYTHON) -c 'import datetime; print datetime.date.today()' > $@
 
-build_stamp: $(REFERENCE_DEPS) reference/builddate.xml
+$(HTMLFILES): $(REFERENCE_DEPS) reference/builddate.xml
 	xsltproc --nonet --xinclude -o $(BUILDDIR)/html/ \
 		 --path $(BUILDDIR)/reference:$(srcdir)/reference \
 		 --stringparam gtkdoc.bookname "thunarx-python" \
