@@ -1,4 +1,4 @@
-SUBDIRS = src
+SUBDIRS = src examples
 
 if ENABLE_GTK_DOC
 SUBDIRS += docs

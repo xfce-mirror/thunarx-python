@@ -1,5 +1,3 @@
-SUBDIRS = examples
-
 docsdir = $(docdir)
 
 BUILDDIR = $(top_builddir)/docs

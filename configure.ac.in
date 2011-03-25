@@ -162,8 +162,8 @@ XDT_FEATURE_LINKER_OPTS()
 AC_OUTPUT([
 Makefile
 src/Makefile
+examples/Makefile
 docs/Makefile
-docs/examples/Makefile
 docs/reference/entities.docbook
 ])
 
