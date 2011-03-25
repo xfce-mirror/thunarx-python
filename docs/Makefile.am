@@ -56,7 +56,6 @@ CLEANFILES = 			\
 	reference/builddate.xml
 
 EXTRA_DIST = 		\
-    documentation.py    \
 	$(XMLFILES) 
 
 REFERENCE_DEPS = 	\
