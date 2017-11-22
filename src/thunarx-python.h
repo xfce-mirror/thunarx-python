@@ -46,11 +46,14 @@ extern ThunarxPythonDebug thunarx_python_debug;
 PyTypeObject *_PyGtkWidget_Type;
 #define PyGtkWidget_Type (*_PyGtkWidget_Type)
 
-PyTypeObject *_PyGtkAction_Type;
-#define PyGtkAction_Type (*_PyGtkAction_Type)
-
 PyTypeObject *_PyThunarxFileInfo_Type;
 #define PyThunarxFileInfo_Type (*_PyThunarxFileInfo_Type)
+
+PyTypeObject *_PyThunarxMenuItem_Type;
+#define PyThunarxMenuItem_Type (*_PyThunarxMenuItem_Type)
+
+PyTypeObject *_PyThunarxMenu_Type;
+#define PyThunarxMenu_Type (*_PyThunarxMenu_Type)
 
 PyTypeObject *_PyThunarxMenuProvider_Type;
 #define PyThunarxMenuProvider_Type (*_PyThunarxMenuProvider_Type)

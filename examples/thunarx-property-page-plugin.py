@@ -1,10 +1,9 @@
 import hashlib
 import urllib
 
-import thunarx
-import gtk
+from gi.repository import GObject, Gtk, Thunarx
 
-class ThunarxPropertyPagePlugin(thunarx.PropertyPageProvider):
+class ThunarxPropertyPagePlugin(GObject.GObject, Thunarx.PropertyPageProvider):
     def __init__(self):
         pass
 
@@ -21,22 +20,22 @@ class ThunarxPropertyPagePlugin(thunarx.PropertyPageProvider):
 
         filename = urllib.unquote(file.get_uri()[7:])
 
-        self.hbox = gtk.HBox(0, False)
-        self.hbox.show()
+        hbox = Gtk.HBox(0, False)
+        hbox.show()
 
-        label = gtk.Label('MD5Sum:')
+        label = Gtk.Label('MD5Sum:')
         label.show()
-        self.hbox.pack_start(label)
+        hbox.pack_start(label, True, True, 0)
 
-        self.value_label = gtk.Label()
-        self.hbox.pack_start(self.value_label)
+        value_label = Gtk.Label()
+        hbox.pack_start(value_label, True, True, 0)
 
         md5sum = hashlib.md5(filename).hexdigest()
-        self.value_label.set_text(md5sum)
-        self.value_label.show()
+        value_label.set_text(md5sum)
+        value_label.show()
 
-        page = thunarx.PropertyPage("MD5")
-
-        page.add(self.hbox)
+        page = Thunarx.PropertyPage()
+        page.set_label("MD5")
+        page.add(hbox)
 
         return [page]

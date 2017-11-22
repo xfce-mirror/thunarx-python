@@ -1,6 +1,6 @@
 dnl $Id: configure.in.in 2439 2007-01-20 10:41:39Z benny $
 dnl
-dnl Copyright (c) 2006-2009
+dnl Copyright (c) 2006-2017
 dnl         The Thunar development team. All rights reserved.
 dnl
 dnl Originally written for Thunar by Benedikt Meurer <benny@xfce.org>.
@@ -21,7 +21,7 @@ m4_define([txp_version], [txp_version_major().txp_version_minor().txp_version_mi
 dnl ***************************
 dnl *** Initialize autoconf ***
 dnl ***************************
-AC_COPYRIGHT([Copyright (c) 2010 Adam Plumb <adamplumb@gmail.com>.])
+AC_COPYRIGHT([Copyright (c) 2017 Adam Plumb <adamplumb@gmail.com>.])
 AC_INIT([thunarx-python], [txp_version], [thunar-dev@xfce.org])
 AC_PREREQ([2.50])
 AC_CANONICAL_TARGET()
@@ -56,8 +56,8 @@ AM_PROG_CC_C_O()
 dnl **************************
 dnl *** Initialize libtool ***
 dnl **************************
-AC_DISABLE_STATIC()
-AC_PROG_LIBTOOL()
+LT_PREREQ([2.4])
+LT_INIT([disable-static])
 
 
 dnl **************************************************
@@ -72,26 +72,19 @@ GTK_DOC_CHECK(1.9)
 dnl ***************************
 dnl *** Determine the installed thunarx version ***
 dnl ***************************
-if test "`pkg-config --variable prefix thunarx-2`" != ""; then
-    THUNARX_API_VERSION=2
-    prefix=`pkg-config --variable prefix thunarx-2`
-    XDT_CHECK_PACKAGE([THUNARX], [thunarx-2], [1.1.0])
+if test "`pkg-config --variable prefix thunarx-3`" != ""; then
+    THUNARX_API_VERSION=3
+    prefix=`pkg-config --variable prefix thunarx-3`
+    XDT_CHECK_PACKAGE([THUNARX], [thunarx-3], [1.6.0])
+
+    XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [3.20.0])
+    XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.30.0])
+    XDT_CHECK_PACKAGE([PYGOBJECT], [pygobject-3.0], [3.20.0])
 else
-    THUNARX_API_VERSION=1
-    prefix=`pkg-config --variable prefix thunarx-1`
-    XDT_CHECK_PACKAGE([THUNARX], [thunarx-1], [0.4.0])
+    echo "thunarx-3 is required";
+    exit 1;
 fi
 AC_SUBST(THUNARX_API_VERSION)
-
-
-dnl ***********************************
-dnl *** Check for required packages ***
-dnl ***********************************
-XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [2.6.0])
-XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.6.0])
-XDT_CHECK_PACKAGE([GOBJECT], [gobject-2.0], [2.6.0])
-XDT_CHECK_PACKAGE([PYGTK], [pygtk-2.0], [2.6.0])
-XDT_CHECK_PACKAGE([PYGOBJECT], [pygobject-2.0], [2.16.0])
 
 PYTHON_CFLAGS="`python-config --includes`"
 PYTHON_LIBS="`python-config --libs`"
@@ -105,29 +98,6 @@ THUNARX_LIBDIR=`pkg-config --variable=libdir thunarx-${THUNARX_API_VERSION}`
 AC_SUBST(THUNARX_LIBDIR)
 AC_DEFINE_UNQUOTED(THUNARX_LIBDIR, "$THUNARX_LIBDIR", [Thunarx libdir])
 
-AC_MSG_CHECKING(for pygtk defs)
-PYGTK_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygtk-2.0`
-AC_SUBST(PYGTK_DEFSDIR)
-AC_MSG_RESULT($PYGTK_DEFSDIR)
-
-AC_MSG_CHECKING(for pygobject defs)
-PYGOBJECT_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygobject-2.0`
-AC_SUBST(PYGOBJECT_DEFSDIR)
-AC_MSG_RESULT($PYGOBJECT_DEFSDIR)
-
-AC_MSG_CHECKING(for pygtk codegen)
-PYGTK_CODEGEN="/usr/bin/python `$PKG_CONFIG --variable=codegendir pygobject-2.0`/codegen.py"
-AC_SUBST(PYGTK_CODEGEN)
-AC_MSG_RESULT($PYGTK_CODEGEN)
-
-PYGOBJECT_DATADIR=`$PKG_CONFIG --variable=datadir pygobject-2.0`
-AC_SUBST(PYGOBJECT_DATADIR)
-
-PYGOBJECT_PYGDOCS="`$PKG_CONFIG --variable=pygdocs pygobject-2.0`"
-AC_SUBST(PYGOBJECT_PYGDOCS)
-
-PYGOBJECT_FIXXREF="$PYTHON `$PKG_CONFIG --variable=fixxref pygobject-2.0`"
-AC_SUBST(PYGOBJECT_FIXXREF)
 
 dnl ---------------------------------
 dnl Get thunar extensions directory

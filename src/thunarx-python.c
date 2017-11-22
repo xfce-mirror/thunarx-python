@@ -23,7 +23,8 @@
 
 #include <Python.h>
 #include <pygobject.h>
-#include <pygtk/pygtk.h>
+#include <gmodule.h>
+#include <gtk/gtk.h>
 
 #include "thunarx-python.h"
 #include "thunarx-python-object.h"
@@ -41,96 +42,27 @@ G_MODULE_EXPORT void thunar_extension_shutdown (void);
 G_MODULE_EXPORT void thunar_extension_list_types (const GType **types, gint *n_types);
 
 static gboolean thunarx_python_init_pygobject (void);
-static gboolean thunarx_python_init_pygtk (void);
 static gboolean thunarx_python_init_python (void);
 
 
 static inline gboolean 
 thunarx_python_init_pygobject(void)
 {
-#ifdef Py_CAPSULE_H
-    void *capsule = PyCapsule_Import("gobject._PyGObject_API", 1);
-    if (capsule)
-    {
-	    _PyGObject_API = (struct _PyGObject_Functions *)capsule;
-        return TRUE;
-    }
-#endif
+    PyObject *gobject = pygobject_init (3, 0, 0);
 
-    PyObject *gobject = PyImport_ImportModule("gobject");
-    if (gobject != NULL)
-    {
-        PyObject *mdict = PyModule_GetDict(gobject);
-        PyObject *cobject = PyDict_GetItemString(mdict, "_PyGObject_API");
-        if (PyCObject_Check(cobject))
-        {
-            _PyGObject_API = (struct _PyGObject_Functions *)PyCObject_AsVoidPtr(cobject);
-        }
-        else
-        {
-            PyErr_SetString(PyExc_RuntimeError,
-                            "could not find _PyGObject_API object");
-            PyErr_Print();
-            return FALSE;
-        }
-    }
-    else
-    {
-        PyErr_Print();
-        g_warning("could not import gobject");
+    if (gobject == NULL) {
+        PyErr_Print ();
         return FALSE;
     }
-	return TRUE;
+
+    return TRUE;
 }
-
-
-
-static inline gboolean 
-thunarx_python_init_pygtk(void)
-{
-#ifdef Py_CAPSULE_H
-    void *capsule = PyCapsule_Import("gtk._gtk._PyGtk_API", 0);
-    if (capsule)
-    {
-	    _PyGtk_API = (struct _PyGtk_FunctionStruct*)capsule;
-	    return TRUE;
-    }
-#endif
-
-    PyObject *pygtk = PyImport_ImportModule("gtk._gtk");
-    if (pygtk != NULL)
-    {
-        PyObject *module_dict = PyModule_GetDict(pygtk);
-        PyObject *cobject = PyDict_GetItemString(module_dict, "_PyGtk_API");
-        if (PyCObject_Check(cobject))
-        {
-	        _PyGtk_API = (struct _PyGtk_FunctionStruct*)
-		        PyCObject_AsVoidPtr(cobject);
-        }
-        else
-        {
-	        PyErr_SetString(PyExc_RuntimeError,
-	                        "could not find _PyGtk_API object");
-	        PyErr_Print();
-	        return FALSE;
-        }
-    }
-    else
-    {
-        PyErr_Print();
-        g_warning("could not import gtk._gtk");
-        return FALSE;
-    }
-	return TRUE;
-}
-
 
 
 static gboolean 
 thunarx_python_init_python (void)
 {
-	PyObject *pygtk, *mdict, *require;
-	PyObject *sys_path, *tmp, *thunarx, *gtk, *pygtk_version, *pygtk_required_version;
+	PyObject *thunarx;
     GModule *libpython;
     char *argv[] = { "thunarx", NULL };
 
@@ -138,6 +70,10 @@ thunarx_python_init_python (void)
 
     if (Py_IsInitialized())
         return TRUE;
+    
+    debug("Setting GI_TYPELIB_PATH to " GI_TYPELIB_PATH); 
+    gchar *typelib_env = g_strdup_printf("GI_TYPELIB_PATH=$GI_TYPELIB_PATH:%s", GI_TYPELIB_PATH);
+    putenv(typelib_env);
 
     debug ("g_module_open " PY_LIB_LOC "/libpython" PYTHON_VERSION "." G_MODULE_SUFFIX ".1.0");  
     libpython = g_module_open (PY_LIB_LOC "/libpython" PYTHON_VERSION "." G_MODULE_SUFFIX ".1.0", 0);
@@ -167,24 +103,6 @@ thunarx_python_init_python (void)
 	    return FALSE;
     }
 
-	/* pygtk.require("2.0") */
-	debug("pygtk.require(\"2.0\")");
-	pygtk = PyImport_ImportModule("pygtk");
-	if (!pygtk)
-	{
-		PyErr_Print();
-		return FALSE;
-	}
-	
-	mdict = PyModule_GetDict(pygtk);
-	require = PyDict_GetItemString(mdict, "require");
-	PyObject_CallObject(require, Py_BuildValue("(S)", PyString_FromString("2.0")));
-	if (PyErr_Occurred())
-	{
-		PyErr_Print();
-		return FALSE;
-	}
-
 	/* import gobject */
     debug("init_pygobject");
 	if (!thunarx_python_init_pygobject())
@@ -193,65 +111,30 @@ thunarx_python_init_python (void)
 		return FALSE;
 	}
 
-	/* import gtk */
-	debug("init_pygtk");
-	if (!thunarx_python_init_pygtk())
-	{
-		g_warning("pygtk initialization failed");
-		return FALSE;
-	}
-
-	/* gobject.threads_init() */
-    debug("pyg_enable_threads");
-	setenv("PYGTK_USE_GIL_STATE_API", "", 0);
-	pyg_enable_threads();
-
-	/* gtk.pygtk_version < (2, 4, 0) */
-	gtk = PyImport_ImportModule("gtk");
-	mdict = PyModule_GetDict(gtk);
-	pygtk_version = PyDict_GetItemString(mdict, "pygtk_version");
-	pygtk_required_version = Py_BuildValue("(iii)", 2, 4, 0);
-	if (PyObject_Compare(pygtk_version, pygtk_required_version) == -1)
-	{
-		g_warning("PyGTK %s required, but %s found.",
-				  PyString_AsString(PyObject_Repr(pygtk_required_version)),
-				  PyString_AsString(PyObject_Repr(pygtk_version)));
-		Py_DECREF(pygtk_required_version);
-		return FALSE;
-	}
-	Py_DECREF(pygtk_required_version);
-
-    debug("sys.path.insert(0, ...)");
-    sys_path = PySys_GetObject("path");
-    PyList_Insert(sys_path, 0, (tmp = PyString_FromString(THUNARX_LIBDIR "/thunarx-python")));
-    Py_DECREF(tmp);
-
     g_setenv("INSIDE_THUNARX_PYTHON", "", FALSE);
-    debug("import thunarx");
-    thunarx = PyImport_ImportModule("thunarx");
+    debug("import Thunarx");
+    PyRun_SimpleString("import gi; gi.require_version('Thunarx', '3.0')");
+    thunarx = PyImport_ImportModule("gi.repository.Thunarx");
     if (!thunarx)
     {
         PyErr_Print();
         return FALSE;
     }
-
-	/* Extract types and interfaces from thunarx */
-	mdict = PyModule_GetDict(thunarx);
-	
+    	
 	_PyGtkWidget_Type = pygobject_lookup_class(GTK_TYPE_WIDGET);
 	g_assert(_PyGtkWidget_Type != NULL);
 
-	_PyGtkAction_Type = pygobject_lookup_class(GTK_TYPE_ACTION);
-	g_assert(_PyGtkAction_Type != NULL);
-
 #define IMPORT(x, y) \
-    _PyThunarx##x##_Type = (PyTypeObject *)PyDict_GetItemString(mdict, y); \
+    _PyThunarx##x##_Type = (PyTypeObject *)PyObject_GetAttrString(thunarx, y); \
 	if (_PyThunarx##x##_Type == NULL) { \
+        debug("hi " y); \
 		PyErr_Print(); \
 		return FALSE; \
 	}
 
 	IMPORT(FileInfo, "FileInfo");
+    IMPORT(MenuItem, "MenuItem");
+    IMPORT(Menu, "Menu");
 	IMPORT(MenuProvider, "MenuProvider");
 	IMPORT(PreferencesProvider, "PreferencesProvider");
 	IMPORT(PropertyPage, "PropertyPage");

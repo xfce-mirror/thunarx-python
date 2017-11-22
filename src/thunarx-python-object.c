@@ -43,13 +43,13 @@ thunarx_python_object_class_init (ThunarxPythonObjectClass *klass,
 								                  
 
 static void thunarx_python_object_menu_provider_iface_init      (ThunarxMenuProviderIface *iface);
-static GList *thunarx_python_object_get_file_actions            (ThunarxMenuProvider      *provider,
+static GList *thunarx_python_object_get_file_menu_items            (ThunarxMenuProvider      *provider,
                                                                  GtkWidget                *window,
                                                                  GList                    *files);
-static GList *thunarx_python_object_get_folder_actions          (ThunarxMenuProvider      *provider,
+static GList *thunarx_python_object_get_folder_menu_items          (ThunarxMenuProvider      *provider,
                               									 GtkWidget                *window,
 	                         		 							 ThunarxFileInfo          *folder);
-static GList *thunarx_python_object_get_dnd_actions             (ThunarxMenuProvider      *provider,
+static GList *thunarx_python_object_get_dnd_menu_items             (ThunarxMenuProvider      *provider,
                        		  									 GtkWidget                *window,
 	                        									 ThunarxFileInfo          *folder,
 	                        									 GList                    *files);
@@ -60,7 +60,7 @@ static GList *thunarx_python_object_get_property_pages              (ThunarxProp
 										                             GList                              *files);
 
 static void   thunarx_python_object_preferences_provider_iface_init (ThunarxPreferencesProviderIface    *iface);
-static GList *thunarx_python_object_get_preferences_actions         (ThunarxPreferencesProvider         *provider,
+static GList *thunarx_python_object_get_preferences_menu_items         (ThunarxPreferencesProvider         *provider,
 										                             GtkWidget                          *window);
 
 static void   thunarx_python_object_renamer_provider_iface_init (ThunarxRenamerProviderIface  *iface);
@@ -131,9 +131,9 @@ static GList *thunarx_python_object_get_renamers                (ThunarxRenamerP
     }
 
 
-#define METHOD_NAME "get_file_actions"
+#define METHOD_NAME "get_file_menu_items"
 static GList *
-thunarx_python_object_get_file_actions (ThunarxMenuProvider *provider,
+thunarx_python_object_get_file_menu_items (ThunarxMenuProvider *provider,
                                         GtkWidget *window,
                                         GList *files)
 {
@@ -154,7 +154,7 @@ thunarx_python_object_get_file_actions (ThunarxMenuProvider *provider,
 
     HANDLE_RETVAL(py_ret);
 
-    HANDLE_LIST(py_ret, GtkAction, "gtk.Action");
+    HANDLE_LIST(py_ret, ThunarxMenuItem, "Thunarx.MenuItem");
 
 beach:
     Py_XDECREF(py_ret);
@@ -165,9 +165,9 @@ beach:
 
 
 
-#define METHOD_NAME "get_folder_actions"
+#define METHOD_NAME "get_folder_menu_items"
 static GList *
-thunarx_python_object_get_folder_actions (ThunarxMenuProvider   *provider,
+thunarx_python_object_get_folder_menu_items (ThunarxMenuProvider   *provider,
  		  								  GtkWidget             *window,
 	  									  ThunarxFileInfo       *folder)
 {
@@ -188,7 +188,7 @@ thunarx_python_object_get_folder_actions (ThunarxMenuProvider   *provider,
 						     
     HANDLE_RETVAL(py_ret);
 
-    HANDLE_LIST(py_ret, GtkAction, "gtk.Action");
+    HANDLE_LIST(py_ret, ThunarxMenuItem, "Thunarx.MenuItem");
 	
 beach:
     Py_XDECREF(py_ret);
@@ -199,9 +199,9 @@ beach:
 
 
 
-#define METHOD_NAME "get_dnd_actions"
+#define METHOD_NAME "get_dnd_menu_items"
 static GList *
-thunarx_python_object_get_dnd_actions (ThunarxMenuProvider  *provider,
+thunarx_python_object_get_dnd_menu_items (ThunarxMenuProvider  *provider,
                                        GtkWidget            *window,
                                        ThunarxFileInfo      *folder,
                                        GList                *files)
@@ -226,7 +226,7 @@ thunarx_python_object_get_dnd_actions (ThunarxMenuProvider  *provider,
 
     HANDLE_RETVAL(py_ret);
 
-    HANDLE_LIST(py_ret, GtkAction, "gtk.Action");
+    HANDLE_LIST(py_ret, ThunarxMenuItem, "Thunarx.MenuItem");
 
 beach:
     Py_XDECREF(py_ret);
@@ -240,9 +240,9 @@ beach:
 static void
 thunarx_python_object_menu_provider_iface_init (ThunarxMenuProviderIface *iface)
 {
-	iface->get_file_actions = thunarx_python_object_get_file_actions;
-	iface->get_folder_actions = thunarx_python_object_get_folder_actions;
-	iface->get_dnd_actions = thunarx_python_object_get_dnd_actions;
+	iface->get_file_menu_items = thunarx_python_object_get_file_menu_items;
+	iface->get_folder_menu_items = thunarx_python_object_get_folder_menu_items;
+	iface->get_dnd_menu_items = thunarx_python_object_get_dnd_menu_items;
 }
 
 
@@ -325,9 +325,9 @@ thunarx_python_object_renamer_provider_iface_init (ThunarxRenamerProviderIface *
 
 
 
-#define METHOD_NAME "get_preferences_actions"
+#define METHOD_NAME "get_preferences_menu_items"
 static GList *
-thunarx_python_object_get_preferences_actions (ThunarxPreferencesProvider *provider,
+thunarx_python_object_get_preferences_menu_items (ThunarxPreferencesProvider *provider,
 										       GtkWidget                  *window)
 {
     ThunarxPythonObject *object = (ThunarxPythonObject*)provider;
@@ -345,7 +345,7 @@ thunarx_python_object_get_preferences_actions (ThunarxPreferencesProvider *provi
 
     HANDLE_RETVAL(py_ret);
 
-    HANDLE_LIST(py_ret, GtkAction, "Gtk.Action");
+    HANDLE_LIST(py_ret, ThunarxMenuItem, "Thunarx.MenuItem");
 	
 beach:
     Py_XDECREF(py_ret);
@@ -359,7 +359,7 @@ beach:
 static void
 thunarx_python_object_preferences_provider_iface_init (ThunarxPreferencesProviderIface *iface)
 {
-	iface->get_actions = thunarx_python_object_get_preferences_actions;
+	iface->get_menu_items = thunarx_python_object_get_preferences_menu_items;
 }
 
 
