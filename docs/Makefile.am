@@ -64,9 +64,11 @@ if ENABLE_GTK_DOC
 
 reference/builddate.xml: $(REFERENCE_DEPS)
 	$(PYTHON) -c 'import datetime; print datetime.date.today()' > $@
-	
+
 $(HTML_DATA): $(REFERENCE_DEPS) reference/builddate.xml
-	$(GTKDOC_MKHTML) thunarx-python reference/thunarx-python-ref.xml
+	$(GTKDOC_MKHTML) \
+		thunarx-python $(srcdir)/reference/thunarx-python-ref.xml \
+		--path $(BUILDDIR)/reference:$(srcdir)/reference
 	touch $@
 	
 endif
