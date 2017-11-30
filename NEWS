@@ -1,6 +1,6 @@
-1.0.0:
+0.4.0:
    - Updated to work with Thunarx-3 which requires uses gobject introspection 
-        and required Gtk+3 and PyGObject3.
+        and requires Gtk+3 and PyGObject3.
 
 0.3.0:
     - Look for python extensions in $XDG_DATA_DIR/thunarx-python/extensions now. 	No longer look in /usr/lib/thunarx-1/python.

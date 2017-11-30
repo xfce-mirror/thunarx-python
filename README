@@ -1,8 +1,8 @@
 Thunarx Python Bindings
 
-These bindings allow one to create python plugins for Thunar.  As of v1.0.0
-the bindings will only work with Gtk+3 and the version of Thunar that supports Gtk+3.  To use these 
-with Gtk+2, using v0.3.0 of the bindings.
+These bindings allow one to create python plugins for Thunar.  As of v0.4.0
+the thunarx-python bindings will only work with Gtk+3 and Thunar v1.7.  To use these 
+with Gtk+2, make sure to use thunarx-python v0.3.0.
 
 Install
 -----------
@@ -26,7 +26,7 @@ set to).  Simply copy your python scripts into that folder and restart thunar.
 
 Dependencies
 ------------
- * thunar (1.6.0 or later)
+ * thunar (1.7.0 or later)
  * pygobject (3.20.0 or later)
  * gtk+3 (3.20.0 or later)
  
