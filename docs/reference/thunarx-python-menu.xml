@@ -1,0 +1,103 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="class-thunarx-python-menu">
+  <refnamediv>
+    <refname>Thunarx.Menu</refname>
+    <refpurpose>Thunarx.Menu Reference</refpurpose>
+  </refnamediv>
+
+<!-- ******************************* -->
+<!-- BEGIN OF NAUTILUS-PYTHON SYNOPSIS -->
+<!-- ******************************* -->
+
+  <refsect1>
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+        <ooclass><classname>Thunarx.Menu</classname></ooclass>
+        <ooclass><classname><link linkend="class-ginterface">GObject.GInterface</link></classname></ooclass>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-thunarx-python-menu--get-items">get_items</link></methodname>
+            <methodparam></methodparam>
+        </methodsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-thunarx-python-menu--append-item">append_item</link></methodname>
+            <methodparam>ThunarxMenuItem</methodparam>
+        </methodsynopsis>
+    </classsynopsis>
+  </refsect1>
+
+<!-- ********************************* -->
+<!-- BEGIN OF ANCESTRY -->
+<!-- ********************************* -->
+
+<refsect1>
+    <title>Ancestry</title>
+
+<synopsis>+-- <link linkend="class-ginterface">GObject.GInterface</link>
+    +-- <link linkend="class-thunarx-python-menu">Thunarx.Menu</link>
+</synopsis>
+</refsect1>
+
+
+<!-- ********************************** -->
+<!-- BEGIN OF DESCRIPTION -->
+<!-- ********************************** -->
+
+  <refsect1 id="description-menu">
+    <title>Description</title>
+
+      <para>
+        Each <link linkend="class-thunarx-python-menu"><classname>Thunarx.Menu</classname></link> object is an abstraction
+        of a real menu.
+      </para>
+
+  </refsect1>
+
+
+
+
+<!-- ******************************** -->
+<!-- BEGIN OF METHODS -->
+<!-- ******************************** -->
+
+<refsect1>
+    <title>Public Methods</title>
+
+    <refsect2 id="method-thunarx-python-menu--get-items">
+        <title>Thunarx.Menu.get_items</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>get_items</methodname>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:List</term>
+                <listitem><simpara>Returns a list of attached menu items</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+
+    <refsect2 id="method-thunarx-python-menu--append-item">
+        <title>Thunarx.Menu.append_item</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>append_item</methodname>
+            <methodparam>ThunarxMenuItem</methodparam>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>Append menu items to menu</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+    
+</refsect1>
+
+
+
+</refentry>
+

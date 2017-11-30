@@ -4,8 +4,8 @@
 
 <refentry id="class-thunarx-python-file-info">
   <refnamediv>
-    <refname>thunarx.FileInfo</refname>
-    <refpurpose>thunarx.FileInfo Reference</refpurpose>
+    <refname>Thunarx.FileInfo</refname>
+    <refpurpose>Thunarx.FileInfo Reference</refpurpose>
   </refnamediv>
 
 <!-- ******************************* -->
@@ -16,8 +16,8 @@
     <title>Synopsis</title>
 
     <classsynopsis language="python">
-        <ooclass><classname>thunarx.FileInfo</classname></ooclass>
-        <ooclass><classname><link linkend="class-ginterface">gobject.GInterface</link></classname></ooclass>
+        <ooclass><classname>Thunarx.FileInfo</classname></ooclass>
+        <ooclass><classname><link linkend="class-ginterface">GObject.GInterface</link></classname></ooclass>
 
         <methodsynopsis language="python">
             <methodname><link linkend="method-thunarx-python-file-info--get-name">get_name</link></methodname>
@@ -88,8 +88,8 @@
 <refsect1>
     <title>Ancestry</title>
 
-<synopsis>+-- <link linkend="class-ginterface">gobject.GInterface</link>
-    +-- <link linkend="class-thunarx-python-file-info">thunarx.FileInfo</link>
+<synopsis>+-- <link linkend="class-ginterface">GObject.GInterface</link>
+    +-- <link linkend="class-thunarx-python-file-info">Thunarx.FileInfo</link>
 </synopsis>
 </refsect1>
 
@@ -102,7 +102,7 @@
     <title>Description</title>
 
       <para>
-        Each <link linkend="class-thunarx-python-file-info"><classname>thunarx.FileInfo</classname></link> object is an abstraction
+        Each <link linkend="class-thunarx-python-file-info"><classname>Thunarx.FileInfo</classname></link> object is an abstraction
         of a real file.
       </para>
 
@@ -142,7 +142,7 @@
     <title>Public Methods</title>
 
     <refsect2 id="method-thunarx-python-file-info--get-name">
-        <title>thunarx.FileInfo.get_name</title>
+        <title>Thunarx.FileInfo.get_name</title>
         <programlisting><methodsynopsis language="python">
             <methodname>get_name</methodname>
         </methodsynopsis></programlisting>
@@ -155,7 +155,7 @@
     </refsect2>
 
     <refsect2 id="method-thunarx-python-file-info--get-uri">
-        <title>thunarx.FileInfo.get_uri</title>
+        <title>Thunarx.FileInfo.get_uri</title>
         <programlisting><methodsynopsis language="python">
             <methodname>get_uri</methodname>
         </methodsynopsis></programlisting>
@@ -168,7 +168,7 @@
     </refsect2>
 
     <refsect2 id="method-thunarx-python-file-info--get-parent-uri">
-        <title>thunarx.FileInfo.get_parent_uri</title>
+        <title>Thunarx.FileInfo.get_parent_uri</title>
         <programlisting><methodsynopsis language="python">
             <methodname>get_parent_uri</methodname>
         </methodsynopsis></programlisting>
@@ -181,7 +181,7 @@
     </refsect2>
 
     <refsect2 id="method-thunarx-python-file-info--get-uri-scheme">
-        <title>thunarx.FileInfo.get_uri_scheme</title>
+        <title>Thunarx.FileInfo.get_uri_scheme</title>
         <programlisting><methodsynopsis language="python">
             <methodname>get_uri_scheme</methodname>
         </methodsynopsis></programlisting>
@@ -194,7 +194,7 @@
     </refsect2>
 
     <refsect2 id="method-thunarx-python-file-info--get-mime-type">
-        <title>thunarx.FileInfo.get_mime_type</title>
+        <title>Thunarx.FileInfo.get_mime_type</title>
         <programlisting><methodsynopsis language="python">
             <methodname>get_mime_type</methodname>
         </methodsynopsis></programlisting>
@@ -207,7 +207,7 @@
     </refsect2>
 
     <refsect2 id="method-thunarx-python-file-info--has-mime-type">
-        <title>thunarx.FileInfo.has_mime_type</title>
+        <title>Thunarx.FileInfo.has_mime_type</title>
         <programlisting><methodsynopsis language="python">
             <methodname>has_mime_type</methodname>
         </methodsynopsis></programlisting>
@@ -221,7 +221,7 @@
                 <listitem><simpara>
 Checks whether file_info is of the given mime_type or whether the MIME-type of file_info is a subclass of mime_type.
 
-This is the preferred way for most extensions to check whether they support a given file or not, and you should consider using this method rather than thunarx.FileInfo.get_mime_type(). A simple example would be a menu extension that performs a certain action on text files. In this case you want to check whether a given thunarx.FileInfo refers to any kind of text file, not only to "text/plain" (e.g. this also includes "text/xml" and "application/x-desktop").
+This is the preferred way for most extensions to check whether they support a given file or not, and you should consider using this method rather than Thunarx.FileInfo.get_mime_type(). A simple example would be a menu extension that performs a certain action on text files. In this case you want to check whether a given Thunarx.FileInfo refers to any kind of text file, not only to "text/plain" (e.g. this also includes "text/xml" and "application/x-desktop").
 
 But you should be aware that this method may take some time to test whether mime_type is valid for file_info, so don't call it too often.
                 </simpara></listitem>
@@ -230,7 +230,7 @@ But you should be aware that this method may take some time to test whether mime
     </refsect2>
 
     <refsect2 id="method-thunarx-python-file-info--is-directory">
-        <title>thunarx.FileInfo.is_directory</title>
+        <title>Thunarx.FileInfo.is_directory</title>
         <programlisting><methodsynopsis language="python">
             <methodname>is_directory</methodname>
         </methodsynopsis></programlisting>
@@ -243,7 +243,7 @@ But you should be aware that this method may take some time to test whether mime
     </refsect2>
 
     <refsect2 id="method-thunarx-python-file-info--get-file-info">
-        <title>thunarx.FileInfo.get_file_info</title>
+        <title>Thunarx.FileInfo.get_file_info</title>
         <programlisting><methodsynopsis language="python">
             <methodname>get_file_info</methodname>
         </methodsynopsis></programlisting>
@@ -256,7 +256,7 @@ But you should be aware that this method may take some time to test whether mime
     </refsect2>
 
     <refsect2 id="method-thunarx-python-file-info--get-filesystem-info">
-        <title>thunarx.FileInfo.get_filesystem_info</title>
+        <title>Thunarx.FileInfo.get_filesystem_info</title>
         <programlisting><methodsynopsis language="python">
             <methodname>get_filesystem_info</methodname>
         </methodsynopsis></programlisting>
@@ -269,7 +269,7 @@ But you should be aware that this method may take some time to test whether mime
     </refsect2>
 
     <refsect2 id="method-thunarx-python-file-info--get-location">
-        <title>thunarx.FileInfo.get_location</title>
+        <title>Thunarx.FileInfo.get_location</title>
         <programlisting><methodsynopsis language="python">
             <methodname>get_location</methodname>
         </methodsynopsis></programlisting>
@@ -282,7 +282,7 @@ But you should be aware that this method may take some time to test whether mime
     </refsect2>
 
     <refsect2 id="method-thunarx-python-file-info--changed">
-        <title>thunarx.FileInfo.changed</title>
+        <title>Thunarx.FileInfo.changed</title>
         <programlisting><methodsynopsis language="python">
             <methodname>changed</methodname>
         </methodsynopsis></programlisting>
@@ -295,7 +295,7 @@ But you should be aware that this method may take some time to test whether mime
     </refsect2>
 
     <refsect2 id="method-thunarx-python-file-info--renamed">
-        <title>thunarx.FileInfo.renamed</title>
+        <title>Thunarx.FileInfo.renamed</title>
         <programlisting><methodsynopsis language="python">
             <methodname>renamed</methodname>
         </methodsynopsis></programlisting>
@@ -323,18 +323,18 @@ The plugins should instead connect to the ::renamed signal and update it's inter
     <title>Signal Details</title>
 
   <refsect2 id="signal-thunarx-python-file-info--changed">
-    <title>The "changed" thunarx.FileInfo Signal</title>
+    <title>The "changed" Thunarx.FileInfo Signal</title>
 
     <para>
 Emitted whenever the system notices a change to file_info.
 </para><para>
-Thunar plugins should use this signal to stay informed about changes to a file_info for which they currently display information (i.e. in a thunarx.PropertyPage), and update it's user interface whenever a change is noticed on file_info.
+Thunar plugins should use this signal to stay informed about changes to a file_info for which they currently display information (i.e. in a Thunarx.PropertyPage), and update it's user interface whenever a change is noticed on file_info.
     </para>
 
   </refsect2>
   
   <refsect2 id="signal-thunarx-python-file-info--renamed">
-    <title>The "renamed" thunarx.FileInfo Signal</title>
+    <title>The "renamed" Thunarx.FileInfo Signal</title>
 
     <para>
 Emitted when the file_info is renamed to another name.

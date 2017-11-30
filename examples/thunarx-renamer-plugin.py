@@ -10,7 +10,7 @@ class ThunarxPythonRenamer(Thunarx.Renamer):
         # Set properties to be saved in the settings files
         self.set_property("prefix", "__")
         
-        self.set_name("Example Python Renamer")
+        self.set_name("Example Python Renamer 2")
         self.set_help_url("http://www.google.com")
      
         hbox = Gtk.HBox(0, False)
@@ -28,18 +28,15 @@ class ThunarxPythonRenamer(Thunarx.Renamer):
         self.add(hbox)
         hbox.show()
     
-    def do_process(self, file, text, index):
-        prefix = self.entry.get_text()
-        return prefix + text
-
     def entry_changed(self, widget):
         self.set_property("prefix", widget.get_text())
         
         # Emitting this will cause the do_process method to be called
         self.emit("changed")
 
-    def do_get_actions(self, window, files):
-        return [Gtk.MenuItem(name="TPR:SomeAction", label="Some Action", tooltip=None, icon=Gtk.STOCK_OPEN)]
+    def do_get_menu_items(self, window, files):
+        print "python get menu items"
+        return [Thunarx.MenuItem(name="TPR:SomeAction", label="Some Action", tooltip=None, icon=Gtk.STOCK_OPEN)]
 
     def do_load(self, settings):
         """

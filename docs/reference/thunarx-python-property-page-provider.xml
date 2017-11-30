@@ -4,8 +4,8 @@
 
 <refentry id="class-thunarx-python-property-page-provider">
   <refnamediv>
-    <refname>thunarx.PropertyPageProvider</refname>
-    <refpurpose>thunarx.PropertyPageProvider Reference</refpurpose>
+    <refname>Thunarx.PropertyPageProvider</refname>
+    <refpurpose>Thunarx.PropertyPageProvider Reference</refpurpose>
   </refnamediv>
 
 <!-- ******************************* -->
@@ -16,10 +16,10 @@
     <title>Synopsis</title>
 
     <classsynopsis language="python">
-      <ooclass><classname>thunarx.PropertyPageProvider</classname></ooclass>
+      <ooclass><classname>Thunarx.PropertyPageProvider</classname></ooclass>
 
       <methodsynopsis language="python">
-        <methodname><link linkend="method-thunarx-property-page-provider--get-pages">get_pages</link></methodname>
+        <methodname><link linkend="method-Thunarx-property-page-provider--get-pages">get_pages</link></methodname>
         <methodparam><parameter role="keyword">files</parameter></methodparam>
       </methodsynopsis>
     </classsynopsis>
@@ -33,20 +33,19 @@
     <title>Description</title>
 
       <para>
-      To add a property page to the file properties dialog, extensions must implement the ThunarxPropertyPageProvider interface. This interface has only one virtual method, get_pages, that is passed a list of thunarx.FileInfo objects and returns a list of thunarx.PropertyPage objects. 
+      To add a property page to the file properties dialog, extensions must implement the ThunarxPropertyPageProvider interface. This interface has only one virtual method, get_pages, that is passed a list of Thunarx.FileInfo objects and returns a list of Thunarx.PropertyPage objects. 
       </para>
   </refsect1>
 
 <example>
-    <title>A thunarx.PropertyPageProvider plugin</title>
+    <title>A Thunarx.PropertyPageProvider plugin</title>
     <programlisting>
 import hashlib
 import urllib
 
-import thunarx
-import gtk
+from gi.repository import GObject, Gtk, Thunarx
 
-class ThunarxPropertyPagePlugin(thunarx.PropertyPageProvider):
+class ThunarxPropertyPagePlugin(GObject.GObject, Thunarx.PropertyPageProvider):
     def __init__(self):
         pass
 
@@ -63,23 +62,23 @@ class ThunarxPropertyPagePlugin(thunarx.PropertyPageProvider):
 
         filename = urllib.unquote(file.get_uri()[7:])
 
-        self.hbox = gtk.HBox(0, False)
-        self.hbox.show()
+        hbox = Gtk.HBox(0, False)
+        hbox.show()
 
-        label = gtk.Label('MD5Sum:')
+        label = Gtk.Label('MD5Sum:')
         label.show()
-        self.hbox.pack_start(label)
+        hbox.pack_start(label, True, True, 0)
 
-        self.value_label = gtk.Label()
-        self.hbox.pack_start(self.value_label)
+        value_label = Gtk.Label()
+        hbox.pack_start(value_label, True, True, 0)
 
         md5sum = hashlib.md5(filename).hexdigest()
-        self.value_label.set_text(md5sum)
-        self.value_label.show()
+        value_label.set_text(md5sum)
+        value_label.show()
 
-        page = thunarx.PropertyPage("MD5")
-
-        page.add(self.hbox)
+        page = Thunarx.PropertyPage()
+        page.set_label("MD5")
+        page.add(hbox)
 
         return [page]
     </programlisting>
@@ -92,8 +91,8 @@ class ThunarxPropertyPagePlugin(thunarx.PropertyPageProvider):
   <refsect1>
         <title>Passive Methods</title>
 
-        <refsect2 id="method-thunarx-property-page-provider--get-pages">
-          <title>thunarx.PropertyPageProvider.get_pages</title>
+        <refsect2 id="method-Thunarx-property-page-provider--get-pages">
+          <title>Thunarx.PropertyPageProvider.get_pages</title>
 
           <programlisting><methodsynopsis language="python">
             <methodname>get_pages</methodname>
@@ -103,11 +102,11 @@ class ThunarxPropertyPagePlugin(thunarx.PropertyPageProvider):
           <variablelist>
             <varlistentry>
 	            <term><parameter role="keyword">files</parameter>&nbsp;:</term>
-	            <listitem><simpara>a list of <link linkend="class-thunarx-python-file-info"><classname>thunarx.FileInfo</classname></link> objects.</simpara></listitem>
+	            <listitem><simpara>a list of <link linkend="class-thunarx-python-file-info"><classname>Thunarx.FileInfo</classname></link> objects.</simpara></listitem>
             </varlistentry>
             <varlistentry>
               <term><emphasis>Returns</emphasis>&nbsp;:</term>
-              <listitem><simpara>a list of <link linkend="class-thunarx-python-property-page"><classname>thunarx.PropertyPage</classname></link> objects</simpara></listitem>
+              <listitem><simpara>a list of <link linkend="class-thunarx-python-property-page"><classname>Thunarx.PropertyPage</classname></link> objects</simpara></listitem>
             </varlistentry>
           </variablelist>
 

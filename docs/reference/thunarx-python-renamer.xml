@@ -4,8 +4,8 @@
 
 <refentry id="class-thunarx-python-renamer">
   <refnamediv>
-    <refname>thunarx.Renamer</refname>
-    <refpurpose>thunarx.Renamer Reference</refpurpose>
+    <refname>Thunarx.Renamer</refname>
+    <refpurpose>Thunarx.Renamer Reference</refpurpose>
   </refnamediv>
 
 <!-- ******************************* -->
@@ -16,8 +16,8 @@
     <title>Synopsis</title>
 
     <classsynopsis language="python">
-        <ooclass><classname>thunarx.Renamer</classname></ooclass>
-        <ooclass><classname><link linkend="class-ginterface">gobject.GObject</link></classname></ooclass>
+        <ooclass><classname>Thunarx.Renamer</classname></ooclass>
+        <ooclass><classname><link linkend="class-ginterface">GObject.GObject</link></classname></ooclass>
 
         <methodsynopsis language="python">
             <methodname><link linkend="method-thunarx-python-renamer--get-help-url">get_help_name</link></methodname>
@@ -57,7 +57,7 @@
         </methodsynopsis>
 
         <methodsynopsis language="python">
-            <methodname><link linkend="method-thunarx-python-renamer--do-get-actions">do_get_actions</link></methodname>
+            <methodname><link linkend="method-thunarx-python-renamer--do-get-menu-items">do_get_menu_items</link></methodname>
             <methodparam><parameter role="keyword">window</parameter></methodparam>
             <methodparam><parameter role="keyword">files</parameter></methodparam>
         </methodsynopsis>
@@ -76,8 +76,8 @@
 <refsect1>
     <title>Ancestry</title>
 
-<synopsis>+-- <link linkend="class-ginterface">gobject.GObject</link>
-    +-- <link linkend="class-thunarx-python-renamer">thunarx.Renamer</link>
+<synopsis>+-- <link linkend="class-ginterface">GObject.GObject</link>
+    +-- <link linkend="class-thunarx-python-renamer">Thunarx.Renamer</link>
 </synopsis>
 </refsect1>
 
@@ -90,11 +90,11 @@
     <title>Description</title>
 
       <para>
-        The abstract base class thunarx.Renamer is implemented by extensions which provide additional bulk renamers that should be used in the bulk rename dialog.
+        The abstract base class Thunarx.Renamer is implemented by extensions which provide additional bulk renamers that should be used in the bulk rename dialog.
       </para>
       
       <para>
-Derived classes must override the process() method, which is called by the bulk rename dialog for every file to generate a new name. For example, the ThunarSbrReplaceRenamer class included in the thunar-sbr plugin (which is part of the Thunar distribution) provides a bulk renamer, named Search &amp; Replace, which allows the user to rename multiple files by searching for a pattern in each file name and, if the pattern is found, replacing it with the specified replacement text.
+Derived classes must override the do_process() method, which is called by the bulk rename dialog for every file to generate a new name. For example, the ThunarSbrReplaceRenamer class included in the thunar-sbr plugin (which is part of the Thunar distribution) provides a bulk renamer, named Search &amp; Replace, which allows the user to rename multiple files by searching for a pattern in each file name and, if the pattern is found, replacing it with the specified replacement text.
       </para>
 
   </refsect1>
@@ -168,7 +168,7 @@ Default value: NULL
     <title>Passive Methods</title>
 
     <refsect2 id="method-thunarx-python-renamer--do-process">
-        <title>thunarx.Renamer.do_process</title>
+        <title>Thunarx.Renamer.do_process</title>
         <programlisting><methodsynopsis language="python">
             <methodname>do_process</methodname>
             <methodparam><parameter role="keyword">file</parameter></methodparam>
@@ -178,7 +178,7 @@ Default value: NULL
         <variablelist>
             <varlistentry>
 	            <term><parameter role="keyword">file</parameter>&nbsp;:</term>
-	            <listitem><simpara>the thunarx.FileInfo for the file whose new name - according to renamer - should be determined.</simpara></listitem>
+	            <listitem><simpara>the Thunarx.FileInfo for the file whose new name - according to renamer - should be determined.</simpara></listitem>
             </varlistentry>
             <varlistentry>
 	            <term><parameter role="keyword">text</parameter>&nbsp;:</term>
@@ -198,7 +198,7 @@ Default value: NULL
     </refsect2>
 
     <refsect2 id="method-thunarx-python-renamer--do-load">
-        <title>thunarx.Renamer.do_load</title>
+        <title>Thunarx.Renamer.do_load</title>
         <programlisting><methodsynopsis language="python">
             <methodname>do_load</methodname>
             <methodparam><parameter role="keyword">settings</parameter></methodparam>
@@ -210,16 +210,16 @@ Default value: NULL
             </varlistentry>
         </variablelist>
         
-        <para>Tells renamer to load its internal settings from the specified settings. The settings hash table contains previously saved settings, see thunarx.Renamer.do_save(), as key/value pairs of strings. That is, both the keys and the values are strings.
+        <para>Tells renamer to load its internal settings from the specified settings. The settings hash table contains previously saved settings, see Thunarx.Renamer.do_save(), as key/value pairs of strings. That is, both the keys and the values are strings.
 </para><para>
-Implementations of thunarx.Renamer may decide to override this method to perform custom loading of settings. If you do not override this method, the default method of thunarx.Renamer will be used, which simply loads all GObject properties provided by renamers class (excluding the ones provided by the parent classes) from the settings. The GObject properties must be transformable to strings and from strings.
+Implementations of Thunarx.Renamer may decide to override this method to perform custom loading of settings. If you do not override this method, the default method of Thunarx.Renamer will be used, which simply loads all GObject properties provided by renamers class (excluding the ones provided by the parent classes) from the settings. The GObject properties must be transformable to strings and from strings.
 </para><para>
-If you decide to override this method for your thunarx.Renamer implementation, you should also override thunarx.Renamer.do_save().
+If you decide to override this method for your Thunarx.Renamer implementation, you should also override Thunarx.Renamer.do_save().
 </para>
     </refsect2>
 
     <refsect2 id="method-thunarx-python-renamer--do-save">
-        <title>thunarx.Renamer.do_save</title>
+        <title>Thunarx.Renamer.do_save</title>
         <programlisting><methodsynopsis language="python">
             <methodname>do_save</methodname>
             <methodparam><parameter role="keyword">settings</parameter></methodparam>
@@ -232,45 +232,45 @@ If you decide to override this method for your thunarx.Renamer implementation, y
         </variablelist>
     </refsect2>
 
-    <refsect2 id="method-thunarx-python-renamer--do-get-actions">
-        <title>thunarx.Renamer.do_get_actions</title>
+    <refsect2 id="method-thunarx-python-renamer--do-get-menu-items">
+        <title>Thunarx.Renamer.do_get_menu_items</title>
         <programlisting><methodsynopsis language="python">
-            <methodname>do_get_actions</methodname>
+            <methodname>do_get_menu_items</methodname>
             <methodparam><parameter role="keyword">window</parameter></methodparam>
             <methodparam><parameter role="keyword">files</parameter></methodparam>
         </methodsynopsis></programlisting>
         <variablelist>
             <varlistentry>
 	            <term><parameter role="keyword">window</parameter>&nbsp;:</term>
-	            <listitem><simpara>a gtk.Window</simpara></listitem>
+	            <listitem><simpara>a Gtk.Window</simpara></listitem>
             </varlistentry>
             <varlistentry>
 	            <term><parameter role="keyword">files</parameter>&nbsp;:</term>
-	            <listitem><simpara>a list of thunarx.FileInfo objects</simpara></listitem>
+	            <listitem><simpara>a list of Thunarx.FileInfo objects</simpara></listitem>
             </varlistentry>
             <varlistentry>
                 <term><emphasis>Returns</emphasis>&nbsp;:</term>
-                <listitem><simpara>the list of GtkActions provided by renamer for the given list of files</simpara></listitem>
+                <listitem><simpara>the list of ThunarxMenuItems provided by renamer for the given list of files</simpara></listitem>
             </varlistentry>
         </variablelist>
 
         <para>
-Returns the list of gtk.Action objects provided by renamer for the given list of files. By default, this method returns NULL (the empty list), but derived classes may override this method to provide additional actions for files in the bulk renamer dialog list.
+Returns the list of Thunarx.MenuItem objects provided by renamer for the given list of files. By default, this method returns NULL (the empty list), but derived classes may override this method to provide additional actions for files in the bulk renamer dialog list.
 </para><para>
-The returned gtk.Action objects will be displayed in the file's context menu of the bulk renamer dialog, when this renamer is active. For example, an ID3-Tag based renamer may add an action "Edit Tags" to the context menus of supported media files and, when activated, display a dialog (which should be transient and modal for window, if not NULL), which allows the users to edit media file tags on-the-fly.
+The returned Thunarx.MenuItem objects will be displayed in the file's context menu of the bulk renamer dialog, when this renamer is active. For example, an ID3-Tag based renamer may add an action "Edit Tags" to the context menus of supported media files and, when activated, display a dialog (which should be transient and modal for window, if not NULL), which allows the users to edit media file tags on-the-fly.
 </para><para>
-Derived classes that override this method should always check first if all the thunarx.FileInfo objects in the list of files are supported, and only return actions that can be performed on this specific list of files. For example, the ID3-Tag renamer mentioned above, should first check whether all items in files are actually audio files. The thunarx.FileInfo.has_mime_type() of the thunarx.FileInfo interface can be used to easily test whether a file in the files list is of a certain MIME type.
+Derived classes that override this method should always check first if all the Thunarx.FileInfo objects in the list of files are supported, and only return actions that can be performed on this specific list of files. For example, the ID3-Tag renamer mentioned above, should first check whether all items in files are actually audio files. The Thunarx.FileInfo.has_mime_type() of the Thunarx.FileInfo interface can be used to easily test whether a file in the files list is of a certain MIME type.
 </para><para>
 Some actions may only work properly if only a single file ist selected (for example, the ID3-Tag renamer will probably only supporting editing one file at a time). In this case you have basicly two options: Either you can return NULL here if files does not contain exactly one item, or you can return the actions as usual, but make them insensitive, using: action.set_sensitive(False)
 </para><para>
 The latter has the advantage that the user will still notice the existance of the action and probably realize that it can only be applied to a single item at once.
 </para><para>
-The gtk.Action objects returned from this method must be namespaced with the module to avoid collision with internal file manager actions and actions provided by other extensions. For example, the menu action provided by the ID3-Tag renamer mentioned above, should be named TagRenamer::edit-tags (if TagRenamer is the class name). For additional information about the way GtkActions should be returned from extensions and the way they are used, read the description of the thunarx.MenuProvider interface or read the introduction provided with this reference manual.
+The Thunarx.MenuItem objects returned from this method must be namespaced with the module to avoid collision with internal file manager actions and actions provided by other extensions. For example, the menu action provided by the ID3-Tag renamer mentioned above, should be named TagRenamer::edit-tags (if TagRenamer is the class name). For additional information about the way ThunarxMenuItems should be returned from extensions and the way they are used, read the description of the Thunarx.MenuProvider interface or read the introduction provided with this reference manual.
         </para>
     </refsect2>
 
     <refsect2 id="method-thunarx-python-renamer--do-changed">
-        <title>thunarx.Renamer.do_changed</title>
+        <title>Thunarx.Renamer.do_changed</title>
         <programlisting><methodsynopsis language="python">
             <methodname>do_changed</methodname>
         </methodsynopsis></programlisting>
@@ -290,7 +290,7 @@ The gtk.Action objects returned from this method must be namespaced with the mod
     <title>Active Methods</title>
     
     <refsect2 id="method-thunarx-python-renamer--get-help-url">
-        <title>thunarx.Renamer.get_help_url</title>
+        <title>Thunarx.Renamer.get_help_url</title>
         <programlisting><methodsynopsis language="python">
             <methodname>get_help_url</methodname>
         </methodsynopsis></programlisting>
@@ -305,7 +305,7 @@ The gtk.Action objects returned from this method must be namespaced with the mod
     </refsect2>
     
     <refsect2 id="method-thunarx-python-renamer--set-help-url">
-        <title>thunarx.Renamer.set_help_url</title>
+        <title>Thunarx.Renamer.set_help_url</title>
         <programlisting><methodsynopsis language="python">
             <methodname>set_help_url</methodname>
             <methodparam><parameter role="keyword">help_url</parameter></methodparam>
@@ -318,14 +318,14 @@ The gtk.Action objects returned from this method must be namespaced with the mod
         </variablelist>
         
         <para>
-The URL to the documentation of this thunarx.Renamer. Derived classes can set this property to point to the documentation for the specific renamer. The documentation of the specific renamer in turn should contain a link to the general Thunar renamer documentation.
+The URL to the documentation of this Thunarx.Renamer. Derived classes can set this property to point to the documentation for the specific renamer. The documentation of the specific renamer in turn should contain a link to the general Thunar renamer documentation.
 </para><para>
 May also be unset, in which case the general Thunar renamer documentation will be shown when the user clicks the "Help" button.
         </para>
     </refsect2>
 
     <refsect2 id="method-thunarx-python-renamer--get-name">
-        <title>thunarx.Renamer.get_name</title>
+        <title>Thunarx.Renamer.get_name</title>
         <programlisting><methodsynopsis language="python">
             <methodname>get_name</methodname>
         </methodsynopsis></programlisting>
@@ -336,11 +336,11 @@ May also be unset, in which case the general Thunar renamer documentation will b
             </varlistentry>
         </variablelist>
         
-        <para>Returns the user visible name for renamer, previously set with thunarx.Renamer.set_name().</para>
+        <para>Returns the user visible name for renamer, previously set with Thunarx.Renamer.set_name().</para>
     </refsect2>
     
     <refsect2 id="method-thunarx-python-renamer--set-name">
-        <title>thunarx.Renamer.set_name</title>
+        <title>Thunarx.Renamer.set_name</title>
         <programlisting><methodsynopsis language="python">
             <methodname>set_name</methodname>
         </methodsynopsis></programlisting>
@@ -367,12 +367,12 @@ May also be unset, in which case the general Thunar renamer documentation will b
     <title>Signal Details</title>
 
   <refsect2 id="signal-thunarx-python-renamer--changed">
-    <title>The "changed" thunarx.Renamer Signal</title>
+    <title>The "changed" Thunarx.Renamer Signal</title>
 
     <para>
-Derived classes should emit this signal using the thunarx.Renamer.do_changed() method whenever the user changed a setting in the renamer GUI.
+Derived classes should emit this signal using the Thunarx.Renamer.do_changed() method whenever the user changed a setting in the renamer GUI.
 </para><para>
-The file manager will then invoke thunarx.Renamer.do_process() for all files that should be renamed and update the preview.
+The file manager will then invoke Thunarx.Renamer.do_process() for all files that should be renamed and update the preview.
     </para>
 
   </refsect2>

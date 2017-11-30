@@ -1,12 +1,5 @@
 from gi.repository import GObject, Gtk, Thunarx
 
-"""
-Thunarx Submenu Plugin
-    This plugin shows an example of a MenuProvider plugin that implements
-    sub-menus.    The example used here requires the developer to sub-class 
-    gtk.Action and override the create_menu_item virtual method.
-"""
-
 class ThunarxSubMenuProviderPlugin(GObject.GObject, Thunarx.MenuProvider):
     def __init__(self):
         pass

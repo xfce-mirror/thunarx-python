@@ -6,9 +6,9 @@
 
     <title>Overview</title>
 
-    <para>Writing a Thunarx-Python extension is a fairly straight-forward process. 
-    One simply imports the thunarx module and creates a class which is derived from a number 
-    of the thunarx module's classes. When an extension derives a class, it becomes a "provider", 
+    <para>Writing a thunarx-python extension is a fairly straight-forward process. 
+    One simply imports the Thunarx module and creates a class which is derived from a number 
+    of the Thunarx module's classes. When an extension derives a class, it becomes a "provider", 
     telling Thunarx to ask it for information. There are several types of providers 
     available for extensions to use: there is MenuProvider, PropertyPageProvider, RenamerProvider,
     and PreferencePageProvider, all of which will be explained 
@@ -17,15 +17,20 @@
     <para>Here are the basic steps:</para>
     
     <para>1. A script is written and installed to the standard python extensions install path</para>
-    <para>2. Thunar is (re)started and loads the Thunarx-Python C extension, which in turn loads all python extensions</para>
-    <para>3. Any python script in the standard python extensions install path that imports the thunarx module and derives 
-    the main class from a thunarx module class will be loaded</para>
+    <para>2. Thunar is (re)started and loads the thunarx-python C extension, which in turn loads all python extensions</para>
+    <para>3. Any python script in the standard python extensions install path that imports the Thunarx module and derives 
+    the main class from a Thunarx module class will be loaded</para>
     
     <note>
 <title>Where to install python extensions</title>
 
 <para>As of thunarx-python 0.3.0, python extensions are installed in $XDG_DATA_DIR/thunarx-python/extensions where $XDG_DATA_DIR 
         could be /usr/share for a global install or ~/.local/share for a local install.</para>
+    </note>
+    
+    <note>
+        <title>thunarx-3</title>
+        <para>As of thunar v1.7.0, thunarx requires Gtk+3 and no longer accepts gtk.Actions.  Instead, it expects Thunarx.MenuItems.</para>
     </note>
 
     <xi:include href="thunarx-python-overview-example.xml"/>

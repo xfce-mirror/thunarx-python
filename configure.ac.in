@@ -67,7 +67,7 @@ AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
 AM_CHECK_PYTHON_LIBS(,[AC_MSG_ERROR(could not find Python lib)])
 
 dnl Check for gtk-doc
-GTK_DOC_CHECK(1.9)
+GTK_DOC_CHECK(1.14)
 
 dnl ***************************
 dnl *** Determine the installed thunarx version ***
@@ -110,9 +110,9 @@ dnl ---------------------------------
 dnl Check for gtk-doc dependencies
 dnl ---------------------------------
 if test "${enable_gtk_doc}" != no; then
-    dnl Check for xsltproc
-    AC_PATH_PROG([XSLTPROC], [xsltproc])
-    if test -z "$XSLTPROC"; then
+    dnl Check for gtkdoc-mkhtml
+    AC_PATH_PROG([GTKDOC_MKHTML], [gtkdoc-mkhtml])
+    if test -z "$GTKDOC_MKHTML"; then
         echo " disabling generation of docs"
         enable_gtk_doc=no
     fi

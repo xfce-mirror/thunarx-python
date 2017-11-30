@@ -4,8 +4,8 @@
 
 <refentry id="class-thunarx-python-preferences-provider">
   <refnamediv>
-    <refname>thunarx.PreferencesProvider</refname>
-    <refpurpose>thunarx.PreferencesProvider Reference</refpurpose>
+    <refname>Thunarx.PreferencesProvider</refname>
+    <refpurpose>Thunarx.PreferencesProvider Reference</refpurpose>
   </refnamediv>
 
 <!-- ******************************* -->
@@ -16,10 +16,10 @@
     <title>Synopsis</title>
 
     <classsynopsis language="python">
-      <ooclass><classname>thunarx.PreferencesProvider</classname></ooclass>
+      <ooclass><classname>Thunarx.PreferencesProvider</classname></ooclass>
 
       <methodsynopsis language="python">
-        <methodname><link linkend="method-thunarx-preferences-provider--get-actions">get_actions</link></methodname>
+        <methodname><link linkend="method-Thunarx-preferences-provider--get-preferences-menu-items">get_preferences_menu_items</link></methodname>
         <methodparam><parameter role="keyword">window</parameter></methodparam>
       </methodsynopsis>
     </classsynopsis>
@@ -33,37 +33,45 @@
     <title>Description</title>
 
       <para>
-The thunarx.PreferencesProvider interface is implemented by extensions that want to register additional actions in the preferences menu of the file manager. In general this should only be done by extensions that are closely tied to the file manager (for example, the thunar-uca is such an extension, while an extension that just adds Compress file and Uncompress file to the context menu of compressed files should not add their own preferences to the file manager menu, because it should use desktop-wide settings for archive managers instead).
+The Thunarx.PreferencesProvider interface is implemented by extensions that want to register additional actions in the preferences menu of the file manager. In general this should only be done by extensions that are closely tied to the file manager (for example, the thunar-uca is such an extension, while an extension that just adds Compress file and Uncompress file to the context menu of compressed files should not add their own preferences to the file manager menu, because it should use desktop-wide settings for archive managers instead).
 </para><para>
-The gtk.Action objects returned from the thunarx.PreferencesProvider.get_actions() method must be namespaced with the model to avoid collision with internal file manager actions and actions provided by other extensions. For example, the preferences action provided by the thunar-uca extension is called ThunarUca::manage-actions.
+The Thunarx.MenuItem objects returned from the Thunarx.PreferencesProvider.get_preferences_menu_items() method must be namespaced with the model to avoid collision with internal file manager actions and actions provided by other extensions. For example, the preferences action provided by the thunar-uca extension is called ThunarUca::manage-actions.
       </para>
   </refsect1>
 
 <example>
-    <title>A thunarx.PreferencesProvider plugin</title>
+    <title>A Thunarx.PreferencesProvider plugin</title>
     <programlisting>
-import thunarx
-import gtk
+from gi.repository import GObject, Gtk, Thunarx
 
-class ThunarxPreferencesPlugin(thunarx.PreferencesProvider):
+class DialogExample(Gtk.Dialog):
+    def __init__(self, parent):
+        Gtk.Dialog.__init__(self, "My Dialog", parent, 0,
+            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+             Gtk.STOCK_OK, Gtk.ResponseType.OK))
+
+        self.set_default_size(150, 100)
+
+        label = Gtk.Label("This is a dialog to display additional information")
+
+        box = self.get_content_area()
+        box.add(label)
+        self.show_all()
+
+class ThunarxPreferencesPlugin(GObject.GObject, Thunarx.PreferencesProvider):
     def __init__(self):
         pass
     
-    def get_preferences_actions(self, window):
-        action = gtk.Action("TPP:PrefItem", "My Example Preferences", None, None)
-        action.connect("activate", self.__open_preferences, window)
-        return action,
+    def get_preferences_menu_items(self, window):
+        item = Thunarx.MenuItem(name="TPP:PrefItem", label="My Example Preferences", tooltip=None, icon=None)
+        item.connect("activate", self.__open_preferences, window)
+        return item,
     
     def __open_preferences(self, action, window):
-        dialog = gtk.Dialog("My dialog",
-            window,
-            gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-            (gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
-            gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
-
-        dialog.show()
-        dialog.run()
+        dialog = DialogExample(window)
+        response = dialog.run()
         dialog.destroy()
+
     </programlisting>
 </example>
 
@@ -74,27 +82,27 @@ class ThunarxPreferencesPlugin(thunarx.PreferencesProvider):
   <refsect1>
         <title>Passive Methods</title>
 
-        <refsect2 id="method-thunarx-preferences-provider--get-actions">
-          <title>thunarx.PreferencesProvider.get_actions</title>
+        <refsect2 id="method-Thunarx-preferences-provider--get-preferences-menu-items">
+          <title>Thunarx.PreferencesProvider.get_preferences_menu_items</title>
 
           <programlisting><methodsynopsis language="python">
-            <methodname>get_actions</methodname>
+            <methodname>get_preferences_menu_items</methodname>
               <methodparam></methodparam>
           </methodsynopsis></programlisting>
 
           <variablelist>
             <varlistentry>
 	            <term><parameter role="keyword">window</parameter>&nbsp;:</term>
-	            <listitem><simpara>a gtk.Window</simpara></listitem>
+	            <listitem><simpara>a Gtk.Window</simpara></listitem>
             </varlistentry>
             <varlistentry>
               <term><emphasis>Returns</emphasis>&nbsp;:</term>
-              <listitem><simpara>the list of gtk.Action objects that provider has to offer as preferences within window.</simpara></listitem>
+              <listitem><simpara>the list of Thunarx.MenuItem objects that provider has to offer as preferences within window.</simpara></listitem>
             </varlistentry>
           </variablelist>
 
           <para>
-Returns the list of GtkActions that provider has to offer as preferences within window. These actions will usually be added to the builtin list of preferences in the "Edit" menu of the file manager's window.
+Returns the list of ThunarxMenuItems that provider has to offer as preferences within window. These actions will usually be added to the builtin list of preferences in the "Edit" menu of the file manager's window.
 </para><para>
 Plugin writers that implement this interface should make sure to choose descriptive action names and tooltips, and not to crowd the "Edit" menu too much. That said, think twice before implementing this interface, as too many preference actions will render the file manager useless over time!
           </para>

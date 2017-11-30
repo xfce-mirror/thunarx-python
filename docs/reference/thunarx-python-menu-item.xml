@@ -1,0 +1,177 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="class-thunarx-python-menu-item">
+  <refnamediv>
+    <refname>Thunarx.MenuItem</refname>
+    <refpurpose>Thunarx.MenuItem Reference</refpurpose>
+  </refnamediv>
+
+<!-- ******************************* -->
+<!-- BEGIN OF NAUTILUS-PYTHON SYNOPSIS -->
+<!-- ******************************* -->
+
+  <refsect1>
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+        <ooclass><classname>Thunarx.MenuItem</classname></ooclass>
+        <ooclass><classname><link linkend="class-ginterface">GObject.GInterface</link></classname></ooclass>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-thunarx-python-menu-item--set-sensitive">set_sensitive</link></methodname>
+            <methodparam>Boolean</methodparam>
+        </methodsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-thunarx-python-menu-item--get-sensitive">get_sensitive</link></methodname>
+            <methodparam></methodparam>
+        </methodsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-thunarx-python-menu-item--set-menu">set_menu</link></methodname>
+            <methodparam>ThunarxMenu</methodparam>
+        </methodsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-thunarx-python-menu-item--activate">activate</link></methodname>
+            <methodparam></methodparam>
+        </methodsynopsis>
+    </classsynopsis>
+  </refsect1>
+
+<!-- ********************************* -->
+<!-- BEGIN OF ANCESTRY -->
+<!-- ********************************* -->
+
+<refsect1>
+    <title>Ancestry</title>
+
+<synopsis>+-- <link linkend="class-ginterface">GObject.GInterface</link>
+    +-- <link linkend="class-thunarx-python-menu-item">Thunarx.MenuItem</link>
+</synopsis>
+</refsect1>
+
+
+<!-- ********************************** -->
+<!-- BEGIN OF DESCRIPTION -->
+<!-- ********************************** -->
+
+  <refsect1 id="description-menu-item">
+    <title>Description</title>
+
+      <para>
+        Each <link linkend="class-thunarx-python-menu-item"><classname>Thunarx.MenuItem</classname></link> object is an abstraction
+        of a real menu item.
+      </para>
+
+  </refsect1>
+
+
+<!-- ****************************************** -->
+<!-- BEGIN OF SIGNAL PROTOTYPES -->
+<!-- ****************************************** -->
+
+<refsect1>
+    <title>Signals</title>
+    <variablelist>
+      <varlistentry>
+        <term><link linkend="signal-thunarx-python-menu-item--activate">"activate"</link></term>
+        <listitem>
+          <methodsynopsis language="python"><methodname>callback</methodname>
+          </methodsynopsis>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+</refsect1>
+
+
+<!-- ******************************** -->
+<!-- BEGIN OF METHODS -->
+<!-- ******************************** -->
+
+<refsect1>
+    <title>Public Methods</title>
+
+    <refsect2 id="method-thunarx-python-menu-item--get-sensitive">
+        <title>Thunarx.MenuItem.get_sensitive</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>get_sensitive</methodname>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:Boolean</term>
+                <listitem><simpara>Returns whether the menu item is sensitive.</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+
+    <refsect2 id="method-thunarx-python-menu-item--set-sensitive">
+        <title>Thunarx.MenuItem.set_sensitive</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>set_sensitive</methodname>
+            <methodparam>Boolean</methodparam>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>Set whether the menu item is sensitive.</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+
+    <refsect2 id="method-thunarx-python-menu-item--set-menu">
+        <title>Thunarx.MenuItem.set_menu</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>set_menu</methodname>
+            <methodparam>ThunarxMenu</methodparam>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>Add a menu to the menu item (i.e. submenu)</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+    
+
+    <refsect2 id="method-thunarx-python-menu-item--activate">
+        <title>Thunarx.MenuItem.activate</title>
+        <programlisting><methodsynopsis language="python">
+            <methodname>activate</methodname>
+        </methodsynopsis></programlisting>
+        <variablelist>
+            <varlistentry>
+                <term><emphasis>Returns</emphasis>&nbsp;:</term>
+                <listitem><simpara>Emits the ::activate signal on menu_item. This method should not be invoked by thunarx-python plugins, instead the file manager itself will use this method to emit ::activate whenever it notices a change on menu_item.</simpara></listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect2>
+
+</refsect1>
+
+
+
+<!-- ******************************** -->
+<!-- BEGIN OF SIGNAL DETAILS -->
+<!-- ******************************** --> 
+ 
+<refsect1>
+    <title>Signal Details</title>
+
+  <refsect2 id="signal-thunarx-python-menu-item--activate">
+    <title>The "activate" Thunarx.MenuItem Signal</title>
+
+    <para>
+Emitted whenever the system notices a change to menu_item.
+</para><para>
+Thunar plugins should use this signal to stay informed about changes to a menu_item for which they currently display information (i.e. in a Thunarx.PropertyPage), and update it's user interface whenever a change is noticed on menu_item.
+    </para>
+
+  </refsect2>
+  
+</refsect1>
+
+</refentry>
+

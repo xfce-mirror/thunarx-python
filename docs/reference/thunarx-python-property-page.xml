@@ -4,8 +4,8 @@
 
 <refentry id="class-thunarx-python-property-page">
   <refnamediv>
-    <refname>thunarx.PropertyPage</refname>
-    <refpurpose>thunarx.PropertyPage Reference</refpurpose>
+    <refname>Thunarx.PropertyPage</refname>
+    <refpurpose>Thunarx.PropertyPage Reference</refpurpose>
   </refnamediv>
 
 <!-- ******************************* -->
@@ -16,16 +16,16 @@
     <title>Synopsis</title>
 
     <classsynopsis language="python">
-        <ooclass><classname>thunarx.PropertyPage</classname></ooclass>
-        <ooclass><classname><link linkend="class-gobject">gobject.GObject</link></classname></ooclass>
+        <ooclass><classname>Thunarx.PropertyPage</classname></ooclass>
+        <ooclass><classname><link linkend="class-GObject">GObject.GObject</link></classname></ooclass>
 
         <constructorsynopsis language="python">
-            <methodname><link linkend="constructor-thunarx-property-page">thunarx.PropertyPage</link></methodname>
+            <methodname><link linkend="constructor-Thunarx-property-page">Thunarx.PropertyPage</link></methodname>
             <methodparam><parameter role="keyword">label</parameter></methodparam>
         </constructorsynopsis>
 
         <constructorsynopsis language="python">
-            <methodname><link linkend="constructor-thunarx-property-page">thunarx.PropertyPage</link></methodname>
+            <methodname><link linkend="constructor-Thunarx-property-page">Thunarx.PropertyPage</link></methodname>
             <methodparam><parameter role="keyword">label_widget</parameter></methodparam>
         </constructorsynopsis>
         
@@ -56,8 +56,8 @@
 <refsect1>
     <title>Ancestry</title>
 
-<synopsis>+-- <link linkend="class-gobject">gobject.GObject</link>
-    +-- <link linkend="class-thunarx-python-property-page">thunarx.PropertyPage</link>
+<synopsis>+-- <link linkend="class-GObject">GObject.GObject</link>
+    +-- <link linkend="class-thunarx-python-property-page">Thunarx.PropertyPage</link>
 </synopsis>
 </refsect1>
 
@@ -70,7 +70,7 @@
     <title>Description</title>
 
       <para>
-        A <link linkend="class-thunarx-python-property-page"><classname>thunarx.PropertyPage</classname></link> object is returned by <link linkend="class-thunarx-python-property-page-provider"><classname>thunarx.PropertyPageProvider</classname></link> extensions.
+        A <link linkend="class-thunarx-python-property-page"><classname>Thunarx.PropertyPage</classname></link> object is returned by <link linkend="class-thunarx-python-property-page-provider"><classname>Thunarx.PropertyPageProvider</classname></link> extensions.
       </para>
 
   </refsect1>
@@ -114,11 +114,11 @@
 <!-- BEGIN OF CONSTRUCTOR -->
 <!-- ************************************ -->
 
-<refsect1 id="constructor-thunarx-property-page">
+<refsect1 id="constructor-Thunarx-property-page">
   <title>Constructor</title>
 
   <programlisting><constructorsynopsis language="python">
-        <methodname>thunarx.PropertyPage</methodname>
+        <methodname>Thunarx.PropertyPage</methodname>
         <methodparam><parameter role="keyword">label</parameter></methodparam>
   </constructorsynopsis></programlisting>
 
@@ -130,15 +130,15 @@
   </variablelist>
 
   <para>
-    Creates a new <link linkend="class-thunarx-python-property-page"><classname>thunarx.PropertyPage</classname></link> object.
+    Creates a new <link linkend="class-thunarx-python-property-page"><classname>Thunarx.PropertyPage</classname></link> object.
   </para>
 </refsect1>
 
-<refsect1 id="constructor-thunarx-property-page-label-widget">
+<refsect1 id="constructor-Thunarx-property-page-label-widget">
   <title>Constructor</title>
 
   <programlisting><constructorsynopsis language="python">
-        <methodname>thunarx.PropertyPage</methodname>
+        <methodname>Thunarx.PropertyPage</methodname>
         <methodparam><parameter role="keyword">label_widget</parameter></methodparam>
   </constructorsynopsis></programlisting>
     
@@ -150,7 +150,7 @@
   </variablelist>
 
   <para>
-    Creates a new <link linkend="class-thunarx-python-property-page-label-widget"><classname>thunarx.PropertyPage</classname></link> object.
+    Creates a new <link linkend="class-thunarx-python-property-page-label-widget"><classname>Thunarx.PropertyPage</classname></link> object.
   </para>
 </refsect1>
 
@@ -162,7 +162,7 @@
     <title>Public Methods</title>
 
     <refsect2 id="method-thunarx-python-property-page--get-label">
-        <title>thunarx.FileInfo.get_label</title>
+        <title>Thunarx.FileInfo.get_label</title>
         <programlisting><methodsynopsis language="python">
             <methodname>get_label</methodname>
         </methodsynopsis></programlisting>
@@ -175,7 +175,7 @@
     </refsect2>
 
     <refsect2 id="method-thunarx-python-property-page--set-label">
-        <title>thunarx.FileInfo.set_label</title>
+        <title>Thunarx.FileInfo.set_label</title>
         <programlisting><methodsynopsis language="python">
             <methodname>set_label</methodname>
         </methodsynopsis></programlisting>
@@ -188,7 +188,7 @@
     </refsect2>
 
     <refsect2 id="method-thunarx-python-property-page--get-label-widget">
-        <title>thunarx.FileInfo.get_label_widget</title>
+        <title>Thunarx.FileInfo.get_label_widget</title>
         <programlisting><methodsynopsis language="python">
             <methodname>get_label_widget</methodname>
         </methodsynopsis></programlisting>
@@ -201,7 +201,7 @@
     </refsect2>
     
     <refsect2 id="method-thunarx-python-property-page--set-label-widget">
-        <title>thunarx.FileInfo.set_label_widget</title>
+        <title>Thunarx.FileInfo.set_label_widget</title>
         <programlisting><methodsynopsis language="python">
             <methodname>set_label_widget</methodname>
         </methodsynopsis></programlisting>
