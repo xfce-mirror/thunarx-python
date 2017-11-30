@@ -1,6 +1,7 @@
 0.4.0:
    - Updated to work with Thunarx-3 which requires uses gobject introspection 
         and requires Gtk+3 and PyGObject3.
+   - Fix x86_64 python lib path issue on Debian-based systems
 
 0.3.0:
     - Look for python extensions in $XDG_DATA_DIR/thunarx-python/extensions now. 	No longer look in /usr/lib/thunarx-1/python.
