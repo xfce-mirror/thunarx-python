@@ -1,5 +1,6 @@
 0.5.0:
     - Updated to work with python3 or python2
+    - Improve extension path loading semantics to follow XDG recommendations
 
 0.4.0:
    - Updated to work with Thunarx-3 which requires uses gobject introspection 

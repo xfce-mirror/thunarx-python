@@ -6,7 +6,7 @@ As of v0.4.0 the thunarx-python bindings will only work with Gtk+3
 and Thunar v1.7.  To use these with Gtk+2, make sure to use thunarx-python v0.3.0.
 
 As of v0.5.0 the thunarx-python bindings can be built with either python3
-or python2 support.  The $PYTHON environment variable should be pointed
+or python2 support.  Ensure the $PYTHON environment variable is pointed
 at your preferred python executable before running configure or autogen.
 
 Install
@@ -16,27 +16,32 @@ To install, run the following commands:
   $ make
   $ make install
   
-If you have built thunar into a non-standard prefix, thunarx-python will be
+If you have built Thunar into a non-standard prefix, thunarx-python will be
 installed there, but make sure pkg-config knows where it is.  You may have to 
-update your PKG_CONFIG_PATH environment variable to include your thunar's 
+update your PKG_CONFIG_PATH environment variable to include your Thunar's 
 pkgconfig path.
 
-    export PKG_CONFIG_PATH="/thunar_prefix/lib/pkgconfig"
+  export PKG_CONFIG_PATH="/thunar_prefix/lib/pkgconfig"
 
 Running Extensions
 ------------------
-As of thunarx-python 0.3.0, scripts are loaded from $XDG_DATA_DIR/thunarx-python/extensions,
-which includes ~/.local/share and /usr/share (or whatever your $XDG_DATA_DIR is 
-set to).  Simply copy your python scripts into that folder and restart thunar.
+As of thunarx-python 0.5.0, scripts are loaded in the following order:
+
+  1. $XDG_DATA_HOME/thunarx-python/extensions
+  2. thunar_prefix/share/thunarx-python/extensions
+  3. $XDG_DATA_DIRS/thunarx-python/extensions
+  4. THUNARX_EXTENSION_DIR/python (i.e. /usr/lib64/thunarx-3/python)
+
+Simply copy your python scripts into that folder and restart Thunar.
 
 Dependencies
 ------------
- * thunar (1.7.0 or later)
+ * Thunar (1.7.0 or later)
  * pygobject (3.20.0 or later)
  * gtk+3 (3.20.0 or later)
  
 Debugging
 -----------
-To enable debug mode, start thunar with the following command:
+To enable debug mode, start Thunar with the following command:
 
   $ THUNARX_PYTHON_DEBUG=all /path/to/thunar
