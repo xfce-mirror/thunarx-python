@@ -32,7 +32,7 @@ class ThunarxSubMenuProviderPlugin(GObject.GObject, Thunarx.MenuProvider):
         return item,item2
 
     def __subitem1_callback(self, item, window):
-        print "Subitem1 call"
+        print("Subitem1 call")
         
     def __subitem2_callback(self, item, window):
-        print "Subitem2 call"
+        print("Subitem2 call")

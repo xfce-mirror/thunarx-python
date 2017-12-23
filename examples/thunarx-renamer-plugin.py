@@ -27,7 +27,11 @@ class ThunarxPythonRenamer(Thunarx.Renamer):
         self.entry.show()
         self.add(hbox)
         hbox.show()
-    
+
+    def do_process(self, file, text, index):
+        prefix = self.entry.get_text()
+        return prefix + text
+
     def entry_changed(self, widget):
         self.set_property("prefix", widget.get_text())
         
@@ -35,7 +39,6 @@ class ThunarxPythonRenamer(Thunarx.Renamer):
         self.emit("changed")
 
     def do_get_menu_items(self, window, files):
-        print "python get menu items"
         return [Thunarx.MenuItem(name="TPR:SomeAction", label="Some Action", tooltip=None, icon=Gtk.STOCK_OPEN)]
 
     def do_load(self, settings):

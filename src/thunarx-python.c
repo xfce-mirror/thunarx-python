@@ -48,7 +48,7 @@ static gboolean thunarx_python_init_python (void);
 static inline gboolean 
 thunarx_python_init_pygobject(void)
 {
-    PyObject *gobject = pygobject_init (3, 0, 0);
+	PyObject *gobject = pygobject_init (3, 0, 0);
 
     if (gobject == NULL) {
         PyErr_Print ();
@@ -63,23 +63,23 @@ static gboolean
 thunarx_python_init_python (void)
 {
 	PyObject *thunarx;
-    GModule *libpython;
-    char *argv[] = { "thunarx", NULL };
+	GModule *libpython;
 
     debug_enter();
 
     if (Py_IsInitialized())
         return TRUE;
     
-    debug("Setting GI_TYPELIB_PATH to " GI_TYPELIB_PATH); 
+    debug("Setting GI_TYPELIB_PATH to " GI_TYPELIB_PATH);
     gchar *typelib_env = g_strdup_printf("GI_TYPELIB_PATH=$GI_TYPELIB_PATH:%s", GI_TYPELIB_PATH);
     putenv(typelib_env);
 
-    debug ("g_module_open " PY_LIB_LOC "/libpython" PYTHON_VERSION "." G_MODULE_SUFFIX ".1.0");  
-    libpython = g_module_open (PY_LIB_LOC "/libpython" PYTHON_VERSION "." G_MODULE_SUFFIX ".1.0", 0);
-    if (!libpython)
+    debug ("g_module_open " PY_LIB_LOC "/lib" PYTHON_LIB_NAME "." G_MODULE_SUFFIX ".1.0");  
+    libpython = g_module_open (PY_LIB_LOC "/lib" PYTHON_LIB_NAME "." G_MODULE_SUFFIX ".1.0", 0);
+    if (!libpython) {
         g_warning ("g_module_open libpython failed: %s", g_module_error());
-  
+	}
+
     debug ("Py_Initialize");
     Py_Initialize();
     if (PyErr_Occurred())
@@ -89,6 +89,11 @@ thunarx_python_init_python (void)
     }
 
     debug ("PySys_SetArgv");
+#if PY_MAJOR_VERSION >= 3
+    wchar_t *argv[] = { L"thunar", NULL };
+#else
+    char *argv[] = { "thunar", NULL };
+#endif
     PySys_SetArgv (1, argv);
     if (PyErr_Occurred())
     {
@@ -96,12 +101,13 @@ thunarx_python_init_python (void)
         return FALSE;
     }
 
-    debug ("Sanitizing python sys.path");
-    PyRun_SimpleString("import sys; sys.path = filter(None, sys.path)");
-    if (PyErr_Occurred()) {
-	    PyErr_Print();
-	    return FALSE;
-    }
+	debug("Sanitize the python search path");
+	PyRun_SimpleString("import sys; sys.path = [path for path in sys.path if path]");
+	if (PyErr_Occurred())
+	{
+		PyErr_Print();
+		return FALSE;
+	}
 
 	/* import gobject */
     debug("init_pygobject");
@@ -127,7 +133,6 @@ thunarx_python_init_python (void)
 #define IMPORT(x, y) \
     _PyThunarx##x##_Type = (PyTypeObject *)PyObject_GetAttrString(thunarx, y); \
 	if (_PyThunarx##x##_Type == NULL) { \
-        debug("hi " y); \
 		PyErr_Print(); \
 		return FALSE; \
 	}
@@ -235,7 +240,11 @@ thunarx_python_load_dir (ThunarxProviderPlugin  *plugin,
                 
                 /* sys.path.insert(0, dirname) */
 				sys_path = PySys_GetObject("path");
+#if PY_MAJOR_VERSION >= 3
+				py_path = PyUnicode_FromString(dirname);
+#else
 				py_path = PyString_FromString(dirname);
+#endif
 				PyList_Insert(sys_path, 0, py_path);
 				Py_DECREF(py_path);
 			}

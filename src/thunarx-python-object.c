@@ -72,6 +72,22 @@ static GList *thunarx_python_object_get_renamers                (ThunarxRenamerP
  *   the return value is called ret
  */
 
+int __PyString_Check(PyObject *obj) {
+#if PY_MAJOR_VERSION >= 3
+    return PyUnicode_Check(obj);
+#else
+    return PyString_Check(obj);
+#endif
+}
+
+char* __PyString_AsString(PyObject *obj) {
+#if PY_MAJOR_VERSION >= 3
+    return PyUnicode_AsUTF8(obj);
+#else
+    return PyString_AsString(obj);
+#endif
+}
+
 #define CHECK_METHOD_NAME(self)                                             \
 	if (!PyObject_HasAttrString(self, METHOD_NAME))                         \
 		goto beach;
@@ -107,7 +123,7 @@ static GList *thunarx_python_object_get_renamers                (ThunarxRenamerP
 #define HANDLE_LIST(py_ret, type, type_name)                                \
     {                                                                       \
         Py_ssize_t i = 0;                                                   \
-    	if (!PySequence_Check(py_ret) || PyString_Check(py_ret))            \
+    	if (!PySequence_Check(py_ret) || __PyString_Check(py_ret))            \
     	{                                                                   \
     		PyErr_SetString(PyExc_TypeError,                                \
     						METHOD_NAME " must return a sequence");         \
@@ -157,6 +173,10 @@ thunarx_python_object_get_file_menu_items (ThunarxMenuProvider *provider,
     HANDLE_LIST(py_ret, ThunarxMenuItem, "Thunarx.MenuItem");
 
 beach:
+    if (PyErr_Occurred()) {
+	PyErr_Print();
+    }
+    
     Py_XDECREF(py_ret);
     pyg_gil_state_release(state);
     return ret;
@@ -191,6 +211,10 @@ thunarx_python_object_get_folder_menu_items (ThunarxMenuProvider   *provider,
     HANDLE_LIST(py_ret, ThunarxMenuItem, "Thunarx.MenuItem");
 	
 beach:
+    if (PyErr_Occurred()) {
+	PyErr_Print();
+    }
+    
     Py_XDECREF(py_ret);
     pyg_gil_state_release(state);
     return ret;
@@ -229,6 +253,10 @@ thunarx_python_object_get_dnd_menu_items (ThunarxMenuProvider  *provider,
     HANDLE_LIST(py_ret, ThunarxMenuItem, "Thunarx.MenuItem");
 
 beach:
+    if (PyErr_Occurred()) {
+	PyErr_Print();
+    }
+    
     Py_XDECREF(py_ret);
     pyg_gil_state_release(state);
     return ret;
@@ -269,9 +297,13 @@ thunarx_python_object_get_property_pages (ThunarxPropertyPageProvider *provider,
 
     HANDLE_RETVAL(py_ret);
 
-    HANDLE_LIST(py_ret, ThunarxPropertyPage, "thunarx.PropertyPage");
+    HANDLE_LIST(py_ret, ThunarxPropertyPage, "Thunarx.PropertyPage");
 	
 beach:
+    if (PyErr_Occurred()) {
+	PyErr_Print();
+    }
+    
     Py_XDECREF(py_ret);
     pyg_gil_state_release(state);
     return ret;
@@ -298,9 +330,13 @@ thunarx_python_object_get_renamers (ThunarxRenamerProvider *provider)
 
     HANDLE_RETVAL(py_ret);
 
-    HANDLE_LIST(py_ret, ThunarxRenamer, "thunarx.Renamer");
+    HANDLE_LIST(py_ret, ThunarxRenamer, "Thunarx.Renamer");
 
 beach:
+    if (PyErr_Occurred()) {
+	PyErr_Print();
+    }
+    
     Py_XDECREF(py_ret);
     pyg_gil_state_release(state);
     return ret;
@@ -348,6 +384,10 @@ thunarx_python_object_get_preferences_menu_items (ThunarxPreferencesProvider *pr
     HANDLE_LIST(py_ret, ThunarxMenuItem, "Thunarx.MenuItem");
 	
 beach:
+    if (PyErr_Occurred()) {
+	PyErr_Print();
+    }
+    
     Py_XDECREF(py_ret);
     pyg_gil_state_release(state);
     return ret;
@@ -433,7 +473,8 @@ thunarx_python_object_get_type (ThunarxProviderPlugin   *plugin,
 		NULL
 	};
 
-	debug_enter_args("type=%s", PyString_AsString(PyObject_GetAttrString(type, "__name__")));
+	debug_enter_args("type=%s", __PyString_AsString(PyObject_GetAttrString(type, "__name__")));
+
 	info = g_new0 (GTypeInfo, 1);
 	
 	info->class_size = sizeof (ThunarxPythonObjectClass);
@@ -445,7 +486,7 @@ thunarx_python_object_get_type (ThunarxProviderPlugin   *plugin,
 	Py_INCREF(type);
 
 	type_name = g_strdup_printf("%s+ThunarxPython",
-								PyString_AsString(PyObject_GetAttrString(type, "__name__")));
+	    __PyString_AsString(PyObject_GetAttrString(type, "__name__")));
 
 	gtype = thunarx_provider_plugin_register_type (plugin, 
 										 G_TYPE_OBJECT,

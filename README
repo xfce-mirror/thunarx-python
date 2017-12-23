@@ -1,8 +1,13 @@
 Thunarx Python Bindings
 
-These bindings allow one to create python plugins for Thunar.  As of v0.4.0
-the thunarx-python bindings will only work with Gtk+3 and Thunar v1.7.  To use these 
-with Gtk+2, make sure to use thunarx-python v0.3.0.
+These bindings allow one to create python plugins for Thunar.
+
+As of v0.4.0 the thunarx-python bindings will only work with Gtk+3
+and Thunar v1.7.  To use these with Gtk+2, make sure to use thunarx-python v0.3.0.
+
+As of v0.5.0 the thunarx-python bindings can be built with either python3
+or python2 support.  The $PYTHON environment variable should be pointed
+at your preferred python executable before running configure or autogen.
 
 Install
 -----------

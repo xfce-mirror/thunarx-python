@@ -6,8 +6,7 @@ AM_CPPFLAGS =								\
 	-DEXO_API_SUBJECT_TO_CHANGE					\
 	-DLIBEXECDIR=\"$(libexecdir)\"					\
 	-DPY_LIB_LOC=\"$(PYTHON_LIB_LOC)\"				\
-	-DPYTHON_VERSION=\"$(PYTHON_VERSION)\"				\
-	$(THUNARX_PYTHON_CFLAGS)					\
+	-DPYTHON_LIB_NAME=\"$(PYTHON_LIB_NAME)\"				\
 	-DTHUNARX_API_VERSION=$(THUNARX_API_VERSION) \
 	-DGI_TYPELIB_PATH=\"$(libdir)/girepository-1.0\"
 
@@ -25,6 +24,7 @@ thunarx_python_la_SOURCES =						\
 thunarx_python_la_CFLAGS =						\
 	$(THUNARX_CFLAGS)						\
 	$(PYTHON_CFLAGS)						\
+	$(PYTHON_INCLUDES)						\
 	$(PYGOBJECT_CFLAGS)							
 
 thunarx_python_la_LDFLAGS =						\
@@ -35,6 +35,6 @@ thunarx_python_la_LDFLAGS =						\
 	$(PYGOBJECT_CFLAGS)						
 
 thunarx_python_la_LIBADD =						\
-	$(THUNARX_CFLAGS)						\
-	$(PYTHON_CFLAGS)						\
-	$(PYGOBJECT_CFLAGS)						
+	$(THUNARX_LIBS)						\
+	$(PYTHON_LIBS)						\
+	$(PYGOBJECT_LIBS)						

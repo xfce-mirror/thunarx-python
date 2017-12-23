@@ -59,15 +59,11 @@ dnl **************************
 LT_PREREQ([2.4])
 LT_INIT([disable-static])
 
-
-dnl **************************************************
-dnl * Check for Python
-dnl **************************************************
-AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
-AM_CHECK_PYTHON_LIBS(,[AC_MSG_ERROR(could not find Python lib)])
-
 dnl Check for gtk-doc
 GTK_DOC_CHECK(1.14)
+
+PYG_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
+PYG_CHECK_PYTHON_LIBS(,[AC_MSG_ERROR(could not find Python lib)])
 
 dnl ***************************
 dnl *** Determine the installed thunarx version ***
@@ -85,14 +81,6 @@ else
     exit 1;
 fi
 AC_SUBST(THUNARX_API_VERSION)
-
-PYTHON_CFLAGS="`python-config --includes`"
-PYTHON_LIBS="`python-config --libs`"
-PYTHON_LDFLAGS="`python-config --ldflags`"
-
-AC_SUBST(PYTHON_CFLAGS)
-AC_SUBST(PYTHON_LIBS)
-AC_SUBST(PYTHON_LDFLAGS)
 
 THUNARX_LIBDIR=`pkg-config --variable=libdir thunarx-${THUNARX_API_VERSION}`
 AC_SUBST(THUNARX_LIBDIR)
@@ -145,4 +133,5 @@ echo
 
 echo "      Prefix: $prefix"
 echo "      Documentation: ${enable_gtk_doc}"
+echo "      Python Version: ${PYTHON_LIB_NAME}"
 echo
