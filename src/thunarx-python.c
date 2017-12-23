@@ -174,9 +174,9 @@ thunarx_python_load_file (ThunarxProviderPlugin *plugin,
             continue;
 
         if (PyObject_IsSubclass(value, (PyObject*)&PyThunarxMenuProvider_Type) ||
-				PyObject_IsSubclass(value, (PyObject*)&PyThunarxPropertyPageProvider_Type) ||
-				PyObject_IsSubclass(value, (PyObject*)&PyThunarxPreferencesProvider_Type) ||
-				PyObject_IsSubclass(value, (PyObject*)&PyThunarxRenamerProvider_Type)) {
+                PyObject_IsSubclass(value, (PyObject*)&PyThunarxPropertyPageProvider_Type) ||
+                PyObject_IsSubclass(value, (PyObject*)&PyThunarxPreferencesProvider_Type) ||
+                PyObject_IsSubclass(value, (PyObject*)&PyThunarxRenamerProvider_Type)) {
             new_type = thunarx_python_object_get_type(plugin, value);
             g_array_append_val(all_types, new_type);
         }
@@ -237,38 +237,38 @@ thunarx_python_check_all_directories(ThunarxProviderPlugin *plugin) {
 
     GList *dirs = NULL;
 
-	// Check ~/.local/share first
+    // Check ~/.local/share first
     dirs = g_list_append(dirs, g_build_filename(g_get_user_data_dir(), 
         "thunarx-python", "extensions", NULL));
 
-	// If thunar is built in a non-standard prefix
-	// Check that' prefix's DATADIR
+    // If thunar is built in a non-standard prefix
+    // Check that' prefix's DATADIR
     gchar *prefix_extension_dir = DATADIR "/thunarx-python/extensions";
-	dirs = g_list_append(dirs, prefix_extension_dir);
+    dirs = g_list_append(dirs, prefix_extension_dir);
 
-	// Check all system data dirs 
+    // Check all system data dirs 
     const gchar *const *temp = g_get_system_data_dirs();
     while (*temp != NULL) {
-		gchar *dir = g_build_filename(*temp,
-			"thunarx-python", "extensions", NULL);
-		if (dir != prefix_extension_dir) {
-			dirs = g_list_append(dirs, dir);
-		}
+        gchar *dir = g_build_filename(*temp,
+            "thunarx-python", "extensions", NULL);
+        if (dir != prefix_extension_dir) {
+            dirs = g_list_append(dirs, dir);
+        }
 
-		temp++;
-	}
+        temp++;
+    }
 
-	// Finally, check the old thunarx-python <0.3.0 extension dir
-	dirs = g_list_append(dirs, THUNARX_EXTENSION_DIR "/python");
+    // Finally, check the old thunarx-python <0.3.0 extension dir
+    dirs = g_list_append(dirs, THUNARX_EXTENSION_DIR "/python");
 
-	dirs = g_list_first(dirs);
-	while (dirs != NULL) {
-		gchar *dir = dirs->data;
-		thunarx_python_load_dir(plugin, dir);
-		dirs = dirs->next;
-	}
+    dirs = g_list_first(dirs);
+    while (dirs != NULL) {
+        gchar *dir = dirs->data;
+        thunarx_python_load_dir(plugin, dir);
+        dirs = dirs->next;
+    }
 
-	g_list_free(dirs);
+    g_list_free(dirs);
 }
 
 G_MODULE_EXPORT void
@@ -297,7 +297,7 @@ thunar_extension_initialize (ThunarxProviderPlugin *plugin) {
 
     thunarx_provider_plugin_set_resident (plugin, TRUE);
 
-	thunarx_python_check_all_directories(plugin);
+    thunarx_python_check_all_directories(plugin);
 }
 
 G_MODULE_EXPORT void

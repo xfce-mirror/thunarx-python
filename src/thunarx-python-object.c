@@ -173,7 +173,7 @@ thunarx_python_object_get_file_menu_items (ThunarxMenuProvider *provider,
 
 beach:
     if (PyErr_Occurred()) {
-	PyErr_Print();
+    PyErr_Print();
     }
     
     Py_XDECREF(py_ret);
@@ -209,7 +209,7 @@ thunarx_python_object_get_folder_menu_items (ThunarxMenuProvider   *provider,
     
 beach:
     if (PyErr_Occurred()) {
-	PyErr_Print();
+    PyErr_Print();
     }
     
     Py_XDECREF(py_ret);
@@ -250,7 +250,7 @@ thunarx_python_object_get_dnd_menu_items (ThunarxMenuProvider  *provider,
 
 beach:
     if (PyErr_Occurred()) {
-	PyErr_Print();
+    PyErr_Print();
     }
     
     Py_XDECREF(py_ret);
@@ -295,7 +295,7 @@ thunarx_python_object_get_property_pages (ThunarxPropertyPageProvider *provider,
     
 beach:
     if (PyErr_Occurred()) {
-	PyErr_Print();
+    PyErr_Print();
     }
     
     Py_XDECREF(py_ret);
@@ -327,7 +327,7 @@ thunarx_python_object_get_renamers (ThunarxRenamerProvider *provider) {
 
 beach:
     if (PyErr_Occurred()) {
-	PyErr_Print();
+    PyErr_Print();
     }
     
     Py_XDECREF(py_ret);
@@ -369,7 +369,7 @@ thunarx_python_object_get_preferences_menu_items (ThunarxPreferencesProvider *pr
     
 beach:
     if (PyErr_Occurred()) {
-	PyErr_Print();
+    PyErr_Print();
     }
     
     Py_XDECREF(py_ret);
