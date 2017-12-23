@@ -27,10 +27,24 @@
 <para>As of thunarx-python 0.3.0, python extensions are installed in $XDG_DATA_DIR/thunarx-python/extensions where $XDG_DATA_DIR 
         could be /usr/share for a global install or ~/.local/share for a local install.</para>
     </note>
+
+    <note>
+<para>As of thunarx-python 0.5.0, python extensions are loaded in the following order:
+
+  1. $XDG_DATA_HOME/thunarx-python/extensions
+  2. thunar_prefix/share/thunarx-python/extensions
+  3. $XDG_DATA_DIRS/thunarx-python/extensions
+  4. THUNARX_EXTENSION_DIR/python (i.e. /usr/lib64/thunarx-3/python)</para>
+    </note>
     
     <note>
         <title>thunarx-3</title>
         <para>As of thunar v1.7.0, thunarx requires Gtk+3 and no longer accepts gtk.Actions.  Instead, it expects Thunarx.MenuItems.</para>
+    </note>
+
+    <note>
+        <title>python3</title>
+        <para>As of thunarx-python v0.5.0, thunarx-python can be built to embed python3 instead of python2.  It uses the $PYTHON environment variable to determine which library to use.</para>
     </note>
 
     <xi:include href="thunarx-python-overview-example.xml"/>

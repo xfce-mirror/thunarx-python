@@ -71,7 +71,7 @@ class ThunarxMenuProviderPlugin(GObject.GObject, Thunarx.MenuProvider):
         return [Thunarx.MenuItem(name="TMP:TestFolderAction", label="Python Folder Action", tooltip='', icon=Gtk.STOCK_OPEN)]
 
     def __do_something(self, item, window):
-        print "Doing something"
+        print("Doing something")
     </programlisting>
 </example>
 
@@ -112,10 +112,10 @@ class ThunarxSubMenuProviderPlugin(GObject.GObject, Thunarx.MenuProvider):
         return item,item2
 
     def __subitem1_callback(self, item, window):
-        print "Subitem1 call"
+        print("Subitem1 call")
         
     def __subitem2_callback(self, item, window):
-        print "Subitem2 call"
+        print("Subitem2 call")
 
     </programlisting>
 </example>

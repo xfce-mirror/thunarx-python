@@ -27,7 +27,7 @@ class ThunarxMenuProviderPlugin(GObject.GObject, Thunarx.MenuProvider):
         return [Thunarx.MenuItem(name="TMP:TestFolderAction", label="Python Folder Action", tooltip='', icon=Gtk.STOCK_OPEN)]
 
     def __do_something(self, item, window):
-        print "Doing something"
+        print("Doing something")
         </programlisting>
     </example>
     

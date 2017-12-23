@@ -51,6 +51,7 @@ class DialogExample(Gtk.Dialog):
              Gtk.STOCK_OK, Gtk.ResponseType.OK))
 
         self.set_default_size(150, 100)
+        self.set_transient_for(parent)
 
         label = Gtk.Label("This is a dialog to display additional information")
 

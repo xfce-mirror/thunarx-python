@@ -7,6 +7,7 @@ Makefile
 Makefile.in
 depcomp
 stamp-h1
+*.stamp
 missing
 *.tar.gz
 *.tar.bz2
@@ -21,4 +22,8 @@ configure
 configure.ac
 *.m4
 *.make
-
+docs/*.html
+docs/*.png
+docs/*.css
+builddate.xml
+*.devhelp2
