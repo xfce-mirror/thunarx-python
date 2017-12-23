@@ -231,9 +231,48 @@ thunarx_python_load_dir (ThunarxProviderPlugin  *plugin,
     }
 }
 
+static void
+thunarx_python_check_all_directories(ThunarxProviderPlugin *plugin) {
+    gchar *extensions_dir = NULL;
+
+    GList *dirs = NULL;
+
+	// Check ~/.local/share first
+    dirs = g_list_append(dirs, g_build_filename(g_get_user_data_dir(), 
+        "thunarx-python", "extensions", NULL));
+
+	// If thunar is built in a non-standard prefix
+	// Check that' prefix's DATADIR
+    gchar *prefix_extension_dir = DATADIR "/thunarx-python/extensions";
+	dirs = g_list_append(dirs, prefix_extension_dir);
+
+	// Check all system data dirs 
+    const gchar *const *temp = g_get_system_data_dirs();
+    while (*temp != NULL) {
+		gchar *dir = g_build_filename(*temp,
+			"thunarx-python", "extensions", NULL);
+		if (dir != prefix_extension_dir) {
+			dirs = g_list_append(dirs, dir);
+		}
+
+		temp++;
+	}
+
+	// Finally, check the old thunarx-python <0.3.0 extension dir
+	dirs = g_list_append(dirs, THUNARX_EXTENSION_DIR "/python");
+
+	dirs = g_list_first(dirs);
+	while (dirs != NULL) {
+		gchar *dir = dirs->data;
+		thunarx_python_load_dir(plugin, dir);
+		dirs = dirs->next;
+	}
+
+	g_list_free(dirs);
+}
+
 G_MODULE_EXPORT void
 thunar_extension_initialize (ThunarxProviderPlugin *plugin) {
-    gchar *user_extensions_dir;
     const gchar *mismatch;
     const gchar *env_string;
 
@@ -258,16 +297,7 @@ thunar_extension_initialize (ThunarxProviderPlugin *plugin) {
 
     thunarx_provider_plugin_set_resident (plugin, TRUE);
 
-    // Look in the new global path, $DATADIR/thunarx-python/extensions
-    thunarx_python_load_dir(plugin, DATADIR "/thunarx-python/extensions");
-
-    // Look in XDG_DATA_DIR, ~/.local/share/thunarx-python/extensions
-    user_extensions_dir = g_build_filename(g_get_user_data_dir(), 
-        "thunarx-python", "extensions", NULL);
-    thunarx_python_load_dir(plugin, user_extensions_dir);
-    g_free(user_extensions_dir);
-    
-    thunarx_python_load_dir(plugin, THUNARX_EXTENSION_DIR "/python");
+	thunarx_python_check_all_directories(plugin);
 }
 
 G_MODULE_EXPORT void
