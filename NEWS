@@ -1,3 +1,6 @@
+0.5.1:
+    - Fix bug #14199, building docs with python3
+    
 0.5.0:
     - Updated to work with python3 or python2
     - Improve extension path loading semantics to follow XDG recommendations
