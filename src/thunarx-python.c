@@ -25,6 +25,7 @@
 #include <pygobject.h>
 #include <gmodule.h>
 #include <gtk/gtk.h>
+#include <string.h>
 
 #include "thunarx-python.h"
 #include "thunarx-python-object.h"
@@ -231,6 +232,14 @@ thunarx_python_load_dir (ThunarxProviderPlugin  *plugin,
     }
 }
 
+static GList *
+add_unique_dir(GList *dirs, char *dir)
+{
+    if (!g_list_find_custom(dirs, dir, strcmp))
+        dirs = g_list_append(dirs, dir);
+    return dirs;
+}
+
 static void
 thunarx_python_check_all_directories(ThunarxProviderPlugin *plugin) {
     gchar *extensions_dir = NULL;
@@ -238,13 +247,13 @@ thunarx_python_check_all_directories(ThunarxProviderPlugin *plugin) {
     GList *dirs = NULL;
 
     // Check ~/.local/share first
-    dirs = g_list_append(dirs, g_build_filename(g_get_user_data_dir(), 
+    dirs = add_unique_dir(dirs, g_build_filename(g_get_user_data_dir(), 
         "thunarx-python", "extensions", NULL));
 
     // If thunar is built in a non-standard prefix
     // Check that' prefix's DATADIR
     gchar *prefix_extension_dir = DATADIR "/thunarx-python/extensions";
-    dirs = g_list_append(dirs, prefix_extension_dir);
+    dirs = add_unique_dir(dirs, prefix_extension_dir);
 
     // Check all system data dirs 
     const gchar *const *temp = g_get_system_data_dirs();
@@ -252,14 +261,14 @@ thunarx_python_check_all_directories(ThunarxProviderPlugin *plugin) {
         gchar *dir = g_build_filename(*temp,
             "thunarx-python", "extensions", NULL);
         if (dir != prefix_extension_dir) {
-            dirs = g_list_append(dirs, dir);
+            dirs = add_unique_dir(dirs, dir);
         }
 
         temp++;
     }
 
     // Finally, check the old thunarx-python <0.3.0 extension dir
-    dirs = g_list_append(dirs, THUNARX_EXTENSION_DIR "/python");
+    dirs = add_unique_dir(dirs, THUNARX_EXTENSION_DIR "/python");
 
     dirs = g_list_first(dirs);
     while (dirs != NULL) {
