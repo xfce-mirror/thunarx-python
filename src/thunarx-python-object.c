@@ -24,6 +24,7 @@
 
 #include <thunarx/thunarx.h>
 
+#define NO_IMPORT_PYGOBJECT
 #include <pygobject.h>
 
 #include <string.h>

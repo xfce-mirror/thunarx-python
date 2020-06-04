@@ -30,6 +30,18 @@
 #include "thunarx-python.h"
 #include "thunarx-python-object.h"
 
+PyTypeObject *_PyGtkWidget_Type;
+PyTypeObject *_PyThunarxFileInfo_Type;
+PyTypeObject *_PyThunarxMenuItem_Type;
+PyTypeObject *_PyThunarxMenu_Type;
+PyTypeObject *_PyThunarxMenuProvider_Type;
+PyTypeObject *_PyThunarxPreferencesProvider_Type;
+PyTypeObject *_PyThunarxPropertyPage_Type;
+PyTypeObject *_PyThunarxPropertyPageProvider_Type;
+PyTypeObject *_PyThunarxProviderPlugin_Type;
+PyTypeObject *_PyThunarxRenamer_Type;
+PyTypeObject *_PyThunarxRenamerProvider_Type;
+
 static const GDebugKey thunarx_python_debug_keys[] = {
   {"all", THUNARX_PYTHON_DEBUG_ALL},
 };
