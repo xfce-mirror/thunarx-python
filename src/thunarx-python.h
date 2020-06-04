@@ -43,37 +43,37 @@ extern ThunarxPythonDebug thunarx_python_debug;
 #define debug_enter_args(x, y) { if (thunarx_python_debug & THUNARX_PYTHON_DEBUG_ALL) \
                                      g_printf("%s: entered " x "\n", __FUNCTION__, y); }
 
-PyTypeObject *_PyGtkWidget_Type;
+extern PyTypeObject *_PyGtkWidget_Type;
 #define PyGtkWidget_Type (*_PyGtkWidget_Type)
 
-PyTypeObject *_PyThunarxFileInfo_Type;
+extern PyTypeObject *_PyThunarxFileInfo_Type;
 #define PyThunarxFileInfo_Type (*_PyThunarxFileInfo_Type)
 
-PyTypeObject *_PyThunarxMenuItem_Type;
+extern PyTypeObject *_PyThunarxMenuItem_Type;
 #define PyThunarxMenuItem_Type (*_PyThunarxMenuItem_Type)
 
-PyTypeObject *_PyThunarxMenu_Type;
+extern PyTypeObject *_PyThunarxMenu_Type;
 #define PyThunarxMenu_Type (*_PyThunarxMenu_Type)
 
-PyTypeObject *_PyThunarxMenuProvider_Type;
+extern PyTypeObject *_PyThunarxMenuProvider_Type;
 #define PyThunarxMenuProvider_Type (*_PyThunarxMenuProvider_Type)
 
-PyTypeObject *_PyThunarxPreferencesProvider_Type;
+extern PyTypeObject *_PyThunarxPreferencesProvider_Type;
 #define PyThunarxPreferencesProvider_Type (*_PyThunarxPreferencesProvider_Type)
 
-PyTypeObject *_PyThunarxPropertyPage_Type;
+extern PyTypeObject *_PyThunarxPropertyPage_Type;
 #define PyThunarxPropertyPage_Type (*_PyThunarxPropertyPage_Type)
 
-PyTypeObject *_PyThunarxPropertyPageProvider_Type;
+extern PyTypeObject *_PyThunarxPropertyPageProvider_Type;
 #define PyThunarxPropertyPageProvider_Type (*_PyThunarxPropertyPageProvider_Type)
 
-PyTypeObject *_PyThunarxProviderPlugin_Type;
+extern PyTypeObject *_PyThunarxProviderPlugin_Type;
 #define PyThunarxProviderPlugin_Type (*_PyThunarxProviderPlugin_Type)
 
-PyTypeObject *_PyThunarxRenamer_Type;
+extern PyTypeObject *_PyThunarxRenamer_Type;
 #define PyThunarxRenamer_Type (*_PyThunarxRenamer_Type)
 
-PyTypeObject *_PyThunarxRenamerProvider_Type;
+extern PyTypeObject *_PyThunarxRenamerProvider_Type;
 #define PyThunarxRenamerProvider_Type (*_PyThunarxRenamerProvider_Type)
 
 #endif /* THUNARX_PYTHON_H */
