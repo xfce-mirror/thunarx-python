@@ -1,10 +1,5 @@
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
-SUBDIRS = src examples
-
-if ENABLE_GTK_DOC
-SUBDIRS += docs
-CLEANFILES = html.stamp
-endif
+SUBDIRS = src examples docs
 
 DISTCHECK_CONFIGURE_FLAGS=--enable-gtk-doc

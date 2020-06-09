@@ -25,5 +25,7 @@ configure.ac
 docs/*.html
 docs/*.png
 docs/*.css
+docs/reference/html
+docs/reference/xml
 builddate.xml
 *.devhelp2

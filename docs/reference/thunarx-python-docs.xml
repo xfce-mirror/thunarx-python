@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+               "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd"
+[
+  <!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
+  <!ENTITY % gtkdocentities SYSTEM "xml/gtkdocentities.ent">
+  %gtkdocentities;
+]>
+<book id="index" xmlns:xi="http://www.w3.org/2003/XInclude">
+  <bookinfo>
+    <title>thunarx-python Reference Manual</title>
+    <edition>Reference Manual for thunarx-python</edition>
+    <releaseinfo>For thunarx-python version <xi:include href="version.xml" parse="text"/></releaseinfo>
+    <authorgroup>
+      <author>
+        <firstname>Adam</firstname>
+        <surname>Plumb</surname>
+      </author>
+    </authorgroup>
+    <abstract>
+      <para>This reference describes the classes of the thunarx-python module.</para>
+    </abstract>
+  </bookinfo>
+
+  <xi:include href="thunarx-python-overview.xml"/>
+  <xi:include href="thunarx-python-class-reference.xml"/>
+  <xi:include href="thunarx-python-provider-reference.xml"/>
+</book>

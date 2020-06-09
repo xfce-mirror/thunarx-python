@@ -121,7 +121,8 @@ Makefile
 src/Makefile
 examples/Makefile
 docs/Makefile
-docs/reference/entities.docbook
+docs/reference/Makefile
+docs/reference/version.xml
 ])
 
 dnl ***************************
