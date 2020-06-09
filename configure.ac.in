@@ -68,43 +68,13 @@ PYG_CHECK_PYTHON_LIBS(,[AC_MSG_ERROR(could not find Python lib)])
 dnl ***************************
 dnl *** Determine the installed thunarx version ***
 dnl ***************************
-if test "`pkg-config --variable prefix thunarx-3`" != ""; then
-    THUNARX_API_VERSION=3
-    prefix=`pkg-config --variable prefix thunarx-3`
-    XDT_CHECK_PACKAGE([THUNARX], [thunarx-3], [1.6.0])
+THUNARX_API_VERSION=3
+XDT_CHECK_PACKAGE([THUNARX], [thunarx-3], [1.7.0])
 
-    XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [3.20.0])
-    XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.30.0])
-    XDT_CHECK_PACKAGE([PYGOBJECT], [pygobject-3.0], [3.20.0])
-else
-    echo "thunarx-3 is required";
-    exit 1;
-fi
+XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [3.20.0])
+XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.30.0])
+XDT_CHECK_PACKAGE([PYGOBJECT], [pygobject-3.0], [3.20.0])
 AC_SUBST(THUNARX_API_VERSION)
-
-THUNARX_LIBDIR=`pkg-config --variable=libdir thunarx-${THUNARX_API_VERSION}`
-AC_SUBST(THUNARX_LIBDIR)
-AC_DEFINE_UNQUOTED(THUNARX_LIBDIR, "$THUNARX_LIBDIR", [Thunarx libdir])
-
-
-dnl ---------------------------------
-dnl Get thunar extensions directory
-dnl ---------------------------------
-THUNARX_EXTENSION_DIR=`$PKG_CONFIG --variable=extensionsdir thunarx-${THUNARX_API_VERSION}`
-AC_SUBST(THUNARX_EXTENSION_DIR)
-AC_DEFINE_UNQUOTED(THUNARX_EXTENSION_DIR, "$THUNARX_EXTENSION_DIR", [Thunar's extensions directory])
-
-dnl ---------------------------------
-dnl Check for gtk-doc dependencies
-dnl ---------------------------------
-if test "${enable_gtk_doc}" != no; then
-    dnl Check for gtkdoc-mkhtml
-    AC_PATH_PROG([GTKDOC_MKHTML], [gtkdoc-mkhtml])
-    if test -z "$GTKDOC_MKHTML"; then
-        echo " disabling generation of docs"
-        enable_gtk_doc=no
-    fi
-fi
 
 dnl ***********************************
 dnl *** Check for debugging support ***

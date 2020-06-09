@@ -279,9 +279,6 @@ thunarx_python_check_all_directories(ThunarxProviderPlugin *plugin) {
         temp++;
     }
 
-    // Finally, check the old thunarx-python <0.3.0 extension dir
-    dirs = add_unique_dir(dirs, THUNARX_EXTENSION_DIR "/python");
-
     dirs = g_list_first(dirs);
     while (dirs != NULL) {
         gchar *dir = dirs->data;
