@@ -41,11 +41,6 @@ AC_ISC_POSIX()
 AC_MINIX()
 
 dnl ********************************
-dnl *** Check for common headers ***
-dnl ********************************
-AC_CHECK_HEADERS([sys/wait.h])
-
-dnl ********************************
 dnl *** Check for basic programs ***
 dnl ********************************
 AC_PROG_CC()
