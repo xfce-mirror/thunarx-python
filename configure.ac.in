@@ -33,13 +33,6 @@ AM_CONFIG_HEADER([config.h])
 AM_MAINTAINER_MODE()
 AM_SILENT_RULES([yes])
 
-dnl *******************************
-dnl *** Check for UNIX variants ***
-dnl *******************************
-AC_AIX()
-AC_ISC_POSIX()
-AC_MINIX()
-
 dnl ********************************
 dnl *** Check for basic programs ***
 dnl ********************************
