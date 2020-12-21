@@ -244,18 +244,23 @@ thunarx_python_load_dir (ThunarxProviderPlugin  *plugin,
     }
 }
 
+static gint
+compare_dir(gconstpointer a, gconstpointer b)
+{
+   return strcmp(a, b);
+}
+
 static GList *
 add_unique_dir(GList *dirs, char *dir)
 {
-    if (!g_list_find_custom(dirs, dir, strcmp))
+    if (!g_list_find_custom(dirs, dir, compare_dir))
         dirs = g_list_append(dirs, dir);
     return dirs;
 }
 
 static void
-thunarx_python_check_all_directories(ThunarxProviderPlugin *plugin) {
-    gchar *extensions_dir = NULL;
-
+thunarx_python_check_all_directories(ThunarxProviderPlugin *plugin)
+{
     GList *dirs = NULL;
 
     // Check ~/.local/share first
