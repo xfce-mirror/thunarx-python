@@ -67,7 +67,7 @@ static GList *thunarx_python_object_get_preferences_menu_items         (ThunarxP
 static void   thunarx_python_object_renamer_provider_iface_init (ThunarxRenamerProviderIface  *iface);
 static GList *thunarx_python_object_get_renamers                (ThunarxRenamerProvider       *provider);
 
-int __PyString_Check(PyObject *obj) {
+static int __PyString_Check(PyObject *obj) {
 #if PY_MAJOR_VERSION >= 3
     return PyUnicode_Check(obj);
 #else
@@ -75,7 +75,7 @@ int __PyString_Check(PyObject *obj) {
 #endif
 }
 
-char* __PyString_AsString(PyObject *obj) {
+static char *__PyString_AsString(PyObject *obj) {
 #if PY_MAJOR_VERSION >= 3
     return PyUnicode_AsUTF8(obj);
 #else
