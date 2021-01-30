@@ -1,3 +1,16 @@
+0.5.2:
+  - Add gitlab-ci for thunarx-python
+  - Update configure.ac.in syntax
+  - Remove checks with unused result
+  - Remove check for unused sys/wait.h
+  - Fix missing-prototypes
+  - Fix g_list_find_custom usage
+  - make distcheck now works !
+  - Update gtk-doc for thunarx-python
+  - Fix compilation with python3.8
+  - fix compilation issues with gcc-10
+  - Scan extension directories only once
+
 0.5.1:
     - Fix bug #14199, building docs with python3
     
